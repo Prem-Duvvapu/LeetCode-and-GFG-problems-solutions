@@ -3,8 +3,7 @@ class Solution {
     {
         if (list.size()==k)
         {
-            List<Integer> temp=new ArrayList<>(list);
-            res.add(temp);
+            res.add(new ArrayList<>(list));
             return;
         }
 
