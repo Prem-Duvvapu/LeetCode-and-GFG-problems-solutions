@@ -1,7 +1,7 @@
 class Solution {
     private void combinations(int n,int k,int pos,List<List<Integer>> res,List<Integer> list)
     {
-        if (list.size()==k)
+        if (k==0)
         {
             res.add(new ArrayList<>(list));
             return;
@@ -10,7 +10,7 @@ class Solution {
         for (int i=pos;i<=n;i++)
         {
             list.add(i);
-            combinations(n,k,i+1,res,list);
+            combinations(n,k-1,i+1,res,list);
             list.remove(list.size()-1);
         }
     }
