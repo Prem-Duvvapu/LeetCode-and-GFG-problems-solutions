@@ -7,7 +7,10 @@ class Solution {
             int sum=0;
 
             for (int val: nums)
+            {
                 sum+=(val>>i&1);
+                sum%=3;
+            }
             
             if (sum%3!=0)
                 res=res|(1<<i);
