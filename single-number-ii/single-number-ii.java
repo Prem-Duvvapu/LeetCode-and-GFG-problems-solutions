@@ -1,18 +1,14 @@
 class Solution {
     public int singleNumber(int[] nums) {
-        int res=0;
+        int ones=0;
+        int twos=0;
 
-        for (int i=0;i<32;i++)
+        for (int val: nums)
         {
-            int sum=0;
-
-            for (int val: nums)
-                sum+=(val>>i&1);
-            
-            if (sum%3!=0)
-                res=res|(1<<i);
+            ones=(ones^val) & ~twos;
+            twos=(twos^val) & ~ones;
         }
 
-        return res;
+        return ones;
     }
 }
