@@ -17,7 +17,7 @@ class Solution {
 
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res=new ArrayList<>();
-        combinations(n,k,1,res,new ArrayList<>());
+        combinations(n,k,1,res,new ArrayList<>(k));
         return res;
     }
 }
