@@ -18,7 +18,7 @@ class Solution {
                         minVal=nums[i]-2;
                         maxVal=nums[i]+2;
 
-                        while (nums[j]>=(nums[i]-2) && nums[j]<=(nums[i]+2))
+                        while (nums[j]>=(minVal) && nums[j]<=(maxVal))
                         {
                                 minVal=Math.max(nums[j]-2,minVal);
                                 maxVal=Math.min(nums[j]+2,maxVal);
