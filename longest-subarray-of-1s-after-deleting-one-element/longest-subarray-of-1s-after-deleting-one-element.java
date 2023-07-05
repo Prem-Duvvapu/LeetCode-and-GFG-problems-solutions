@@ -10,12 +10,8 @@ class Solution {
                 zeroesCnt++;
 
             while (zeroesCnt==2)
-            {
-                if (nums[left]==0)
-                    zeroesCnt--;
-
-                left++;
-            }
+                if (nums[left++]==0)
+                    zeroesCnt=1;
 
             res=Math.max(i-left,res);
         }
