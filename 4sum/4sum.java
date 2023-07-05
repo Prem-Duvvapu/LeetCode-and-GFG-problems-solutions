@@ -1,10 +1,9 @@
 class Solution {
     public List<List<Integer>> fourSum(int[] nums, int target) {
         Arrays.sort(nums);
-        long t=target;
         List<List<Integer>> res = new ArrayList<>();
         List<Integer> quad = new ArrayList<>();
-        kSum(4, 0, target, nums, res, quad);
+        kSum(4, 0, (long)target, nums, res, quad);
         return res;
     }
     
