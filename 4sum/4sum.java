@@ -31,11 +31,9 @@ class Solution {
                 right--;
             } else {
                 List<Integer> temp = new ArrayList<>(quad);
-                temp.add(nums[left]);
-                temp.add(nums[right]);
+                temp.add(nums[left++]);
+                temp.add(nums[right--]);
                 res.add(temp);
-                left++;
-                right--;
                 
                 while (left < right && nums[left] == nums[left - 1]) {
                     left++;
