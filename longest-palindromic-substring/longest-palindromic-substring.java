@@ -3,6 +3,7 @@ class Solution {
         int start=0;
         int end=0;
 
+        //Consider the current of the string as centre of palindrome and then check left index and right index until they are not equal or they reach out of bounds
         for (int i=0;i<s.length();i++)
         {
             char ch=s.charAt(i);
