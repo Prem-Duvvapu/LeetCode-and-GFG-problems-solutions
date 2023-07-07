@@ -15,7 +15,7 @@ class Solution {
                 if (leftCheck && rightCheck)
                 {
                     cnt++;
-                    flowerbed[i]=1;
+                    i++;
                     if (cnt==n)
                         return true;
                 }
