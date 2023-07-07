@@ -5,9 +5,9 @@ class Solution {
         int fCnt=0;
 
         //change F to T
-        for (int i=0;i<answerKey.length();i++)
+        for (int right=0;right<answerKey.length();right++)
         {
-            if (answerKey.charAt(i)=='F')
+            if (answerKey.charAt(right)=='F')
                 fCnt++;
 
             while (fCnt>k)
@@ -18,7 +18,7 @@ class Solution {
                 left++;
             }
 
-            tCntRes=Math.max(i-left+1,tCntRes);
+            tCntRes=Math.max(right-left+1,tCntRes);
         }
 
         left=0;
@@ -26,9 +26,9 @@ class Solution {
         int tCnt=0;
 
         //change T to F
-        for (int i=0;i<answerKey.length();i++)
+        for (int right=0;right<answerKey.length();right++)
         {
-            if (answerKey.charAt(i)=='T')
+            if (answerKey.charAt(right)=='T')
                 tCnt++;
 
             while (tCnt>k)
@@ -39,7 +39,7 @@ class Solution {
                 left++;
             }
 
-            fCntRes=Math.max(i-left+1,fCntRes);
+            fCntRes=Math.max(right-left+1,fCntRes);
         }
 
         return Math.max(tCntRes,fCntRes);
