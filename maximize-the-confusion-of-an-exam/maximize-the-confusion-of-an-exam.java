@@ -1,7 +1,7 @@
 class Solution {
     public int maxConsecutiveAnswers(String answerKey, int k) {
         int left=0;
-        int tCntRes=0;
+        int res=0;
         int fCnt=0;
 
         //change F to T
@@ -18,11 +18,10 @@ class Solution {
                 left++;
             }
 
-            tCntRes=Math.max(right-left+1,tCntRes);
+            res=Math.max(right-left+1,res);
         }
 
         left=0;
-        int fCntRes=0;
         int tCnt=0;
 
         //change T to F
@@ -39,9 +38,9 @@ class Solution {
                 left++;
             }
 
-            fCntRes=Math.max(right-left+1,fCntRes);
+            res=Math.max(right-left+1,res);
         }
 
-        return Math.max(tCntRes,fCntRes);
+        return res;
     }
 }
