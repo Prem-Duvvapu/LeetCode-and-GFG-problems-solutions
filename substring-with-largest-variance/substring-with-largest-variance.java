@@ -29,7 +29,6 @@ class Solution {
         int[] freq=new int[26];
         StringBuilder sb=new StringBuilder(s);
         sb.reverse();
-        String sRev=sb.toString();
 
         for (char ch: s.toCharArray())
             freq[ch-'a']++;
@@ -44,7 +43,7 @@ class Solution {
                     continue;
 
                 res=helper(s,res,ch1,ch2);
-                res=helper(sRev,res,ch1,ch2);
+                res=helper(sb.toString(),res,ch1,ch2);
             }
         }
 
