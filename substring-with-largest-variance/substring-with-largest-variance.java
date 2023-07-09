@@ -1,39 +1,50 @@
 class Solution {
+    private int helper(String s,int res,char ch1,char ch2)
+    {
+        int cnt1=0;
+        int cnt2=0;
+
+        for (char ch: s.toCharArray())
+        {
+            if (ch==ch1)
+                cnt1++;
+
+            if (ch==ch2)
+                cnt2++;
+
+            if (cnt1<cnt2)
+                cnt1=cnt2=0;
+
+            if (cnt1>0 && cnt2>0)
+                res=Math.max(cnt1-cnt2,res);
+        }
+
+        return res;
+    }
+
     public int largestVariance(String s) {
-        
-        int [] freq = new int[26];
-        for(int i = 0 ; i < s.length() ; i++)
-            freq[(int)(s.charAt(i) - 'a')]++;
-        
-        int maxVariance = 0;
-        for(int a = 0 ; a < 26 ; a++){
-            for(int b = 0 ; b < 26 ; b++){
-                int remainingA = freq[a];
-                int remainingB = freq[b];
-                if(a == b || remainingA == 0 || remainingB == 0) continue;
-                
-				// run kadanes on each possible character pairs (A & B)
-                int currBFreq = 0, currAFreq = 0;
-                for(int i = 0 ; i < s.length() ; i++){
-                    int c =  (int)(s.charAt(i) - 'a');
-                    
-                    if(c == b) currBFreq++;
-                    if(c == a) {
-                        currAFreq++;
-                        remainingA--;
-                    }
-                    
-                    if(currAFreq > 0)
-                        maxVariance = Math.max(maxVariance, currBFreq - currAFreq);
-                    
-                    if(currBFreq < currAFreq &&  remainingA >= 1){
-                        currBFreq = 0;
-                        currAFreq = 0;
-                    }
-                }
+        int res=0;
+        int[] freq=new int[26];
+
+        for (char ch: s.toCharArray())
+            freq[ch-'a']++;
+
+        for (int i=0;i<26;i++)
+        {
+            char ch1=(char)(97+i);
+            for (int j=0;j<26;j++)
+            {
+                char ch2=(char)(97+j);
+                if (ch1==ch2 || freq[i]==0 || freq[j]==0)
+                    continue;
+
+                res=helper(s,res,ch1,ch2);
+                StringBuilder sb=new StringBuilder(s);
+                sb.reverse();
+                res=helper(sb.toString(),res,ch1,ch2);
             }
         }
-        
-        return maxVariance;
+
+        return res;
     }
 }
