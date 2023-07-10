@@ -4,14 +4,14 @@ class Solution {
         for (int val: nums)
             set.add(val);
         
-        for (int i=0;i<moveFrom.length;i++)
+        for (int i=0;i<moveFrom.length;i++) //O(n)
         {
-            set.remove(new Integer(moveFrom[i]));
-            set.add(moveTo[i]);
+            set.remove(new Integer(moveFrom[i])); //O(1)
+            set.add(moveTo[i]); //O(1)
         }
 
         List<Integer> res=new ArrayList<Integer>(set);
-        Collections.sort(res);
+        Collections.sort(res); //O(nlogn);
         return res;
     }
 }
