@@ -1,6 +1,6 @@
 class Solution {
     public List<Integer> relocateMarbles(int[] nums, int[] moveFrom, int[] moveTo) {
-        SortedSet<Integer> set=new TreeSet<>();
+        Set<Integer> set=new HashSet<>();
         for (int val: nums)
             set.add(val);
         
@@ -10,6 +10,8 @@ class Solution {
             set.add(moveTo[i]);
         }
 
-        return new ArrayList<Integer>(set);
+        List<Integer> res=new ArrayList<Integer>(set);
+        Collections.sort(res);
+        return res;
     }
 }
