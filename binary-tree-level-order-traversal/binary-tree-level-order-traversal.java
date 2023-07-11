@@ -22,12 +22,12 @@ class Solution {
             return res;
 
         q.add(root);
-        q.add(null);
 
         while (!q.isEmpty())
         {
             List<Integer> curr=new ArrayList<>();
-            while (q.peek()!=null)
+            int qlen=q.size();
+            while (qlen-- > 0)
             {
                 TreeNode t=q.poll();
                 curr.add(t.val);
@@ -37,10 +37,6 @@ class Solution {
                     q.add(t.right);
             }
             res.add(curr);
-            q.poll();
-            if (q.isEmpty())
-                break;
-            q.add(null);
         }
 
         return res;
