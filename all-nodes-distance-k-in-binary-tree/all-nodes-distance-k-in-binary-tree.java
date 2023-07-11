@@ -12,7 +12,6 @@ class Solution {
     {
         Queue<TreeNode> q=new LinkedList<>();
         q.add(root);
-        map.put(root,null);
         while (!q.isEmpty())
         {
             TreeNode curr=q.poll();
@@ -58,7 +57,7 @@ class Solution {
                     q.add(curr.right);
                     visited.add(curr.right);
                 }
-                if (map.get(curr)!=null && !visited.contains(map.get(curr)))
+                if (map.containsKey(curr) && !visited.contains(map.get(curr)))
                 {
                     q.add(map.get(curr));
                     visited.add(map.get(curr));
