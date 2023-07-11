@@ -24,7 +24,7 @@ class Solution {
         q.add(root);
         q.add(null);
 
-        while (!q.isEmpty())
+        while (true)
         {
             List<Integer> curr=new ArrayList<>();
             while (q.peek()!=null)
