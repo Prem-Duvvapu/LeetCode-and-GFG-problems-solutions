@@ -2,7 +2,6 @@ class Solution {
     public void sortColors(int[] nums) {
         int zeroCnt=0;
         int oneCnt=0;
-        int twoCnt=0;
 
         for (int val: nums)
         {
@@ -10,8 +9,6 @@ class Solution {
                 zeroCnt++;
             else if (val==1)
                 oneCnt++;
-            else
-                twoCnt++;
         }
 
         int i=0;
@@ -21,7 +18,7 @@ class Solution {
         while (oneCnt-- > 0)
             nums[i++]=1;
 
-        while (twoCnt-- > 0)
+        while (i<nums.length)
             nums[i++]=2;
     }
 }
