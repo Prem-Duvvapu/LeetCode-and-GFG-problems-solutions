@@ -25,18 +25,18 @@ class Solution {
 
         while (!q.isEmpty())
         {
-            List<Integer> curr=new ArrayList<>();
+            List<Integer> currLevel=new ArrayList<>();
             int qlen=q.size();
             while (qlen-- > 0)
             {
                 TreeNode t=q.poll();
-                curr.add(t.val);
+                currLevel.add(t.val);
                 if (t.left!=null)
                     q.add(t.left);
                 if (t.right!=null)
                     q.add(t.right);
             }
-            res.add(curr);
+            res.add(currLevel);
         }
 
         return res;
