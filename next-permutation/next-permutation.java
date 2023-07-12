@@ -12,10 +12,11 @@ class Solution {
         }
 
         int j=nums.length-1;
-        if (i!=-1)
+        while (j>=0 && i!=-1)
         {
-            while (nums[i]>=nums[j])
-                j--;
+            if (nums[j]>nums[i])
+                break;
+            j--;
         }
 
         if (i>=0 && j>=0)
