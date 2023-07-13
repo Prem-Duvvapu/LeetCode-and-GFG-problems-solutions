@@ -48,8 +48,8 @@ class TwoStack
 class twoStacks
 {
     //Function to push an integer into the stack1.
-    Stack<Integer> s1=new Stack<>();
-    Stack<Integer> s2=new Stack<>();
+    ArrayDeque<Integer> s1=new ArrayDeque<>();
+    ArrayDeque<Integer> s2=new ArrayDeque<>();
     
     void push1(int x)
     {
