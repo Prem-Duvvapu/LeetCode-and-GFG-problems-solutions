@@ -6,7 +6,7 @@ class Solution {
         int n=nums.length;
         int[] res=new int[n];
         Arrays.fill(res,-1);
-        Stack<Integer> mStack=new Stack<>();
+        ArrayDeque<Integer> mStack=new ArrayDeque<>();
 
         for (int i=0;i<2*n;i++)
         {
