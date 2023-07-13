@@ -48,9 +48,9 @@ class TwoStack
 class twoStacks
 {
     //Function to push an integer into the stack1.
-    int[] a=new int[200];
+    int[] a=new int[100];
     int i=-1;
-    int j=200;
+    int j=100;
     
     void push1(int x)
     {
@@ -73,7 +73,7 @@ class twoStacks
     //Function to remove an element from top of the stack2.
     int pop2()
     {
-        if (j==200)
+        if (j==100)
             return -1;
         return a[j++];
     }
