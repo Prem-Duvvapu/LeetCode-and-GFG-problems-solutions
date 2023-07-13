@@ -1,18 +1,19 @@
-//Decreasing monotonic Stack - elements in the stack are in decreasing order from bottom to top
+//Decreasing monotonic Stack - all the elements in the stack are in decreasing order from bottom to top
+
 class Solution {
     public int[] dailyTemperatures(int[] temperatures) {
         int n=temperatures.length;
         int[] res=new int[n];
-        Deque<Integer> s=new ArrayDeque<>();
+        Stack<Integer> stack=new Stack<>();
 
         for (int currIndex=0;currIndex<n;currIndex++)
         {
-            while (!s.isEmpty() && temperatures[currIndex]>temperatures[s.peek()])
+            while (!stack.isEmpty() && temperatures[currIndex]>temperatures[stack.peek()])
             {
-                int index=s.pop();
-                res[index]=(currIndex-index);
+                int pastIndex=stack.pop();
+                res[pastIndex]=(currIndex-pastIndex);
             }
-            s.push(currIndex);
+            stack.push(currIndex);
         }
 
         return res;
