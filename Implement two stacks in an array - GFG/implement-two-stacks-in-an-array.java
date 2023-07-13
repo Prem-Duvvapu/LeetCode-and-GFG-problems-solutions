@@ -48,31 +48,34 @@ class TwoStack
 class twoStacks
 {
     //Function to push an integer into the stack1.
-    ArrayDeque<Integer> s1=new ArrayDeque<>();
-    ArrayDeque<Integer> s2=new ArrayDeque<>();
+    int[] a=new int[200];
+    int i=-1;
+    int j=200;
     
     void push1(int x)
     {
-        s1.push(x);
+        i++;
+        a[i]=x;
     }
     //Function to push an integer into the stack2.
     void push2(int x)
     {
-       s2.push(x);
+       j--;
+       a[j]=x;
     }
     //Function to remove an element from top of the stack1.
     int pop1()
     {
-        if (s1.isEmpty())
+        if (i==-1)
             return -1;
-        return s1.pop();
+        return a[i--];
     }
     //Function to remove an element from top of the stack2.
     int pop2()
     {
-        if (s2.isEmpty())
+        if (j==200)
             return -1;
-        return s2.pop();
+        return a[j++];
     }
 }
 
