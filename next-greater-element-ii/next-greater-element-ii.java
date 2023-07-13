@@ -1,38 +1,21 @@
 class Solution {
     public int[] nextGreaterElements(int[] nums) {
-        int n=nums.length;
-        int[] res=new int[n];
-        Arrays.fill(res,1000000001);
-        Stack<Integer> mStack=new Stack<>();
-
-        for (int i=0;i<n;i++)
-        {
-            while (!mStack.isEmpty() && nums[i]>nums[mStack.peek()])
-            {
-                int index=mStack.pop();
-                res[index]=nums[i];
+        int n = nums.length; // get the length of the array nums
+        int[] res = new int[n]; // create an array of size n to store the result
+        Arrays.fill(res, -1); // fill the result array with -1 initially
+        Deque<Integer> stack = new ArrayDeque<>(); // create a stack using ArrayDeque since its efficient
+        
+        // loop through the array twice, because we need to compare each element with every other element
+        for (int i = 0; i < 2 * n; i++) {
+            int num = nums[i % n]; // get the current element by taking modulus with n
+            while (!stack.isEmpty() && nums[stack.peek()] < num) {
+                // while stack is not empty and top element of stack is less than current element
+                res[stack.pop()] = num; // update result array with current element for top element of stack
             }
-            mStack.push(i);
-        }
-
-        for (int i=0;i<n;i++)
-        {
-            if (res[i]==1000000001)
-            {
-                int j=0;
-                for (;j<i;j++)
-                {
-                    if (nums[j]>nums[i])
-                    {
-                        res[i]=nums[j];
-                        break;
-                    }
-                }
-                if (j==i)
-                    res[i]=-1;
+            if (i < n) {
+                stack.push(i); // push the current index onto the stack if i < n
             }
         }
-
-        return res;
+        return res; // return the result array
     }
 }
