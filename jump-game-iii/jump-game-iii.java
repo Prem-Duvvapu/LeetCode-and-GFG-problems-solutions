@@ -1,58 +1,22 @@
-//bfs
-
-class Edge
-{
-    int src;
-    int dest;
-    public Edge(int s,int d)
-    {
-        src=s;
-        dest=d;
-    }
-}
-
 class Solution {
-    private boolean dfs(ArrayList<Edge>[] graph,Set<Integer> set,int curr,boolean[] visited)
+    private boolean helper(int[] arr,int curr,boolean[] visited)
     {
-        visited[curr]=true;
-        if (set.contains(curr))
+        if (curr<0 || curr>=arr.length || visited[curr])
+            return false;
+
+        if (arr[curr]==0)
             return true;
 
-        for (int i=0;i<graph[curr].size();i++)
-        {
-            Edge e=graph[curr].get(i);
+        visited[curr]=true;
 
-            if (!visited[e.dest])
-                if (dfs(graph,set,e.dest,visited))
-                    return true;
-        }
+        boolean left=helper(arr,curr-arr[curr],visited);
+        boolean right=helper(arr,curr+arr[curr],visited);
 
-        return false;
+        return (left || right);
     }
 
     public boolean canReach(int[] arr, int start) {
-        Set<Integer> set=new HashSet<>();
-        int n=arr.length;
-
-        for (int i=0;i<n;i++)
-            if (arr[i]==0)
-                set.add(i);
-
-        ArrayList<Edge>[] graph=new ArrayList[n];
-
-        for (int i=0;i<n;i++)
-            graph[i]=new ArrayList<>();
-
-        for (int i=0;i<n;i++)
-        {
-            if (arr[i]!=0 && i+arr[i]<n)
-                graph[i].add(new Edge(i,i+arr[i]));
-
-            if (arr[i]!=0 && i-arr[i]>=0)
-                graph[i].add(new Edge(i,i-arr[i]));
-        }
-        
-        boolean[] visited=new boolean[n];
-        return dfs(graph,set,start,visited);
+        boolean[] visited=new boolean[arr.length];
+        return helper(arr,start,visited);
     }
 }
