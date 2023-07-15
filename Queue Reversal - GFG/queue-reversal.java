@@ -53,9 +53,11 @@ class GfG{
     //Function to reverse the queue.
     public Queue<Integer> rev(Queue<Integer> q){
         //add code here.
-        Deque<Integer> res=new ArrayDeque<>();
+        LinkedList<Integer> res=new LinkedList<>();
+    
         for (int val: q)
-            res.offerFirst(val);
+            res.addFirst(val);
+            
         return res;
     }
 }
