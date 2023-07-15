@@ -14,16 +14,16 @@ class Solution {
 
                 int val=(ch-'0'); //char to integer
 
-                if (rowCheck[i+1][val]) //checking if value already exists in that row
+                if (rowCheck[i+1][val]) //checking if value already exists in the row
                     return false;
                 rowCheck[i+1][val]=true; //now note that the value exists in the row
 
-                if (colCheck[j+1][val]) //checking if value already exists in that column
+                if (colCheck[j+1][val]) //checking if value already exists in the column
                     return false;
                 colCheck[j+1][val]=true; //now note that the value exists in the column
 
-                int n=i/3*3+j/3+1;    
-                if (subBoxCheck[n][val]) //checking if value already exists in that subBox
+                int n=i/3+j/3*3+1;    
+                if (subBoxCheck[n][val]) //checking if value already exists in the subBox
                     return false;
                 subBoxCheck[n][val]=true; //now note that the value exists in the subBox
             }
