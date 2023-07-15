@@ -54,8 +54,8 @@ class GfG{
     public Queue<Integer> rev(Queue<Integer> q){
         //add code here.
         Deque<Integer> res=new ArrayDeque<>();
-        while (!q.isEmpty())
-            res.offerFirst(q.poll());
+        for (int val: q)
+            res.offerFirst(val);
         return res;
     }
 }
