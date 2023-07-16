@@ -14,21 +14,17 @@ class Solution {
                     cnt--;
         }
         
-        int dcnt=0;
+        int dCnt=0;
         for (int val: nums)
                 if (val==dominant)
-                        dcnt++;
+                        dCnt++;
         
         int preCnt=0;
-        int sufCnt=dcnt;
         for (int i=0;i<n;i++)
         {
             if (nums.get(i)==dominant)
-            {
                 preCnt++;
-                sufCnt--;
-            }
-            if (preCnt*2>(i+1) && sufCnt*2>(n-1-i))
+            if (preCnt*2>(i+1) && (dCnt-preCnt)*2>(n-1-i))
                     return i;
         }
         return -1;
