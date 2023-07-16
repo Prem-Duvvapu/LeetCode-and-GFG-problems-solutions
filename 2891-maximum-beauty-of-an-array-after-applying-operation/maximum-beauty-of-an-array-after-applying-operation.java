@@ -7,12 +7,14 @@ class Solution {
 
         for (int right=0;right<n;right++)
         {
-            if (nums[right]-nums[left]>2*k)
-                left++;
-            else
+            if (nums[right]-nums[left]<=2*k)
                 res=Math.max(right-left+1,res);
+            else
+                left++;
         }
 
         return res;
     }
 }
+
+//(nums[i]+k)-(nums[i]-k)=2*k
