@@ -15,7 +15,7 @@ class Solution {
         if (k==0)
             return 1;
 
-        String s=Integer.toString(row)+"prem"+Integer.toString(col)+"duvvapu"+Integer.toString(k);
+        String s=Integer.toString(row)+"-"+Integer.toString(col)+"-"+Integer.toString(k);
         if (map.containsKey(s))
             return map.get(s);
 
