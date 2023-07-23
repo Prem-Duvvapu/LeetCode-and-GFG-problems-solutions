@@ -16,9 +16,8 @@ class Solution {
         while (top<bottom)
         {
             for (int i=0;i<n;i++)
-            {
                 swap(matrix,top,i,bottom,i);
-            }
+            
             top++;
             bottom--;
         }
