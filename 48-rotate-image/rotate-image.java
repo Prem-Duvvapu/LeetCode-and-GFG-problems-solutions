@@ -3,11 +3,10 @@ class Solution {
         int n=matrix.length;
         for (int i=0;i<n;i++)
         {
-            int k=n-i-1;
             for (int j=0;j<n-i-1;j++)
             {
+                int k=n-i-j-1;
                 swap(matrix,i,j,i+k,j+k);
-                k--;
             }
         }
 
