@@ -13,34 +13,35 @@
  *     }
  * }
  */
-
 class Solution {
-    static Map<Integer, List<TreeNode>> saved = new HashMap<>();
-    
     public List<TreeNode> allPossibleFBT(int n) {
+        List<TreeNode> res=new ArrayList<>();
+
         if (n%2==0)
-            return new ArrayList<>();
+            return res;
 
-        if (!saved.containsKey(n)) {
-            List<TreeNode> list = new ArrayList<>();
-            
-            if (n==1)
-                list.add(new TreeNode(0));
-            else {
-                for (int i=1; i<=n-1; i+=2) {
-                    List<TreeNode> lTrees = allPossibleFBT(i);
-                    List<TreeNode> rTrees = allPossibleFBT(n-i-1);
+        if (n==1)
+        {
+            res.add(new TreeNode(0));
+            return res;
+        }
 
-                    for (TreeNode lt: lTrees) {
-                        for (TreeNode rt: rTrees) {
-                            list.add(new TreeNode(0, lt, rt));
-                        }
-                    }
+        for (int i=1;i<n;i+=2)
+        {
+            List<TreeNode> lft=allPossibleFBT(i);
+            List<TreeNode> rght=allPossibleFBT(n-i-1);
+            for (int j=0;j<lft.size();j++)
+            {
+                for (int k=0;k<rght.size();k++)
+                {
+                    TreeNode curr=new TreeNode(0);
+                    curr.left=lft.get(j);
+                    curr.right=rght.get(k);
+                    res.add(curr);
                 }
             }
-
-            saved.put(n, list);
         }
-        return saved.get(n);
+
+        return res;
     }
 }
