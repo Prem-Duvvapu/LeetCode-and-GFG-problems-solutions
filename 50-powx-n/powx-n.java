@@ -1,7 +1,7 @@
 class Solution {
     public double myPow(double x, int n) {
-        if (x==1 || n==0)
-            return 1.0;
+        if (x==1.0 || n==0)
+            return 1;
 
         if (n<0)
         {
@@ -9,27 +9,16 @@ class Solution {
             x=1/x;
         }
 
-        double result=1.0;
+        double res=1.0;
         while (n!=0)
         {
-            if ((n & 1)==1)//if n is odd i.e. if (n%2)==1
-                result*=x;
+            if (n%2==1)
+                res=res*x;
 
-            x*=x;
-            n>>>=1;// performs the operation n=n/2
+            x=x*x;
+            n=n>>>1;
         }
 
-        /*
-        
->> Binary Right Shift
-The left operand value is moved right by the number of bits specified by the right operand.
-
->>> Shift right zero fill
-The left operand value is moved right by the number of bits specified by the right operand and shifted values are filled up with zeros.
-
-        */
-
-        return result;
-        
+        return res;
     }
 }
