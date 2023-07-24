@@ -23,17 +23,15 @@ class Solution {
         while (!q.isEmpty())
         {
             int size=q.size();
-            int RightView=0;
+            res.add(q.peek().val);
             while (size-- > 0)
             {
                 TreeNode curr=q.poll();
-                RightView=curr.val;
-                if (curr.left!=null)
-                    q.add(curr.left);
                 if (curr.right!=null)
                     q.add(curr.right);
+                if (curr.left!=null)
+                    q.add(curr.left);
             }
-            res.add(RightView);
         }
         return res;
     }
