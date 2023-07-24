@@ -137,7 +137,7 @@ class Solution{
             return res;
         
         Node root=node;
-        Deque<Node> q=new ArrayDeque<>();
+        Queue<Node> q=new LinkedList<>();
         q.add(root);
         
         while (!q.isEmpty())
