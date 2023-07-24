@@ -142,16 +142,16 @@ class Solution{
         
         while (!q.isEmpty())
         {
-            Node rightView=q.peekLast();
+            Node rightView=q.peek();
             res.add(rightView.data);
             int size=q.size();
             while (size-- > 0)
             {
                 Node curr=q.poll();
-                if (curr.left!=null)
-                    q.add(curr.left);
                 if (curr.right!=null)
                     q.add(curr.right);
+                if (curr.left!=null)
+                    q.add(curr.left);
             }
         }
         
