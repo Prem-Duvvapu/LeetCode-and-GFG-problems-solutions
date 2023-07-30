@@ -68,18 +68,20 @@ class Solution {
 
         StringBuilder res=new StringBuilder();
         TrieNode curr=t.root;
-      while (true) {
-        if (curr.children.size() != 1)
-            break;
-        char key = ' ';
-        for (Map.Entry<Character, TrieNode> entry : curr.children.entrySet()) {
-            key = entry.getKey();
-            curr = entry.getValue();
+        while (true) 
+        {
+            if (curr.children.size()!=1)
+                break;
+
+            for (Map.Entry<Character,TrieNode> m: curr.children.entrySet())
+            {
+                res.append(m.getKey());
+                curr=m.getValue();
+            }
+
+            if (curr.endOfWord)
+                break;
         }
-        res.append(key);
-        if (curr.endOfWord)
-            break;
-    }
         return res.toString();
     }
 }
