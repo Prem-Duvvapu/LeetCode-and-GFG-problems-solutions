@@ -60,14 +60,14 @@ class Solution {
     public String longestCommonPrefix(String[] strs) {
         Trie t=new Trie();
         for (String word: strs)
-        {
-            if (word.equals(""))
-                return "";
             t.insert(word);
-        }
 
         StringBuilder res=new StringBuilder();
         TrieNode curr=t.root;
+        
+        if (curr.endOfWord)
+            return "";
+        
         while (true) 
         {
             if (curr.children.size()!=1)
@@ -82,6 +82,7 @@ class Solution {
             if (curr.endOfWord)
                 break;
         }
+
         return res.toString();
     }
 }
