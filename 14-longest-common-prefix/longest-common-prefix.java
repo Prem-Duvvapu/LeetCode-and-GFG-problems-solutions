@@ -30,30 +30,6 @@ class Trie
         }
         curr.endOfWord=true;
     }
-
-    public boolean search(String word)
-    {
-        TrieNode curr=root;
-        for (char ch: word.toCharArray())
-        {
-            if (!curr.children.containsKey(ch))
-                return false;
-            curr=curr.children.get(ch);
-        }
-        return curr.endOfWord;
-    }
-
-    public boolean startsWith(String prefix)
-    {
-        TrieNode curr=root;
-        for (char ch: prefix.toCharArray())
-        {
-            if (!curr.children.containsKey(ch))
-                return false;
-            curr=curr.children.get(ch);
-        }
-        return true;
-    }
 }
 
 class Solution {
