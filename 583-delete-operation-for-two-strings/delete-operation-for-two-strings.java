@@ -5,14 +5,11 @@ class Solution {
 
     public int solve(int i,int j)
     {
-        if (i==s1.length() && j==s2.length())
-            return 0;
-
         if (i==s1.length())
-            return 1+solve(i,j+1);
+            return s2.length()-j;
 
         if (j==s2.length())
-            return 1+solve(i+1,j);
+            return s1.length()-i;
 
         if (dp[i][j]!=-1)
             return dp[i][j];
