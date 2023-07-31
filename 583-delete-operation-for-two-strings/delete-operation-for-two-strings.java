@@ -15,7 +15,7 @@ class Solution {
             return dp[i][j];
 
         if (s1.charAt(i)==s2.charAt(j))
-            return solve(i+1,j+1);
+            return dp[i][j]=solve(i+1,j+1);
 
         int delete_char_i=1+solve(i+1,j);
         int delete_char_j=1+solve(i,j+1);
