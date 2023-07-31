@@ -8,13 +8,13 @@ class Solution {
             return 0;
 
         if (i==s1.length())
-            return (int)s2.charAt(j)+solve(s1,s2,i,j+1,dp);
+            return dp[i][j]=(int)s2.charAt(j)+solve(s1,s2,i,j+1,dp);
 
         if (j==s2.length())
-            return (int)s1.charAt(i)+solve(s1,s2,i+1,j,dp);
+            return dp[i][j]=(int)s1.charAt(i)+solve(s1,s2,i+1,j,dp);
 
         if (s1.charAt(i)==s2.charAt(j))
-            return solve(s1,s2,i+1,j+1,dp);
+            return dp[i][j]=solve(s1,s2,i+1,j+1,dp);
 
         int delete_char_i=(int)s1.charAt(i)+solve(s1,s2,i+1,j,dp);
         int delete_char_j=(int)s2.charAt(j)+solve(s1,s2,i,j+1,dp);
