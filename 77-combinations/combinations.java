@@ -1,7 +1,7 @@
 class Solution {
     public void solve(int n,int k,int j,List<List<Integer>> res,List<Integer> curr)
     {
-        if (curr.size()==k)
+        if (k==0)
         {
             res.add(new ArrayList<>(curr));
             return;
@@ -10,7 +10,7 @@ class Solution {
         for (int i=j;i<=n;i++)
         {
             curr.add(i);
-            solve(n,k,i+1,res,curr);
+            solve(n,k-1,i+1,res,curr);
             curr.remove(curr.size()-1);
         }
     }
