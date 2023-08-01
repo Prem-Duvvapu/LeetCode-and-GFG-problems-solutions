@@ -1,5 +1,5 @@
 class Solution {
-    public void solve(int[] nums,List<List<Integer>> res,List<Integer> curr,Set<Integer> set)
+    public void solve(int[] nums,List<List<Integer>> res,List<Integer> curr,boolean[] visited)
     {
         if (curr.size()==nums.length)
         {
@@ -10,19 +10,19 @@ class Solution {
 
         for (int i=0;i<nums.length;i++)
         {
-            if (set.contains(i))
+            if (visited[i])
                 continue;
             curr.add(nums[i]);
-            set.add(i);
-            solve(nums,res,curr,set);
+            visited[i]=true;
+            solve(nums,res,curr,visited);
             curr.remove(curr.size()-1);
-            set.remove(i);
+            visited[i]=false;
         }
     }
 
     public List<List<Integer>> permute(int[] nums) {
         List<List<Integer>> res=new ArrayList<>();
-        solve(nums,res,new ArrayList<>(),new HashSet<>());
+        solve(nums,res,new ArrayList<>(),new boolean[nums.length]);
         return res;
     }
 }
