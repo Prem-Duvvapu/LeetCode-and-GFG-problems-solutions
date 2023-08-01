@@ -1,5 +1,5 @@
 class Solution {
-    public void solve(int n,int k,int j,List<List<Integer>> res,List<Integer> curr)
+    public void solve(int n,int k,int pos,List<List<Integer>> res,List<Integer> curr)
     {
         if (k==0)
         {
@@ -7,7 +7,7 @@ class Solution {
             return;
         }
 
-        for (int i=j;i<=n;i++)
+        for (int i=pos;i<=n;i++)
         {
             curr.add(i);
             solve(n,k-1,i+1,res,curr);
