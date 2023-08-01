@@ -1,6 +1,4 @@
 class Solution {
-    int[] a;
-
     public void solve(int n,int k,int j,List<List<Integer>> res,List<Integer> curr)
     {
         if (curr.size()==k)
@@ -19,9 +17,6 @@ class Solution {
 
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> res=new ArrayList<>();
-        a=new int[n];
-        for (int i=0;i<n;i++)
-            a[i]=i+1;
         solve(n,k,1,res,new ArrayList<>());
         return res;
     }
