@@ -40,12 +40,7 @@ class Solution {
             return true;
             
         if (pos==arr.length)
-        {
-            if (sum==k)
-                return true;
-            else
-                return false;
-        }
+            return false;
         
         //pick
         sum+=arr[pos];
