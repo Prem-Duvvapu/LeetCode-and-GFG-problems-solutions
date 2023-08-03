@@ -36,8 +36,8 @@ class Solution {
         if (sum>k)
             return false;
          
-        if (sum==k)  
-            return true;
+        // if (sum==k)  
+        //     return true;
             
         if (pos==arr.length)
         {
