@@ -4,9 +4,11 @@ class Solution {
     public int uniquePaths(int m, int n) {
         int[][] paths=new int[m][n];
 
+        //first row
         for (int i=0;i<n;i++)
             paths[0][i]=1;
 
+        //first column
         for (int i=0;i<m;i++)
             paths[i][0]=1;
 
