@@ -42,16 +42,18 @@ class Solution
         for (char ch: x.toCharArray())
         {
             if (ch=='{' || ch=='[' || ch=='(')
-                s.push(ch);
-            else if (s.isEmpty())
-                return false;
-            else
             {
-                if ((ch=='}' && s.peek()!='{') || (ch==']' && s.peek()!='[') || (ch==')' && s.peek()!='('))
-                    return false;
-                
-                s.pop();
+                s.push(ch);
+                continue;
             }
+                
+            if (s.isEmpty())
+                return false;
+                
+            if ((ch=='}' && s.peek()!='{') || (ch==']' && s.peek()!='[') || (ch==')' && s.peek()!='('))
+                return false;
+                
+            s.pop();
             // System.out.println(s);
         }
         
