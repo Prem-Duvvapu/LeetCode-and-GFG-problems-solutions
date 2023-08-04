@@ -44,26 +44,20 @@ class GFG
 //User function Template for Java
 
 class Solution
-{
-    static void solve(Stack<Integer> s,Stack<Integer> s2)
+{ 
+    static void solve(Queue<Integer> q,Stack<Integer> s)
     {
-        int val=s.pop();
-        s2.push(val);
-        // System.out.println("fromFirst"+" "+s+" "+s2);
-        
         if (s.isEmpty())
             return;
             
-        solve(s,s2);
-        // System.out.println("fromLast"+" "+s+" "+s2);
+        q.add(s.pop());
+        solve(q,s);
+        s.push(q.poll());
     }
     
     static void reverse(Stack<Integer> s)
     {
-        Stack<Integer> s2=new Stack<>();
-        Stack<Integer> s3=new Stack<>();
-        solve(s,s2);
-        solve(s2,s3);
-        solve(s3,s);
+        Queue<Integer> q=new LinkedList<>();
+        solve(q,s);
     }
 }
