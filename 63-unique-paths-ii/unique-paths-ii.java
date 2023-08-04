@@ -4,7 +4,7 @@ class Solution {
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m=obstacleGrid.length;
         int n=obstacleGrid[0].length;
-        int[][] paths=new int[m][n];
+        int[][] unqPaths=new int[m][n];
 
         //first row
         for (int i=0;i<n;i++)
@@ -12,7 +12,7 @@ class Solution {
             if (obstacleGrid[0][i]==1)
                 break;
             
-            paths[0][i]=1;
+            unqPaths[0][i]=1;
         }
 
         //first column
@@ -21,20 +21,14 @@ class Solution {
             if (obstacleGrid[i][0]==1)
                 break;
 
-            paths[i][0]=1;
+            unqPaths[i][0]=1;
         }
 
         for (int i=1;i<m;i++)
-        {
             for (int j=1;j<n;j++)
-            {
-                if (obstacleGrid[i][j]==1)
-                    continue;
+                if (obstacleGrid[i][j]!=1)
+                    unqPaths[i][j]=unqPaths[i][j-1]+unqPaths[i-1][j];
 
-                paths[i][j]=paths[i][j-1]+paths[i-1][j];
-            }
-        }
-
-        return paths[m-1][n-1];
+        return unqPaths[m-1][n-1];
     }
 }
