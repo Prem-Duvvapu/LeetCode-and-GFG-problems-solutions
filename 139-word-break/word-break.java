@@ -1,11 +1,11 @@
 class TrieNode
 {
-    Map<Character,TrieNode> children;
+    TrieNode[] children;
     boolean endOfWord;
 
     TrieNode()
     {
-        children=new HashMap<>();
+        children=new TrieNode[26];
         endOfWord=false;
     }
 }
@@ -24,10 +24,10 @@ class Trie
         TrieNode curr=root;
         for (char ch: word.toCharArray())
         {
-            if (!curr.children.containsKey(ch))
-                curr.children.put(ch,new TrieNode());
+            if (curr.children[ch-'a']==null)
+                curr.children[ch-'a']=new TrieNode();
             
-            curr=curr.children.get(ch);
+            curr=curr.children[ch-'a'];
         }
         curr.endOfWord=true;
     }
@@ -37,10 +37,11 @@ class Trie
         TrieNode curr=root;
         for (char ch: word.toCharArray())
         {
-            if (!curr.children.containsKey(ch))
+            if (curr.children[ch-'a']==null)
                 return false;
 
-            curr=curr.children.get(ch);
+            curr=curr.children[ch-'a'];
+            
         }
         return curr.endOfWord;
     }
