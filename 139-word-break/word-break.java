@@ -49,10 +49,7 @@ class Trie
 class Solution {
     private boolean solve(int pos,String s,Trie t,int[] dp)
     {
-        if (pos==s.length())
-            return true;
-
-        if (dp[pos]==1)
+        if (pos==s.length() || dp[pos]==1)
             return true;
         
         if (dp[pos]==0)
