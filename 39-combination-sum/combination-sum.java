@@ -1,12 +1,14 @@
 class Solution {
     private void combinations(int pos,int target,List<Integer> curr,int[] candidates,List<List<Integer>> res)
     {
-        if (pos==candidates.length)
+        if (target==0)
         {
-            if (target==0)
-                res.add(new ArrayList<>(curr));
+            res.add(new ArrayList<>(curr));
             return;
         }
+        
+        if (pos==candidates.length)
+            return;
 
         if (candidates[pos]<=target)
         {
