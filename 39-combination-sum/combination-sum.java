@@ -6,20 +6,17 @@ class Solution {
             res.add(new ArrayList<>(curr));
             return;
         }
-        
-        if (pos==candidates.length)
+
+        if (target<0 || pos==candidates.length)
             return;
 
-        if (candidates[pos]<=target)
-        {
-            //pick
-            System.out.println(new ArrayList<>(curr)+" "+target);
-            curr.add(candidates[pos]);
-            target-=candidates[pos];
-            combinations(pos,target,curr,candidates,res);
-            curr.remove(curr.size()-1);
-            target+=candidates[pos];
-        }
+        //pick
+        System.out.println(new ArrayList<>(curr)+" "+target);
+        curr.add(candidates[pos]);
+        target-=candidates[pos];
+        combinations(pos,target,curr,candidates,res);
+        curr.remove(curr.size()-1);
+        target+=candidates[pos];
 
         //not pick
         combinations(pos+1,target,curr,candidates,res);
