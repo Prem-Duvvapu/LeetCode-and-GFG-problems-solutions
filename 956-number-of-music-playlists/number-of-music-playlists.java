@@ -1,6 +1,6 @@
 class Solution {
     int N,GOAL,K;
-    int mod=1_000_000_007;
+    int mod=1000000007;
     long[][] dp=new long[101][101];
 
     public long solve(int count_song,int count_unique)
