@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    List<TreeNode>[] dp=new ArrayList[20];
+    List<TreeNode>[] dp=new ArrayList[21];
 
     public List<TreeNode> allPossibleFBT(int n) {
         List<TreeNode> res=new ArrayList<>();
