@@ -14,6 +14,8 @@
  * }
  */
 class Solution {
+    List<TreeNode>[] dp=new ArrayList[20];
+
     public List<TreeNode> allPossibleFBT(int n) {
         List<TreeNode> res=new ArrayList<>();
 
@@ -25,6 +27,9 @@ class Solution {
             res.add(new TreeNode(0));
             return res;
         }
+
+        if (dp[n]!=null)
+            return dp[n];
 
         for (int i=1;i<n;i+=2)
         {
@@ -42,6 +47,6 @@ class Solution {
             }
         }
 
-        return res;
+        return dp[n]=res;
     }
 }
