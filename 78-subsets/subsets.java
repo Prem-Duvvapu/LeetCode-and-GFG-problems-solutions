@@ -7,13 +7,13 @@ class Solution {
             return;
         }
 
+        //not pick
+        solve(index+1,currList,nums,res);
+
         //pick
         currList.add(nums[index]);
         solve(index+1,currList,nums,res);
         currList.remove(currList.size()-1);
-
-        //not pick
-        solve(index+1,currList,nums,res);
     }
 
     public List<List<Integer>> subsets(int[] nums) {
