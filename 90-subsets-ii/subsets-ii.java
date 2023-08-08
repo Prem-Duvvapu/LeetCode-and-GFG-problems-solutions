@@ -8,8 +8,8 @@ class Solution {
 
             //pick
             currList.add(nums[i]);
-            res.add(new ArrayList<>(currList));
             solve(i+1,currList,nums,res);
+            res.add(new ArrayList<>(currList));
             currList.remove(currList.size()-1);
         }
     }
