@@ -6,9 +6,11 @@ class Solution {
         while (left<=right)
         {
             int mid=left+(right-left)/2;
+
             //if target found at mid position
             if (nums[mid]==target)
                 return mid;
+
             //if left part is sorted
             else if (nums[left]<=nums[mid])
             {
@@ -18,6 +20,7 @@ class Solution {
                 else
                     left=mid+1;
             }
+            
             //if right part is sorted
             else
             {
