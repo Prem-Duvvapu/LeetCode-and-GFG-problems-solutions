@@ -7,13 +7,13 @@ class Solution {
             return;
         }
 
-        if (index==candidates.length || candidates[index]>target)
-            return;
-
         for (int i=index;i<candidates.length;i++)
         {
             if (i>index && candidates[i-1]==candidates[i])
                 continue;
+
+            if (candidates[i]>target)
+                break;
 
             currList.add(candidates[i]);
             combinations(i+1,target-candidates[i],currList,candidates,res);
