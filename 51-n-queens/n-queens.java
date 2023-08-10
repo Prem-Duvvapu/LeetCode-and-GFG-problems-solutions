@@ -50,7 +50,7 @@ class Solution {
         return true;
     }
 
-    private boolean solve(int pos,int n,char[][] curr,List<List<String>> res)
+    private void solve(int pos,int n,char[][] curr,List<List<String>> res)
     {
         if (pos==n)
         {
@@ -59,7 +59,7 @@ class Solution {
                 l.add(new String(arr));
             
             res.add(l);
-            return false;
+            return;
         }
 
         for (int j=pos;j<n;j++) //column
@@ -69,13 +69,12 @@ class Solution {
                 if (isValid(curr,i,j,n))
                 {
                     curr[i][j]='Q';
-                    if (!solve(j+1,n,curr,res))
-                        curr[i][j]='.';
+                    solve(j+1,n,curr,res);
+                    curr[i][j]='.';
                 }
             }
-            return false;
+            return;
         }
-        return true;
     }
 
     public List<List<String>> solveNQueens(int n) {
