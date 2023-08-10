@@ -15,12 +15,12 @@ class Solution {
 
         for (int row=0;row<n;row++)
         {
-            if (!rc[row] && !udc[row+col] && !ldc[n-1+col-row]) //is safe or not
+            if (!rc[row] && !ldc[row+col] && !udc[n-1+col-row]) //is safe or not
             {
                 //mark as present
                 rc[row]=true;
-                udc[row+col]=true;
-                ldc[n-1+col-row]=true;
+                ldc[row+col]=true;
+                udc[n-1+col-row]=true;
 
                 curr[row][col]='Q';
                 solve(col+1,n,curr,rc,udc,ldc,res);
@@ -28,8 +28,8 @@ class Solution {
                 //remove the mark
                 curr[row][col]='.';
                 rc[row]=false;
-                udc[row+col]=false;
-                ldc[n-1+col-row]=false;
+                ldc[row+col]=false;
+                udc[n-1+col-row]=false;
             }
         }
     }
