@@ -1,58 +1,44 @@
 class Solution {
     private boolean isValid(char[][] curr,int row,int col,int n)
     {
-        for (int i=0;i<n;i++)
+        //row check
+        int r=row;
+        int c=col;
+        while (c>=0)
         {
-            if (curr[row][i]=='Q')
+            if (curr[r][c]=='Q')
                 return false;
+            c--;
+        }
+        
+        //upper-left diagonal
+        r=row;
+        c=col;
+        while (r>=0 && c>=0)
+        {
+            if (curr[r][c]=='Q')
+                return false;
+            r--;
+            c--;
         }
 
-        int x=row;
-        int y=col;
-        while (x>=0 && y>=0)
+        //lower-left diagonal
+        r=row;
+        c=col;
+        while (r<n && c>=0)
         {
-            if (curr[x][y]=='Q')
+            if (curr[r][c]=='Q')
                 return false;
-            x--;
-            y--;
-        }
-
-        x=row;
-        y=col;
-        while (x<n && y<n)
-        {
-            if (curr[x][y]=='Q')
-                return false;
-            x++;
-            y++;
-        }
-
-        x=row;
-        y=col;
-        while (x>=0 && y<n)
-        {
-            if (curr[x][y]=='Q')
-                return false;
-            x--;
-            y++;
-        }
-
-        x=row;
-        y=col;
-        while (x<n && y>=0)
-        {
-            if (curr[x][y]=='Q')
-                return false;
-            x++;
-            y--;
+            r++;
+            c--;
         }
 
         return true;
     }
 
-    private void solve(int pos,int n,char[][] curr,List<List<String>> res)
+    private void solve(int col,int n,char[][] curr,List<List<String>> res)
     {
-        if (pos==n)
+        if (col==n)
         {
             List<String> l=new ArrayList<>();
             for (char[] arr: curr)
@@ -62,18 +48,14 @@ class Solution {
             return;
         }
 
-        for (int j=pos;j<n;j++) //column
+        for (int row=0;row<n;row++) //row
         {
-            for (int i=0;i<n;i++) //row
+            if (isValid(curr,row,col,n))
             {
-                if (isValid(curr,i,j,n))
-                {
-                    curr[i][j]='Q';
-                    solve(j+1,n,curr,res);
-                    curr[i][j]='.';
-                }
+                curr[row][col]='Q';
+                solve(col+1,n,curr,res);
+                curr[row][col]='.';
             }
-            return;
         }
     }
 
