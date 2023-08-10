@@ -13,7 +13,7 @@ class Solution {
             return;
         }
 
-        for (int row=0;row<n;row++) //row
+        for (int row=0;row<n;row++)
         {
             if (!rc[row] && !udc[row+col] && !ldc[n-1+col-row]) //is safe or not
             {
@@ -25,7 +25,7 @@ class Solution {
                 curr[row][col]='Q';
                 solve(col+1,n,curr,rc,udc,ldc,res);
 
-                //remove mark
+                //remove the mark
                 curr[row][col]='.';
                 rc[row]=false;
                 udc[row+col]=false;
