@@ -36,7 +36,7 @@ class Solution {
         return true;
     }
 
-    private void solve(int col,int n,char[][] curr,List<List<String>> res)
+    private void solve(int col,int n,char[][] curr,boolean[] rc,boolean[] udc,boolean[] ldc,List<List<String>> res)
     {
         if (col==n)
         {
@@ -50,11 +50,17 @@ class Solution {
 
         for (int row=0;row<n;row++) //row
         {
-            if (isValid(curr,row,col,n))
+            if (!rc[row] && !udc[row+col] && !ldc[n-1+col-row])
             {
+                rc[row]=true;
+                udc[row+col]=true;
+                ldc[n-1+col-row]=true;
                 curr[row][col]='Q';
-                solve(col+1,n,curr,res);
+                solve(col+1,n,curr,rc,udc,ldc,res);
                 curr[row][col]='.';
+                rc[row]=false;
+                udc[row+col]=false;
+                ldc[n-1+col-row]=false;
             }
         }
     }
@@ -66,7 +72,10 @@ class Solution {
             for (int j=0;j<n;j++)
                 curr[i][j]='.';
 
-        solve(0,n,curr,res);
+        boolean[] rc=new boolean[n];//row check
+        boolean[] udc=new boolean[2*n-1];//upper diagonal check
+        boolean[] ldc=new boolean[2*n-1];//lower diagonal check
+        solve(0,n,curr,rc,udc,ldc,res);
 
         return res;
     }
