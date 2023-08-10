@@ -27,9 +27,9 @@ class Solution {
     public int totalNQueens(int n) {
         int ans=0;
 
-        boolean[] rc=new boolean[n];
-        boolean[] udc=new boolean[2*n-1];
-        boolean[] ldc=new boolean[2*n-1];
+        boolean[] rc=new boolean[n]; //row check
+        boolean[] udc=new boolean[2*n-1]; //upper diagonal check
+        boolean[] ldc=new boolean[2*n-1]; //lower diagonal check
 
         ans=solve(0,n,rc,udc,ldc);
         return ans;
