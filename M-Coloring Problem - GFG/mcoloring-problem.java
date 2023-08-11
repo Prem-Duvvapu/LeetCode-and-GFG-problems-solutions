@@ -63,9 +63,6 @@ class solve {
     }
     
     public boolean graphColoring(boolean graph[][], int m, int n) {
-        // Your code here
-        // for (int i=0;i<n;i++)
-        //     System.out.println(Arrays.toString(graph[i]));
         List<Integer>[] g=new ArrayList[n];
         buildGraph(graph,g,n);
         int[] color=new int[n];
@@ -80,14 +77,8 @@ class solve {
             g[i]=new ArrayList<>();
             
         for (int i=0;i<n;i++)
-        {
             for (int j=0;j<n;j++)
-            {
                 if (graph[i][j])
-                {
                     g[i].add(j);
-                }
-            }
-        }
     }
 }
