@@ -1,4 +1,6 @@
 class Solution {
+    char[] nums={'1','2','3','4','5','6','7','8','9'};
+    
     private boolean isValid(char[][] board,int row,int col,char ch)
     {
         for (int i=0;i<9;i++)
@@ -19,21 +21,30 @@ class Solution {
         return true;
     }
 
-    private boolean solve(char[][] board)
+    private boolean solve(char[][] board,int row,int col)
     {
-        for (int i=0;i<9;i++)
+        if (col==8)
+        {
+            row+=1;
+            col=0;
+        }
+        else
+        {
+            col+=1;
+        }
+
+        for (int i=row;i<9;i++)
         {
             for (int j=0;j<9;j++)
             {
                 if (board[i][j]=='.')
                 {
-                    char[] nums={'1','2','3','4','5','6','7','8','9'};
                     for (int k=0;k<9;k++)
                     {
                         if (isValid(board,i,j,nums[k]))
                         {
                             board[i][j]=nums[k];
-                            if (solve(board))
+                            if (solve(board,i,j))
                                 return true;
                             board[i][j]='.';
                         }
@@ -46,6 +57,6 @@ class Solution {
     }
 
     public void solveSudoku(char[][] board) {
-        solve(board);
+        solve(board,0,0);
     }
 }
