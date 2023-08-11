@@ -23,14 +23,10 @@ class Solution {
 
     private boolean solve(char[][] board,int row,int col)
     {
-        if (col==8)
+        if (col==9)
         {
             row+=1;
             col=0;
-        }
-        else
-        {
-            col+=1;
         }
 
         for (int i=row;i<9;i++)
@@ -44,7 +40,7 @@ class Solution {
                         if (isValid(board,i,j,nums[k]))
                         {
                             board[i][j]=nums[k];
-                            if (solve(board,i,j))
+                            if (solve(board,i,j+1))
                                 return true;
                             board[i][j]='.';
                         }
