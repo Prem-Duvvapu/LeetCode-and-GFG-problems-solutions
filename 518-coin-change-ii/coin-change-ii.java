@@ -5,7 +5,8 @@ class Solution {
     {
         if (amount==0)
             return 1;
-        else if (pos==coins.length || coins[pos]>amount)
+            
+        if (pos==coins.length || coins[pos]>amount)
             return 0;
 
         if (dp[pos][amount]!=-1)
