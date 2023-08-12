@@ -1,41 +1,28 @@
 class Solution {
-    int k=0;
-    private void swap(char[] a,int i,int j)
+    private void solve(StringBuilder sb,List<Character> list,int val,int n,int fact)
     {
-        char temp=a[i];
-        a[i]=a[j];
-        a[j]=temp;
-    }
-
-    private void permutations(int pos,char[] a,String[] list)
-    {
-        if (pos==a.length)
+        if (n==0)
         {
-            list[k]=new String(a);
-            k++;
+            sb.append(list.get(0));
             return;
         }
 
-        for (int i=pos;i<a.length;i++)
-        {
-            swap(a,pos,i);
-            permutations(pos+1,a,list);
-            swap(a,pos,i);
-        }
+        int index=val/fact;
+        sb.append(list.get(index));
+        list.remove(index);
+        val=val%fact;
+        solve(sb,list,val,n-1,fact/n);
     }
 
     public String getPermutation(int n, int k) {
+        List<Character> list=new ArrayList<>();
+        for (int i=1;i<=n;i++)
+            list.add((char)(i+'0'));
         int fact=1;
         for (int i=1;i<=n;i++)
             fact*=i;
-        String[] list=new String[fact];
-        int num=0;
-        for (int i=1;i<=n;i++)
-            num=num*10+i;
-        String s=Integer.toString(num);
-        char[] arr=s.toCharArray();
-        permutations(0,arr,list);
-        Arrays.sort(list);
-        return list[k-1];
+        StringBuilder sb=new StringBuilder();
+        solve(sb,list,k-1,n-1,fact/n);
+        return sb.toString();
     }
 }
