@@ -19,10 +19,10 @@ class Solution {
         for (int i=1;i<=n;i++)
             list.add((char)(i+'0'));
         int fact=1;
-        for (int i=1;i<=n;i++)
+        for (int i=1;i<n;i++)
             fact*=i;
         StringBuilder sb=new StringBuilder();
-        solve(sb,list,k-1,n-1,fact/n);
+        solve(sb,list,k-1,n-1,fact);
         return sb.toString();
     }
 }
