@@ -34,6 +34,10 @@ class Rat {
 
 // m is the given matrix and n is the order of matrix
 class Solution {
+    static int[] r={1,0,0,-1};
+    static int[] c={0,-1,1,0};
+    static String[] s={"D","L","R","U"};
+    
     private static void solve(int row,int col,String path,int[][] m,int n,boolean[][] visited,List<String> res)
     {
         if (row<0 || row==n || col<0 || col==n)
@@ -45,38 +49,14 @@ class Solution {
             return;
         }
         
-        //DLRU
-        
-        //Down
         if (m[row][col]==1 && !visited[row][col])
         {
-            visited[row][col]=true;
-            solve(row+1,col,path+"D",m,n,visited,res);
-            visited[row][col]=false;
-        }
-        
-        //Left
-        if (m[row][col]==1 && !visited[row][col])
-        {
-            visited[row][col]=true;
-            solve(row,col-1,path+"L",m,n,visited,res);
-            visited[row][col]=false;
-        }
-        
-        //Right
-        if (m[row][col]==1 && !visited[row][col])
-        {
-            visited[row][col]=true;
-            solve(row,col+1,path+"R",m,n,visited,res);
-            visited[row][col]=false;
-        }
-        
-        //Up
-        if (m[row][col]==1 && !visited[row][col])
-        {
-            visited[row][col]=true;
-            solve(row-1,col,path+"U",m,n,visited,res);
-            visited[row][col]=false;
+            for (int i=0;i<4;i++)
+            {
+                visited[row][col]=true;
+                solve(row+r[i],col+c[i],path+s[i],m,n,visited,res);
+                visited[row][col]=false;
+            }
         }
     }
     
