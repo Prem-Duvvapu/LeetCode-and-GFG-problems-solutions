@@ -1,3 +1,5 @@
+//dp - space optimization
+
 class Solution {
     public int climbStairs(int n) {
         int prev1=1;
