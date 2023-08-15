@@ -35,28 +35,31 @@ class GFG
 
 //User function Template for Java
 
+//a^0=a
+//a^a=0
+
 class Solution
 {
     public int[] singleNumber(int[] nums)
     {
-        Arrays.sort(nums);
-        int[] res=new int[2];
-        int k=0;
-        int i=0;
-        for (;i<nums.length-1;i++)
+        int value=0;
+        for (int val: nums)
+            value^=val; //finally remains xor of two distint elements (a^b)
+        
+        value=(value&(value-1))^value;//only right most set bit remains
+        int a=0;
+        int b=0;
+        for (int val:nums)
         {
-            if (nums[i]==nums[i+1])
-            {
-                i++;
-                continue;
-            }
-            res[k]=nums[i];
-            k++;
-            if (k==2)
-                break;
+            if ((value&val)!=0) //value position bit is set
+                a^=val;
+            else
+                b^=val;
         }
-        if (i==nums.length-1)
-            res[k]=nums[i];
+        
+        int[] res={a,b};
+        Arrays.sort(res);
         return res;
+        
     }
 }
