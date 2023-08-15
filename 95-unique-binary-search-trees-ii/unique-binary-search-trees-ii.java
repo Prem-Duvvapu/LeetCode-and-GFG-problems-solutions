@@ -14,7 +14,7 @@
  * }
  */
 class Solution {
-    private  List<TreeNode> solve(int start,int end)
+    private  List<TreeNode> solve(int start,int end,List<TreeNode>[][] dp)
     {
         List<TreeNode> res=new ArrayList<>();
         if (start>end)
@@ -30,10 +30,13 @@ class Solution {
             return res;
         }
 
+        if (dp[start][end]!=null)
+            return dp[start][end];
+
         for (int i=start;i<=end;i++)
         {
-            List<TreeNode> leftSubTrees=solve(start,i-1);
-            List<TreeNode> rightSubTrees=solve(i+1,end);
+            List<TreeNode> leftSubTrees=solve(start,i-1,dp);
+            List<TreeNode> rightSubTrees=solve(i+1,end,dp);
             for (TreeNode leftBST: leftSubTrees)
             {
                 for (TreeNode rightBST: rightSubTrees)
@@ -46,11 +49,12 @@ class Solution {
             }
         }
 
-        return res;
+        return dp[start][end]=res;
     }
 
     public List<TreeNode> generateTrees(int n) {
-        return solve(1,n);
+        List<TreeNode>[][] dp=new ArrayList[n+1][n+1];
+        return solve(1,n,dp);
     }
 }
 
