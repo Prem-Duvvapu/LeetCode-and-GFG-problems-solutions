@@ -14,30 +14,47 @@
  * }
  */
 class Solution {
+    private  List<TreeNode> solve(int start,int end)
+    {
+        List<TreeNode> res=new ArrayList<>();
+        if (start>end)
+        {
+            res.add(null);
+            return res;
+        }
+
+        if (start==end)
+        {
+            TreeNode t=new TreeNode(start);
+            res.add(t);
+            return res;
+        }
+
+        for (int i=start;i<=end;i++)
+        {
+            List<TreeNode> leftSubTrees=solve(start,i-1);
+            List<TreeNode> rightSubTrees=solve(i+1,end);
+            for (TreeNode leftBST: leftSubTrees)
+            {
+                for (TreeNode rightBST: rightSubTrees)
+                {
+                    TreeNode root=new TreeNode(i);
+                    root.left=leftBST;
+                    root.right=rightBST;
+                    res.add(root);
+                }
+            }
+        }
+
+        return res;
+    }
+
     public List<TreeNode> generateTrees(int n) {
-	return generateSubtrees(1, n);
+        return solve(1,n);
+    }
 }
 
-private List<TreeNode> generateSubtrees(int s, int e) {
-	List<TreeNode> res = new LinkedList<TreeNode>();
-	if (s > e) {
-		res.add(null); // empty tree
-		return res;
-	}
-
-	for (int i = s; i <= e; ++i) {
-		List<TreeNode> leftSubtrees = generateSubtrees(s, i - 1);
-		List<TreeNode> rightSubtrees = generateSubtrees(i + 1, e);
-
-		for (TreeNode left : leftSubtrees) {
-			for (TreeNode right : rightSubtrees) {
-				TreeNode root = new TreeNode(i);
-				root.left = left;
-				root.right = right;
-				res.add(root);
-			}
-		}
-	}
-	return res;
-}
-}
+/*
+no. of BSTs can be formed for given value of 'n'=(4 power n)/(n power 1.5)
+T.C. :-  n*((4 power n)/(n power 1.5))
+*/
