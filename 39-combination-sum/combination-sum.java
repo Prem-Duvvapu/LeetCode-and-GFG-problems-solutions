@@ -1,5 +1,12 @@
 class Solution {
-    private void combinations(int pos,int target,List<Integer> curr,int[] candidates,List<List<Integer>> res)
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res=new ArrayList<>();
+        solve(0,new ArrayList<>(),candidates,target,res);
+        return res;
+    }
+
+    private void solve(int pos,List<Integer> curr,int[] candidates,int target,List<List<Integer>> res)
     {
         if (target==0)
         {
@@ -7,23 +14,15 @@ class Solution {
             return;
         }
 
-        if (target<0 || pos==candidates.length)
+        if (pos==candidates.length || candidates[pos]>target)
             return;
 
         //pick
         curr.add(candidates[pos]);
-        target-=candidates[pos];
-        combinations(pos,target,curr,candidates,res);
+        solve(pos,curr,candidates,target-candidates[pos],res);
         curr.remove(curr.size()-1);
-        target+=candidates[pos];
 
         //not pick
-        combinations(pos+1,target,curr,candidates,res);
-    }
-
-    public List<List<Integer>> combinationSum(int[] candidates, int target) {
-        List<List<Integer>> res=new ArrayList<>();
-        combinations(0,target,new ArrayList<>(),candidates,res);
-        return res;
+        solve(pos+1,curr,candidates,target,res);
     }
 }
