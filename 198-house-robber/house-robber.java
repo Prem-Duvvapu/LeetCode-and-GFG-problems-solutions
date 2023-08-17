@@ -1,4 +1,4 @@
-//Recursion
+//Memoization
 
 class Solution {
     public int rob(int[] nums) {
