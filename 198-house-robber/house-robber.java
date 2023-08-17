@@ -9,7 +9,6 @@ class Solution {
         if (n==2)
             return Math.max(nums[1],nums[0]);
 
-        int[] dp=new int[n];
         int prev2=nums[0];
         int prev1=Math.max(nums[1],nums[0]);
 
