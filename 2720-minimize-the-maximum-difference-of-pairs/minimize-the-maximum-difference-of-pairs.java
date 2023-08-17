@@ -38,3 +38,10 @@ class Solution {
         return result;
     }
 }
+
+/*
+T.C. :- O(nlogn)+O(nlogm)
+O(nlogn) for sorting the array
+m=(nums[n-1]-nums[0])
+In binary search, for every mid we are traversing the array for the count of pairs
+*/
