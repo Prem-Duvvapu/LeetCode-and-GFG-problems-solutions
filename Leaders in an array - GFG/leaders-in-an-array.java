@@ -50,16 +50,18 @@ class Array {
 class Solution{
     //Function to find the leaders in the array.
     static ArrayList<Integer> leaders(int arr[], int n){
-        int[] largestFromRight=new int[n];
-        largestFromRight[n-1]=arr[n-1];
-        for (int i=n-2;i>=0;i--)
-            largestFromRight[i]=Math.max(arr[i],largestFromRight[i+1]);
-            
         ArrayList<Integer> res=new ArrayList<>();
-        for (int i=0;i<n;i++)
-            if (arr[i]==largestFromRight[i])
+        int lastGreatest=0;
+        
+        for (int i=n-1;i>=0;i--)
+        {
+            lastGreatest=Math.max(arr[i],lastGreatest);
+            if (arr[i]==lastGreatest)
                 res.add(arr[i]);
-                
+        }
+        
+        Collections.reverse(res);
+        
         return res;
     }
 }
