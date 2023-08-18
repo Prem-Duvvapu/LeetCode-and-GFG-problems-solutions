@@ -1,8 +1,8 @@
 class Solution {
     public int maximalNetworkRank(int n, int[][] roads) {
-        List<Integer>[] graph=new ArrayList[n];
+        Set<Integer>[] graph=new HashSet[n];
         for (int i=0;i<n;i++)
-            graph[i]=new ArrayList<>();
+            graph[i]=new HashSet<>();
 
         for (int[] e: roads)
         {
