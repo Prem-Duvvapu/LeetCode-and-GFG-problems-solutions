@@ -45,20 +45,21 @@ class Array {
 // } Driver Code Ends
 
 
+
+
 class Solution{
     //Function to find the leaders in the array.
     static ArrayList<Integer> leaders(int arr[], int n){
-        ArrayList<Integer> res=new ArrayList<>();
-        res.add(arr[n-1]);
-        int greatest=arr[n-1];
+        int[] largestFromRight=new int[n];
+        largestFromRight[n-1]=arr[n-1];
         for (int i=n-2;i>=0;i--)
-        {
-            if (arr[i]>=greatest)
-            {
-                res.add(0,arr[i]);
-                greatest=arr[i];
-            }
-        }
+            largestFromRight[i]=Math.max(arr[i],largestFromRight[i+1]);
+            
+        ArrayList<Integer> res=new ArrayList<>();
+        for (int i=0;i<n;i++)
+            if (arr[i]==largestFromRight[i])
+                res.add(arr[i]);
+                
         return res;
     }
 }
