@@ -1,21 +1,29 @@
+//Memoization
+
 class Solution {
     int mod=2000000000;
 
     public int uniquePaths(int m, int n) {
-        int[][] paths=new int[m][n];
+        int[][] dp=new int[m][n];//step-1
+        for (int[] arr: dp)
+            Arrays.fill(arr,-1);
+        return solve(m-1,n-1,dp);
+    }
 
-        //first row
-        for (int i=0;i<n;i++)
-            paths[0][i]=1;
+    private int solve(int m,int n,int[][] dp)
+    {
+        if (m==0 && n==0)
+            return 1;
 
-        //first column
-        for (int i=0;i<m;i++)
-            paths[i][0]=1;
+        if (m<0 || n<0)
+            return 0;
 
-        for (int i=1;i<m;i++)
-            for (int j=1;j<n;j++)
-                paths[i][j]=(paths[i][j-1]+paths[i-1][j])%mod;
+        if (dp[m][n]!=-1)//step-3
+            return dp[m][n];
 
-        return paths[m-1][n-1];
+        int up=solve(m-1,n,dp);
+        int left=solve(m,n-1,dp);
+
+        return dp[m][n]=(up+left)%mod;//step-2
     }
 }
