@@ -1,34 +1,37 @@
 //Memoization
 
 class Solution {
-    int mod=2000000000;
+    int mod=(int)(2*10e9);
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m=obstacleGrid.length;
         int n=obstacleGrid[0].length;
-        int[][] dp=new int[m][n];//step-1
-        for (int[] arr: dp)
-            Arrays.fill(arr,-1);
-        return solve(m-1,n-1,obstacleGrid,dp);
-    }
+        int[][] dp=new int[m][n];
 
-    private int solve(int m,int n,int[][] obstacleGrid,int[][] dp)
-    {
-        if (m<0 || n<0)
-            return 0;
+        for (int i=0;i<m;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                if (obstacleGrid[i][j]==1)
+                    dp[i][j]=0;
+                else if (i==0 && j==0)
+                    dp[i][j]=1;
+                else
+                {
+                    int up=0;
+                    int left=0;
 
-        if (obstacleGrid[m][n]==1)
-            return 0;
+                    if (i>0)
+                        up=dp[i-1][j];
 
-        if (m==0 && n==0)
-            return 1;
+                    if (j>0)
+                        left=dp[i][j-1];
 
-        if (dp[m][n]!=-1)//step-3
-            return dp[m][n];
+                    dp[i][j]=(up+left)%mod;
+                }
+            }
+        }
 
-        int up=solve(m-1,n,obstacleGrid,dp);
-        int left=solve(m,n-1,obstacleGrid,dp);
-
-        return dp[m][n]=(up+left)%mod;//step-2
+        return dp[m-1][n-1];
     }
 }
