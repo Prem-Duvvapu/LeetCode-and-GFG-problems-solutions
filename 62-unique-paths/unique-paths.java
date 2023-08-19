@@ -27,8 +27,7 @@ class Solution {
                     curr[j]=(up+left)%mod;
                 }
             }
-            for (int k=0;k<n;k++)
-                prev[k]=curr[k];
+            System.arraycopy(curr,0,prev,0,n);
         }
 
         return prev[n-1];
