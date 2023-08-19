@@ -1,29 +1,33 @@
-//Memoization
+//Tabulation
 
 class Solution {
     public int minPathSum(int[][] grid) {
         int m=grid.length;
         int n=grid[0].length;
-        int[][] dp=new int[m][n];//step-1
-        for (int[] arr: dp)
-            Arrays.fill(arr,-1);
-        return solve(m-1,n-1,grid,dp);
-    }
+        int[][] dp=new int[m][n];
 
-    private int solve(int row,int col,int[][] grid,int[][] dp)
-    {
-        if (row==0 && col==0)
-            return grid[row][col];
+        for (int i=0;i<m;i++)
+        {
+            for (int j=0;j<n;j++)
+            {
+                if (i==0 && j==0)
+                    dp[i][j]=grid[i][j];
+                else
+                {
+                    int up=Integer.MAX_VALUE;
+                    int left=Integer.MAX_VALUE;
 
-        if (row<0 || col<0)
-            return Integer.MAX_VALUE;
+                    if (i>0)
+                        up=dp[i-1][j];
 
-        if (dp[row][col]!=-1)
-            return dp[row][col];
+                    if (j>0)
+                        left=dp[i][j-1];
 
-        int up=solve(row-1,col,grid,dp);
-        int left=solve(row,col-1,grid,dp);
+                    dp[i][j]=grid[i][j]+Math.min(up,left);
+                }
+            }
+        }
 
-        return dp[row][col]=grid[row][col]+Math.min(up,left);//step-2
+        return dp[m-1][n-1];
     }
 }
