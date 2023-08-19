@@ -1,13 +1,14 @@
 class Solution {
     public int maximalNetworkRank(int n, int[][] roads) {
-        Set<Integer>[] graph=new HashSet[n];
-        for (int i=0;i<n;i++)
-            graph[i]=new HashSet<>();
+        int[] cnt=new int[n];
+        boolean[][] connection=new boolean[n][n];
 
         for (int[] e: roads)
         {
-            graph[e[0]].add(e[1]);
-            graph[e[1]].add(e[0]);
+            cnt[e[0]]++;
+            cnt[e[1]]++;
+            connection[e[0]][e[1]]=true;
+            connection[e[1]][e[0]]=true;
         }
 
         int maxRank=0;
@@ -15,11 +16,11 @@ class Solution {
         {
             for (int j=i+1;j<n;j++)
             {
-                int a=graph[i].size();
-                int b=graph[j].size();
+                int a=cnt[i];
+                int b=cnt[j];
                 int curr=a+b;
                 
-                if (graph[i].contains(j))
+                if (connection[i][j])
                     curr--;
 
                 maxRank=Math.max(curr,maxRank);
