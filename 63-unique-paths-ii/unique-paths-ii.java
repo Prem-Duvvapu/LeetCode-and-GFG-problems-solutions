@@ -1,7 +1,7 @@
 //Memoization
 
 class Solution {
-    int mod=(int)(2*10e9);
+    int mod=2000000000;
 
     public int uniquePathsWithObstacles(int[][] obstacleGrid) {
         int m=obstacleGrid.length;
