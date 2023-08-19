@@ -1,25 +1,23 @@
-//Memoization
+//Tabulation
 
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int n=triangle.size();
         int[][] dp=new int[n][n];
-        for (int[] arr: dp)//step-1
-            Arrays.fill(arr,-1);
-        return solve(0,0,triangle,n,dp);
-    }
+        
+        for (int i=0;i<n;i++)
+            dp[n-1][i]=triangle.get(n-1).get(i);
 
-    private int solve(int row,int col,List<List<Integer>> triangle,int n,int[][] dp)
-    {
-        if (row==n-1)
-            return triangle.get(row).get(col);
+        for (int i=n-2;i>=0;i--)
+        {
+            for (int j=0;j<=i;j++)
+            {
+                int down=dp[i+1][j];
+                int diag=dp[i+1][j+1];
+                dp[i][j]=triangle.get(i).get(j)+Math.min(down,diag);
+            }
+        }
 
-        if (dp[row][col]!=-1)//step-3
-            return dp[row][col];
-
-        int down=solve(row+1,col,triangle,n,dp);
-        int diag=solve(row+1,col+1,triangle,n,dp);
-
-        return dp[row][col]=triangle.get(row).get(col)+Math.min(down,diag);//step-2
+        return dp[0][0];
     }
 }
