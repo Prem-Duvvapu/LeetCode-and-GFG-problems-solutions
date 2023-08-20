@@ -4,7 +4,7 @@ class Solution {
     public int cherryPickup(int[][] grid) {
         int m=grid.length;
         int n=grid[0].length;
-        int[][][] dp=new int[m][n][n];//step-1
+        int[][][] dp=new int[m][n][n];
         for (int i=0;i<m;i++)
             for (int j=0;j<n;j++)
                 for (int k=0;k<n;k++)
@@ -17,13 +17,8 @@ class Solution {
         if (c1<0 || c1>=n || c2<0 || c2>=n)
             return -1;
 
-        if (r==m-1)
-        {
-            if (c1==c2)
-                return grid[r][c1];
-            else
-                return (grid[r][c1]+grid[r][c2]);
-        }
+        if (r==m)
+            return -1;
 
         if (dp[r][c1][c2]!=-1)
             return dp[r][c1][c2];
@@ -39,6 +34,6 @@ class Solution {
 
         res+=maxVal;
 
-        return dp[r][c1][c2]=res;//step-2
+        return dp[r][c1][c2]=res;
     }
 }
