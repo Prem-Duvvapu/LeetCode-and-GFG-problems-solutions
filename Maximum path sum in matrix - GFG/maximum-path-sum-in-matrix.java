@@ -26,36 +26,38 @@ class GFG
 // } Driver Code Ends
 
 
-//Tabulation
+//Space Optimization
 
 class Solution{
     static int maximumPath(int n, int a[][])
     {
-        int[][] dp=new int[n][n];
+        int[] prev=new int[n];
         for (int i=0;i<n;i++)
-            dp[0][i]=a[0][i];
+            prev[i]=a[0][i];
             
         for (int i=1;i<n;i++)
         {
+            int[] curr=new int[n];
             for (int j=0;j<n;j++)
             {
-                int up=dp[i-1][j];
+                int up=prev[j];
                 int leftDiag=0;
                 int rightDiag=0;
                 
                 if (j-1>=0)
-                    leftDiag=dp[i-1][j-1];
+                    leftDiag=prev[j-1];
                     
                 if (j+1<n)
-                    rightDiag=dp[i-1][j+1];
+                    rightDiag=prev[j+1];
                     
-                dp[i][j]=a[i][j]+Math.max(up,Math.max(leftDiag,rightDiag));
+                curr[j]=a[i][j]+Math.max(up,Math.max(leftDiag,rightDiag));
             }
+            System.arraycopy(curr,0,prev,0,n);
         }
         
         int maxVal=0;
         for (int k=0;k<n;k++)
-           maxVal=Math.max(dp[n-1][k],maxVal);
+           maxVal=Math.max(prev[k],maxVal);
            
         return maxVal;
     }
