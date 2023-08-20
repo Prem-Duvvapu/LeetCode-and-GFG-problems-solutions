@@ -28,18 +28,17 @@ class Solution {
         if (dp[r][c1][c2]!=-1)
             return dp[r][c1][c2];
 
+        int res=grid[r][c1];
+        if (c1!=c2)
+            res+=grid[r][c2];
+
         int maxVal=0;
         for (int i=-1;i<=1;i++)
-        {
             for (int j=-1;j<=1;j++)
-            {
-                if (c1==c2)
-                    maxVal=Math.max(maxVal,grid[r][c1]+solve(r+1,c1+i,c2+j,grid,m,n,dp));
-                else
-                    maxVal=Math.max(maxVal,grid[r][c1]+grid[r][c2]+solve(r+1,c1+i,c2+j,grid,m,n,dp));
-            }
-        }
+                maxVal=Math.max(maxVal,solve(r+1,c1+i,c2+j,grid,m,n,dp));
 
-        return dp[r][c1][c2]=maxVal;//step-2
+        res+=maxVal;
+
+        return dp[r][c1][c2]=res;//step-2
     }
 }
