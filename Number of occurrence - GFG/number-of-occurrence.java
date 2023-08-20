@@ -37,12 +37,25 @@ public class Main {
 
 class Solution {
     int count(int[] arr, int n, int x) {
-        int cnt=0;
-        
-        for (int val: arr)
-            if (val==x)
-                cnt++;
-                
-        return cnt;
+        int start=bSearch(arr,x,0,n-1);
+        if (start==n || arr[start]!=x)
+            return 0;
+        int end=bSearch(arr,x+1,start,n-1);
+        return (end-start);
+    }
+    
+    int bSearch(int[] arr,int x,int left,int right)
+    {
+        while (left<=right)
+        {
+            int mid=left+(right-left)/2;
+            if (arr[mid]<x)
+                left++;
+            else
+                right--;
+        }
+        return left;
     }
 }
+
+//TC:- O(logn)
