@@ -50,9 +50,9 @@ class Solution {
         {
             int mid=left+(right-left)/2;
             if (arr[mid]<x)
-                left++;
+                left=mid+1;
             else
-                right--;
+                right=mid-1;
         }
         return left;
     }
