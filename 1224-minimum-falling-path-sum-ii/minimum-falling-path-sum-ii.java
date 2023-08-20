@@ -1,3 +1,5 @@
+//Tabulation
+
 class Solution {
     public int minFallingPathSum(int[][] grid) {
         int n=grid.length;
