@@ -9,7 +9,7 @@ class Solution {
             if (n%l==0)//O(2*sqrt(n))
             {
                 int times=n/l;
-                String sub=s.substring(0,l);//O(n)
+                StringBuilder sub=new StringBuilder(s.substring(0,l));//O(n)
                 StringBuilder curr=new StringBuilder();
 
                 while (times-- > 0)//O(n)
