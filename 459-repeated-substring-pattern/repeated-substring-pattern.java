@@ -10,12 +10,12 @@ class Solution {
             {
                 int times=n/l;
                 String sub=s.substring(0,l);//O(n)
-                String curr="";
+                StringBuilder curr=new StringBuilder();
 
                 while (times-- > 0)//O(n)
-                    curr+=sub;
+                    curr.append(sub);
 
-                if (curr.equals(s))//O(n)
+                if (curr.toString().equals(s))//O(n)
                     return true;
             }
         }
