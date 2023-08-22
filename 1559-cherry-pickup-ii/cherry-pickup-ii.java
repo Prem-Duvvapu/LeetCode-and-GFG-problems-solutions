@@ -1,4 +1,4 @@
-//Memoization
+//Tabulation
 
 class Solution {
     public int cherryPickup(int[][] grid) {
@@ -6,32 +6,46 @@ class Solution {
         int n=grid[0].length;
         int[][][] dp=new int[m][n][n];
 
-        for (int i=0;i<m;i++)
-            for (int j=0;j<n;j++)
-                for (int k=0;k<n;k++)
-                    dp[i][j][k]=-1;
-                    
-        return solve(0,0,n-1,grid,m,n,dp);
-    }
+        for (int j1=0;j1<n;j1++)
+        {
+            for (int j2=0;j2<n;j2++)
+            {
+                if (j1==j2)
+                    dp[m-1][j1][j2]=grid[m-1][j1];
+                else
+                    dp[m-1][j1][j2]=grid[m-1][j1]+grid[m-1][j2];
+            }
+        }
 
-    private int solve(int r,int c1,int c2,int[][] grid,int m,int n,int[][][] dp)
-    {
-        if (r==m || c1<0 || c1>=n || c2<0 || c2>=n)
-            return -1;
+        for (int i=m-2;i>=0;i--)
+        {
+            for (int j1=0;j1<n;j1++)
+            {
+                for (int j2=0;j2<n;j2++)
+                {
+                    int maxi=(int)(-1e8);
+                    for (int dj1=-1;dj1<=1;dj1++)
+                    {
+                        for (int dj2=-1;dj2<=1;dj2++)
+                        {
+                            int value=0;
+                            if (j1==j2)
+                                value=grid[i][j1];
+                            else
+                                value=grid[i][j1]+grid[i][j2];
 
-        if (dp[r][c1][c2]!=-1)
-            return dp[r][c1][c2];
+                            if (j1+dj1>=0 && j1+dj1<n && j2+dj2>=0 && j2+dj2<n)
+                                value+=dp[i+1][j1+dj1][j2+dj2];
+                            else
+                                value+=(int)(-1e8);
+                            maxi=Math.max(maxi,value);
+                        }
+                    }
+                    dp[i][j1][j2]=maxi;
+                }
+            }
+        }
 
-        int res=grid[r][c1];
-        if (c1!=c2)
-            res+=grid[r][c2];
-
-        int maxVal=0;
-        for (int i=-1;i<=1;i++)
-            for (int j=-1;j<=1;j++)
-                maxVal=Math.max(maxVal,solve(r+1,c1+i,c2+j,grid,m,n,dp));
-
-        res+=maxVal;
-        return dp[r][c1][c2]=res;
+        return dp[0][0][n-1];
     }
 }
