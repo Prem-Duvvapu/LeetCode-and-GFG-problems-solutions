@@ -74,22 +74,11 @@ class Solution {
         
         for (int i=0;i<N;i++)
         {
-            int sum=0;
             for (int j=0;j<N;j++)
             {
-                sum+=matrix[i][j];
+                rowSum[i]+=matrix[i][j];
+                colSum[j]+=matrix[i][j];
             }
-            rowSum[i]=sum;
-        }
-        
-        for (int i=0;i<N;i++)
-        {
-            int sum=0;
-            for (int j=0;j<N;j++)
-            {
-                sum+=matrix[j][i];
-            }
-            colSum[i]=sum;
         }
         
         int maxVal=0;
