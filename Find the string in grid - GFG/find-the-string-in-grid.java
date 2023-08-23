@@ -85,18 +85,18 @@ class Solution
         {
             int nr=r;
             int nc=c;
-            String curr="";
+            StringBuilder curr=new StringBuilder();
             for (int j=0;j<word.length();j++)
             {
                 if (nr<0 || nr==m || nc<0 || nc==n)
                     break;
                 if (grid[nr][nc]!=word.charAt(j))
                     break;
-                curr+=grid[nr][nc];
+                curr.append(grid[nr][nc]);
                 nr+=row[i];
                 nc+=col[i];
             }
-            if (curr.equals(word))
+            if (curr.toString().equals(word))
                 return true;
         }
         
