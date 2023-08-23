@@ -36,12 +36,30 @@ class GFG
 class Solution{
 
 
-    static Boolean isSubsetSum(int N, int arr[], int target){
-        int[][] dp=new int[N][target+1];
+    static Boolean isSubsetSum(int N, int a[], int target){
+        boolean[][] dp=new boolean[N][target+1];
+        
+        //Base Case
         for (int i=0;i<N;i++)
-            for (int j=0;j<=target;j++)
-                dp[i][j]=-1;
-        return solve(N-1,target,arr,dp);
+            dp[i][0]=true;
+            
+        if (a[0]<=target)
+            dp[0][a[0]]=true;
+        
+        for (int i=1;i<N;i++)
+        {
+            for (int j=1;j<=target;j++)
+            {
+                boolean notTake=dp[i-1][j];
+                boolean take=false;
+                if (j>=a[i])
+                    take=dp[i-1][j-a[i]];
+                    
+                dp[i][j]=(take || notTake);
+            }
+        }
+        
+        return dp[N-1][target];
     }
     
     static Boolean solve(int index,int target,int[] a,int[][] dp)
