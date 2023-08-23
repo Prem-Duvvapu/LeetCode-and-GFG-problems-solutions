@@ -36,35 +36,35 @@ class GFG
 class Solution{
 
 
-    static Boolean isSubsetSum(int N, int arr[], int sum){
-        int[][] dp=new int[N][sum+1];
+    static Boolean isSubsetSum(int N, int arr[], int target){
+        int[][] dp=new int[N][target+1];
         for (int i=0;i<N;i++)
-            for (int j=0;j<=sum;j++)
+            for (int j=0;j<=target;j++)
                 dp[i][j]=-1;
-            
-        if ((solve(0,0,N,arr,sum,dp)==1))
-            return true;
-            
-        return false;
+        return solve(N-1,target,arr,dp);
     }
     
-    static int solve(int pos,int currSum,int n,int[] a,int givenSum,int[][] dp)
+    static Boolean solve(int index,int target,int[] a,int[][] dp)
     {
-        if (currSum==givenSum)
-            return 1;
+        if (target==0)
+            return true;
             
-        if (pos==n || currSum>givenSum)
-            return 0;
+        if (index==0)
+            return (a[0]==target);
             
-        if (dp[pos][currSum]!=-1)
-            return dp[pos][currSum];
-        
-        if (solve(pos+1,currSum+a[pos],n,a,givenSum,dp)==1)
-            return dp[pos][currSum]=1;
+        if (dp[index][target]!=-1)
+            return (dp[index][target]==1);
             
-        if (solve(pos+1,currSum,n,a,givenSum,dp)==1)
-            return dp[pos][currSum]=1;
+        Boolean notTake=solve(index-1,target,a,dp);
+        Boolean take=false;
+        if (target>=a[index])
+            take=solve(index-1,target-a[index],a,dp);
             
-        return dp[pos][currSum]=0;
+        if (take || notTake)
+            dp[index][target]=1;
+        else
+            dp[index][target]=0;
+            
+        return (take || notTake);
     }
 }
