@@ -1,5 +1,5 @@
 //DP on subsequences
-//Memoization
+//Tabulation
 
 class Solution {
     public boolean canPartition(int[] nums) {
@@ -11,36 +11,29 @@ class Solution {
         if (sum%2==1)//odd
             return false;
 
+        //subset sum equal to target problem from here
         int target=sum/2;
-        int[][] dp=new int[n][target+1];
+        boolean[][] dp=new boolean[n][target+1];
 
-        for (int[] arr: dp)
-            Arrays.fill(arr,-1);
+        for (int i=0;i<n;i++)
+            dp[i][0]=true;
 
-        return solve(n-1,target,nums,dp);
-    }
+        if (nums[0]<=target)
+            dp[0][nums[0]]=true;
 
-    private boolean solve(int index,int target,int[] nums,int[][] dp)
-    {
-        if (target==0)
-            return true;
+        for (int i=1;i<n;i++)
+        {
+            for (int j=1;j<=target;j++)
+            {
+                boolean notTake=dp[i-1][j];
+                boolean take=false;
+                if (nums[i]<=j)
+                    take=dp[i-1][j-nums[i]];
 
-        if (index==0)
-            return nums[0]==target;
+                dp[i][j]=(take || notTake);
+            }
+        }
 
-        if (dp[index][target]!=-1)
-            return (dp[index][target]==1);
-
-        boolean notTake=solve(index-1,target,nums,dp);
-        boolean take=false;
-        if (nums[index]<=target)
-            take=solve(index-1,target-nums[index],nums,dp);
-
-        if (take || notTake)
-            dp[index][target]=1;
-        else
-            dp[index][target]=0;
-
-        return (take || notTake);
+        return dp[n-1][target];
     }
 }
