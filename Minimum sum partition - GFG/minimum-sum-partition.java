@@ -34,7 +34,7 @@ class Solution
 	    for (int val: arr)
 	        sum+=val;
 	        
-	    int target=sum;
+	    int target=sum/2;
 	        
 	    boolean[][] dp=new boolean[n][target+1];
 	    
@@ -58,7 +58,7 @@ class Solution
 	    }
 	    
 	    int minVal=sum;
-	    for (int i=0;i<sum;i++)
+	    for (int i=0;i<=target;i++)
 	        if (dp[n-1][i])
 	            minVal=Math.min(minVal,Math.abs(i-(sum-i)));
 	            
