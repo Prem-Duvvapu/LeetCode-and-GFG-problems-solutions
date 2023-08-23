@@ -1,5 +1,5 @@
 //DP on subsequences
-//Tabulation
+//Space Optimization
 
 class Solution {
     public boolean canPartition(int[] nums) {
@@ -13,27 +13,31 @@ class Solution {
 
         //subset sum equal to target problem from here
         int target=sum/2;
-        boolean[][] dp=new boolean[n][target+1];
+        boolean[] prev=new boolean[target+1];
+        boolean[] curr=new boolean[target+1];
 
-        for (int i=0;i<n;i++)
-            dp[i][0]=true;
+        prev[0]=true;
+        curr[0]=true;
 
         if (nums[0]<=target)
-            dp[0][nums[0]]=true;
+            prev[nums[0]]=true;
 
         for (int i=1;i<n;i++)
         {
             for (int j=1;j<=target;j++)
             {
-                boolean notTake=dp[i-1][j];
+                boolean notTake=prev[j];
                 boolean take=false;
                 if (nums[i]<=j)
-                    take=dp[i-1][j-nums[i]];
+                    take=prev[j-nums[i]];
 
-                dp[i][j]=(take || notTake);
+                curr[j]=(take || notTake);
             }
+
+            for (int k=0;k<=target;k++)
+                prev[k]=curr[k];
         }
 
-        return dp[n-1][target];
+        return prev[target];
     }
 }
