@@ -15,9 +15,6 @@ class Solution {
         if (k==s3.length() && i==s1.length() && j==s2.length())
             return true;
 
-        if (k==s3.length())
-            return false;
-
         if (dp[i][j][k]!=-1)
             return (dp[i][j][k]==1);
 
@@ -26,6 +23,9 @@ class Solution {
 
         if (i<s1.length() && s1.charAt(i)==s3.charAt(k))
             b1=solve(i+1,j,k+1,s1,s2,s3,dp);
+
+        if (b1)
+            return b1;
 
         if (j<s2.length() && s2.charAt(j)==s3.charAt(k))
             b2=solve(i,j+1,k+1,s1,s2,s3,dp);
