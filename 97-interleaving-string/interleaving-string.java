@@ -12,9 +12,11 @@ class Solution {
 
     private boolean solve(int i,int j,int k,String s1,String s2,String s3,int[][][] dp)
     {
-        // System.out.println(i+" "+j+" "+k);
         if (k==s3.length() && i==s1.length() && j==s2.length())
             return true;
+
+        if (k==s3.length())
+            return false;
 
         if (dp[i][j][k]!=-1)
             return (dp[i][j][k]==1);
