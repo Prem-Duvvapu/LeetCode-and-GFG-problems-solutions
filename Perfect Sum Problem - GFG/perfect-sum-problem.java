@@ -26,33 +26,36 @@ class GfG
 
 
 class Solution{
-    
     int mod=(int)(1e9)+7;
-
 	public int perfectSum(int arr[],int n, int sum) 
 	{
-	    Arrays.sort(arr);
 	    int[][] dp=new int[n][sum+1];
 	    for (int i=0;i<n;i++)
 	        for (int j=0;j<=sum;j++)
 	            dp[i][j]=-1;
-	    return solve(0,sum,arr,n,dp);
-	}
+	    return solve(n-1,sum,arr,dp);
+	} 
 	
-	private int solve(int pos,int sum,int[] arr,int n,int[][] dp)
+	private int solve(int pos,int target,int[] a,int[][] dp)
 	{
-	    if (sum==0)
-	        return 1;
-	        
-	    if (pos==n || arr[pos]>sum)
+	    if (pos==0)
+	    {
+	        if (a[0]==0 && target==0)
+	            return 2;
+	        else if (a[0]==target || target==0)
+	            return 1;
+	        else
 	        return 0;
-	        
-	    if (dp[pos][sum]!=-1)
-	        return dp[pos][sum];
+	    }
 	    
-	    int notPick=solve(pos+1,sum,arr,n,dp);
-	    int pick=pick=solve(pos+1,sum-arr[pos],arr,n,dp);
+	    if (dp[pos][target]!=-1)
+	        return dp[pos][target];
+	    
+	    int notPick=solve(pos-1,target,a,dp);
+	    int pick=0;
+	    if (a[pos]<=target)
+	        pick=solve(pos-1,target-a[pos],a,dp);
 	        
-	    return dp[pos][sum]=(pick+notPick)%mod;
+	    return dp[pos][target]=(pick+notPick)%mod;
 	}
 }
