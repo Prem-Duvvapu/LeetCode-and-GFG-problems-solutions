@@ -1,5 +1,5 @@
 class Solution {
-    private int solve(int pos,int[] nums,int target,Map<String,Integer> map)
+    private int solve(int pos,int[] nums,int target,int[][] dp)
     {
         if (pos==nums.length)
         {
@@ -9,20 +9,20 @@ class Solution {
                 return 0;
         }
 
-        String s=Integer.toString(pos)+" "+Integer.toString(target);
-        if (map.containsKey(s))
-            return map.get(s);
+        if (dp[pos][target+1000]!=-1)
+            return dp[pos][target+1000];
 
-        int plus=solve(pos+1,nums,target-nums[pos],map);
-        int minus=solve(pos+1,nums,target+nums[pos],map);
-
-        map.put(s,plus+minus);
+        int plus=solve(pos+1,nums,target-nums[pos],dp);
+        int minus=solve(pos+1,nums,target+nums[pos],dp);
         
-        return plus+minus;
+        return dp[pos][target+1000]=plus+minus;
     }
 
     public int findTargetSumWays(int[] nums, int target) {
-        Map<String,Integer> map=new HashMap<>();
-        return solve(0,nums,target,map);
+        int n=nums.length;
+        int[][] dp=new int[n][3001];
+        for (int[] arr: dp)
+            Arrays.fill(arr,-1);
+        return solve(0,nums,target,dp);
     }
 }
