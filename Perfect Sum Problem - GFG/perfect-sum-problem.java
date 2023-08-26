@@ -29,28 +29,34 @@ class Solution{
     int mod=(int)(1e9)+7;
 	public int perfectSum(int a[],int n, int sum) 
 	{
-	    int[][] dp=new int[n][sum+1];
+	    int[] prev=new int[sum+1];
+	    int[] curr=new int[sum+1];
+	    
+	    prev[0]=0;
+	    curr[0]=0;
+	    
 	    if (a[0]==0)
-	        dp[0][0]=2;
+	        prev[0]=2;
 	    else
-	        dp[0][0]=1;
+	        prev[0]=1;
 	        
 	    if (a[0]!=0 && a[0]<=sum)
-	        dp[0][a[0]]=1;
+	        prev[a[0]]=1;
 	        
 	    for (int i=1;i<n;i++)
 	    {
 	        for (int target=0;target<=sum;target++)
 	        {
-	            int notPick=dp[i-1][target];
+	            int notPick=prev[target];
 	            int pick=0;
 	            if (a[i]<=target)
-	                pick=dp[i-1][target-a[i]];
+	                pick=prev[target-a[i]];
 	           
-	            dp[i][target]=(pick+notPick)%mod;
+	            curr[target]=(pick+notPick)%mod;
 	        }
+	        System.arraycopy(curr,0,prev,0,sum+1);
 	    }
 	    
-	    return dp[n-1][sum];
+	    return prev[sum];
 	} 
 }
