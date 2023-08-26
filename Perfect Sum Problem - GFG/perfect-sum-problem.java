@@ -27,35 +27,30 @@ class GfG
 
 class Solution{
     int mod=(int)(1e9)+7;
-	public int perfectSum(int arr[],int n, int sum) 
+	public int perfectSum(int a[],int n, int sum) 
 	{
 	    int[][] dp=new int[n][sum+1];
-	    for (int i=0;i<n;i++)
-	        for (int j=0;j<=sum;j++)
-	            dp[i][j]=-1;
-	    return solve(n-1,sum,arr,dp);
-	} 
-	
-	private int solve(int pos,int target,int[] a,int[][] dp)
-	{
-	    if (pos==0)
+	    if (a[0]==0)
+	        dp[0][0]=2;
+	    else
+	        dp[0][0]=1;
+	        
+	    if (a[0]!=0 && a[0]<=sum)
+	        dp[0][a[0]]=1;
+	        
+	    for (int i=1;i<n;i++)
 	    {
-	        if (a[0]==0 && target==0)
-	            return 2;
-	        else if (a[0]==target || target==0)
-	            return 1;
-	        else
-	        return 0;
+	        for (int target=0;target<=sum;target++)
+	        {
+	            int notPick=dp[i-1][target];
+	            int pick=0;
+	            if (a[i]<=target)
+	                pick=dp[i-1][target-a[i]];
+	           
+	            dp[i][target]=(pick+notPick)%mod;
+	        }
 	    }
 	    
-	    if (dp[pos][target]!=-1)
-	        return dp[pos][target];
-	    
-	    int notPick=solve(pos-1,target,a,dp);
-	    int pick=0;
-	    if (a[pos]<=target)
-	        pick=solve(pos-1,target-a[pos],a,dp);
-	        
-	    return dp[pos][target]=(pick+notPick)%mod;
-	}
+	    return dp[n-1][sum];
+	} 
 }
