@@ -4,7 +4,7 @@ class Solution {
         if (n>1 && stones[1]>1)
             return false;
 
-        int[][] dp=new int[2000][1000];
+        int[][] dp=new int[n][1000];
         for (int[] arr: dp)
             Arrays.fill(arr,-1);
         return solve(1,1,stones,n,dp);
