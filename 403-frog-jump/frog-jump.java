@@ -20,13 +20,13 @@ class Solution {
 
         for (int i=pos+1;i<n;i++)
         {
-            if (stones[i]==stones[pos]+last && solve(i,last,stones,n,dp))
+            if (stones[i]==stones[pos]+last-1 && solve(i,last-1,stones,n,dp))
             {
                 dp[pos][last]=1;
                 return true;
             }
 
-            if (stones[i]==stones[pos]+last-1 && solve(i,last-1,stones,n,dp))
+            if (stones[i]==stones[pos]+last && solve(i,last,stones,n,dp))
             {
                 dp[pos][last]=1;
                 return true;
