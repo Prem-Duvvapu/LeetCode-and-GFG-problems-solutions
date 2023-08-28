@@ -59,19 +59,15 @@ class Solution
             
         for (int i=1;i<n;i++)
         {
-            int[] curr=new int[w+1];
-            for (int j=0;j<=w;j++)
+            for (int j=w;j>=0;j--)
             {
                 int notTake=prev[j];
                 int take=Integer.MIN_VALUE;
                 if (wt[i]<=j)
                     take=val[i]+prev[j-wt[i]];
                     
-                curr[j]=Math.max(take,notTake);
+                prev[j]=Math.max(take,notTake);
             }
-            
-            for (int k=0;k<=w;k++)
-                prev[k]=curr[k];
         }
         
         return prev[w];
