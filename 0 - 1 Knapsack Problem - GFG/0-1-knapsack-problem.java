@@ -52,31 +52,25 @@ class Solution
     static int knapSack(int w, int wt[], int val[], int n) 
     {
         int[][] dp=new int[n][w+1];
-        for (int i=0;i<n;i++)
-            for (int j=0;j<=w;j++)
-                dp[i][j]=-1;
-        return solve(n-1,w,wt,val,dp);
-    } 
-    
-    static int solve(int pos,int w,int[] wt,int[] val,int[][] dp)
-    {
-        if (pos==0)
+        
+        //base case
+        for (int i=wt[0];i<=w;i++)
+            dp[0][i]=val[0];
+            
+        for (int i=1;i<n;i++)
         {
-            if (wt[0]<=w)
-                return val[0];
-            else
-                return 0;
+            for (int j=0;j<=w;j++)
+            {
+                int notTake=dp[i-1][j];
+                int take=Integer.MIN_VALUE;
+                if (wt[i]<=j)
+                    take=val[i]+dp[i-1][j-wt[i]];
+                    
+                dp[i][j]=Math.max(take,notTake);
+            }
         }
         
-        if (dp[pos][w]!=-1)
-            return dp[pos][w];
-        
-        int notTake=solve(pos-1,w,wt,val,dp);
-        int take=Integer.MIN_VALUE;
-        if (wt[pos]<=w)
-            take=val[pos]+solve(pos-1,w-wt[pos],wt,val,dp);
-            
-        return dp[pos][w]=Math.max(take,notTake);
+        return dp[n-1][w];
     }
 }
 
