@@ -49,30 +49,35 @@ class gfg
 class Solution 
 { 
     //Function to return max value that can be put in knapsack of capacity W.
-    static int solve(int pos,int w,int[] wt,int[] val,int n,int[][] dp)
-    {
-        if (w==0 || pos==n)
-            return 0;
-        
-        if (dp[pos][w]!=-1)
-            return dp[pos][w];
-            
-        if (wt[pos]>w)
-            return dp[pos][w]=solve(pos+1,w,wt,val,n,dp);
-        
-        int select=val[pos]+solve(pos+1,w-wt[pos],wt,val,n,dp);
-        int notSelect=solve(pos+1,w,wt,val,n,dp);
-        
-        return dp[pos][w]=Math.max(select,notSelect);
-    }
-    
     static int knapSack(int w, int wt[], int val[], int n) 
     {
         int[][] dp=new int[n][w+1];
-        for (int[] a: dp)
-            Arrays.fill(a,-1);
-        return solve(0,w,wt,val,n,dp);
+        for (int i=0;i<n;i++)
+            for (int j=0;j<=w;j++)
+                dp[i][j]=-1;
+        return solve(n-1,w,wt,val,dp);
     } 
+    
+    static int solve(int pos,int w,int[] wt,int[] val,int[][] dp)
+    {
+        if (pos==0)
+        {
+            if (wt[0]<=w)
+                return val[0];
+            else
+                return 0;
+        }
+        
+        if (dp[pos][w]!=-1)
+            return dp[pos][w];
+        
+        int notTake=solve(pos-1,w,wt,val,dp);
+        int take=Integer.MIN_VALUE;
+        if (wt[pos]<=w)
+            take=val[pos]+solve(pos-1,w-wt[pos],wt,val,dp);
+            
+        return dp[pos][w]=Math.max(take,notTake);
+    }
 }
 
 
