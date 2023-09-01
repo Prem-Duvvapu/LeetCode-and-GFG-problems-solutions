@@ -24,7 +24,7 @@ class RodCutting {
 
 // } Driver Code Ends
 
-//Space optimization using 2 arrays
+//Space optimization using 1 array
 
 class Solution{
     public int cutRod(int price[], int n) {
@@ -41,13 +41,10 @@ class Solution{
                 int notPick=prev[j];
                 int pick=-1;
                 if (i+1<=j)
-                    pick=price[i]+curr[j-(i+1)];
+                    pick=price[i]+prev[j-(i+1)];
                     
-                curr[j]=Math.max(pick,notPick);
+                prev[j]=Math.max(pick,notPick);
             }
-            
-            for (int k=0;k<=n;k++)
-                prev[k]=curr[k];
         }
         
         return prev[n];
