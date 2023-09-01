@@ -24,30 +24,28 @@ class RodCutting {
 
 // } Driver Code Ends
 
-//Memoization
+//Tabulation
 
 class Solution{
     public int cutRod(int price[], int n) {
         int[][] dp=new int[n][n+1];
-        for (int i=0;i<n;i++)
-            for (int j=0;j<=n;j++)
-                dp[i][j]=-1;
-        return solve(n-1,n,price,dp);
-    }
-    
-    private int solve(int pos,int w,int[] price,int[][] dp)
-    {
-        if (pos==0)
-            return price[0]*(w);
-            
-        if (dp[pos][w]!=-1)
-            return dp[pos][w];
         
-        int notPick=solve(pos-1,w,price,dp);
-        int pick=-1;
-        if (pos+1<=w)
-            pick=price[pos]+solve(pos,w-(pos+1),price,dp);
+        for (int i=0;i<=n;i++)
+            dp[0][i]=price[0]*i;
             
-        return dp[pos][w]=Math.max(pick,notPick);
+        for (int i=1;i<n;i++)
+        {
+            for (int j=0;j<=n;j++)
+            {
+                int notPick=dp[i-1][j];
+                int pick=-1;
+                if (i+1<=j)
+                    pick=price[i]+dp[i][j-(i+1)];
+                    
+                dp[i][j]=Math.max(pick,notPick);
+            }
+        }
+        
+        return dp[n-1][n];
     }
 }
