@@ -24,28 +24,32 @@ class RodCutting {
 
 // } Driver Code Ends
 
-//Tabulation
+//Space optimization using 2 arrays
 
 class Solution{
     public int cutRod(int price[], int n) {
-        int[][] dp=new int[n][n+1];
+        int[] prev=new int[n+1];
         
         for (int i=0;i<=n;i++)
-            dp[0][i]=price[0]*i;
+            prev[i]=price[0]*i;
             
         for (int i=1;i<n;i++)
         {
+            int[] curr=new int[n+1];
             for (int j=0;j<=n;j++)
             {
-                int notPick=dp[i-1][j];
+                int notPick=prev[j];
                 int pick=-1;
                 if (i+1<=j)
-                    pick=price[i]+dp[i][j-(i+1)];
+                    pick=price[i]+curr[j-(i+1)];
                     
-                dp[i][j]=Math.max(pick,notPick);
+                curr[j]=Math.max(pick,notPick);
             }
+            
+            for (int k=0;k<=n;k++)
+                prev[k]=curr[k];
         }
         
-        return dp[n-1][n];
+        return prev[n];
     }
 }
