@@ -42,19 +42,15 @@ class Solution{
             
         for (int i=1;i<n;i++)
         {
-            int[] curr=new int[w+1];
             for (int j=0;j<=w;j++)
             {
                 int notPick=prev[j];
                 int pick=-(int)(1e5);
                 if (wt[i]<=j)
-                    pick=val[i]+curr[j-wt[i]];
+                    pick=val[i]+prev[j-wt[i]];
                     
-                curr[j]=Math.max(pick,notPick);
+                prev[j]=Math.max(pick,notPick);
             }
-            
-            for (int k=0;k<=w;k++)
-                prev[k]=curr[k];
         }
                 
         int ans=prev[w];
