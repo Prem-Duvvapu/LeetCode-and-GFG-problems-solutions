@@ -35,25 +35,29 @@ class GFG{
 class Solution{
     static int knapSack(int n, int w, int val[], int wt[])
     {
-        int[][] dp=new int[n][w+1];
+        int[] prev=new int[w+1];
         
         for (int i=0;i<=w;i++)
-            dp[0][i]=val[0]*(i/wt[0]);
+            prev[i]=val[0]*(i/wt[0]);
             
         for (int i=1;i<n;i++)
         {
+            int[] curr=new int[w+1];
             for (int j=0;j<=w;j++)
             {
-                int notPick=dp[i-1][j];
+                int notPick=prev[j];
                 int pick=-(int)(1e5);
                 if (wt[i]<=j)
-                    pick=val[i]+dp[i][j-wt[i]];
+                    pick=val[i]+curr[j-wt[i]];
                     
-                dp[i][j]=Math.max(pick,notPick);
+                curr[j]=Math.max(pick,notPick);
             }
+            
+            for (int k=0;k<=w;k++)
+                prev[k]=curr[k];
         }
                 
-        int ans=dp[n-1][w];
+        int ans=prev[w];
         
         if (ans<0)
             return 0;
