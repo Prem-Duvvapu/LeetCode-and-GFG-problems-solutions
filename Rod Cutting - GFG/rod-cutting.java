@@ -24,7 +24,7 @@ class RodCutting {
 
 // } Driver Code Ends
 
-//Recursion
+//Memoization
 
 class Solution{
     public int cutRod(int price[], int n) {
