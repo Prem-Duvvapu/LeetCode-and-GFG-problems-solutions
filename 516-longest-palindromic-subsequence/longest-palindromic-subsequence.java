@@ -1,5 +1,5 @@
 //Find the longest common subsequence in the given string and its reverse
-//Tabulation
+//Space Optimization(two 1D arrays)
 
 class Solution {
     public int longestPalindromeSubseq(String s) {
@@ -7,19 +7,23 @@ class Solution {
         StringBuilder sb=new StringBuilder(s);
         String t=sb.reverse().toString();
 
-        int[][] dp=new int[n+1][n+1];
+        int[] prev=new int[n+1];
+        int[] curr=new int[n+1];
 
         for (int i=1;i<=n;i++)
         {
             for (int j=1;j<=n;j++)
             {
                 if (s.charAt(i-1)==t.charAt(j-1))
-                    dp[i][j]=1+dp[i-1][j-1];
+                    curr[j]=1+prev[j-1];
                 else
-                    dp[i][j]=Math.max(dp[i-1][j],dp[i][j-1]);
+                    curr[j]=Math.max(prev[j],curr[j-1]);
             }
+
+            for (int k=1;k<=n;k++)
+                prev[k]=curr[k];
         }
 
-        return dp[n][n];
+        return prev[n];
     }
 }
