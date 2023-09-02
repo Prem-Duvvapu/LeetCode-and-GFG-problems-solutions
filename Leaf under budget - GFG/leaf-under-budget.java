@@ -117,7 +117,8 @@ class Solution{
         Deque<Node> q=new ArrayDeque<>();
         q.add(node);
         int level=1;
-        List<Integer> list=new ArrayList<>();
+        int cnt=0;
+        
         while (!q.isEmpty())
         {
             int n=q.size();
@@ -125,24 +126,19 @@ class Solution{
             {
                 Node curr=q.poll();
                 if (curr.left==null && curr.right==null)
-                    list.add(level);
+                {
+                    if (level<=bud)
+                    {
+                        cnt++;
+                        bud-=level;
+                    }
+                }
                 if (curr.left!=null)
                     q.add(curr.left);
                 if (curr.right!=null)
                     q.add(curr.right);
             }
             level++;
-        }
-        
-        // System.out.println(list);
-        int cnt=0;
-        int i=0;
-        while (bud>0 && i<list.size())
-        {
-            if (bud-list.get(i)>=0)
-                cnt++;
-            bud=bud-list.get(i);
-            i++;
         }
         
         return cnt;
