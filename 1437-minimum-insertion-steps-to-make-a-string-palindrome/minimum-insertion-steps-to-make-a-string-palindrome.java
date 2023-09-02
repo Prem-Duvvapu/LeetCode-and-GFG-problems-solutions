@@ -1,3 +1,8 @@
+//Find string length - longest palindromic subsequence of string
+//To find longest palindromic subsequence of a string, take the string and the reverse of that string and find their longest common subsequence
+//Tabulation
+
+
 class Solution {
     public int minInsertions(String s) {
         return (s.length()-longestPalindromicSubsequence(s));
