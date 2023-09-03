@@ -1,4 +1,4 @@
-//Memoization(right shift by 1)
+//Tabulation(right shift by 1)
 
 class Solution {
     public int minDistance(String word1, String word2) {
@@ -6,34 +6,31 @@ class Solution {
         int m=word2.length();
         int[][] dp=new int[n+1][m+1];
 
-        for (int[] arr: dp)
-            Arrays.fill(arr,-1);
+        for (int j=0;j<=m;j++)
+            dp[0][j]=j;
 
-        return solve(n,m,word1,word2,dp);
-    }
+        for (int i=0;i<=n;i++)
+            dp[i][0]=i;
 
-    private int solve(int i,int j,String s,String t,int[][] dp)
-    {
-        if (i==0)
-            return j;
-
-        if (j==0)
-            return i;
-
-        if (dp[i][j]!=-1)
-            return dp[i][j];
-
-        int match=1000,insert=1000,delete=1000,replace=1000;
-        if (s.charAt(i-1)==t.charAt(j-1))
-            match=solve(i-1,j-1,s,t,dp);
-        else
+        for (int i=1;i<=n;i++)
         {
-            insert=1+solve(i,j-1,s,t,dp);
-            delete=1+solve(i-1,j,s,t,dp);
-            replace=1+solve(i-1,j-1,s,t,dp);
+            for (int j=1;j<=m;j++)
+            {
+                int match=1000,insert=1000,delete=1000,replace=1000;
+                if (word1.charAt(i-1)==word2.charAt(j-1))
+                    match=dp[i-1][j-1];
+                else
+                {
+                    insert=1+dp[i][j-1];
+                    delete=1+dp[i-1][j];
+                    replace=1+dp[i-1][j-1];
+                }
+
+
+                dp[i][j]=Math.min(Math.min(match,insert),Math.min(delete,replace));
+            }
         }
 
-
-        return dp[i][j]=Math.min(Math.min(match,insert),Math.min(delete,replace));
+        return dp[n][m];
     }
 }
