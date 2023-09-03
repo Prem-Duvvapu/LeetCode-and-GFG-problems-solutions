@@ -21,13 +21,15 @@ class Solution {
         if (dp[i][j]!=-1)
             return dp[i][j];
 
-        int match=s.length()+t.length();
+        int match=1000,insert=1000,delete=1000,replace=1000;
         if (s.charAt(i)==t.charAt(j))
             match=solve(i-1,j-1,s,t,dp);
-
-        int insert=1+solve(i,j-1,s,t,dp);
-        int delete=1+solve(i-1,j,s,t,dp);
-        int replace=1+solve(i-1,j-1,s,t,dp);
+        else
+        {
+            insert=1+solve(i,j-1,s,t,dp);
+            delete=1+solve(i-1,j,s,t,dp);
+            replace=1+solve(i-1,j-1,s,t,dp);
+        }
 
 
         return dp[i][j]=Math.min(Math.min(match,insert),Math.min(delete,replace));
