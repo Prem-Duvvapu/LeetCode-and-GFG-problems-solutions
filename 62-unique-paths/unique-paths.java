@@ -1,4 +1,4 @@
-//Memoization
+//Tabulation
 
 class Solution {
     int mod=(int)(2e9);
