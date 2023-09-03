@@ -1,35 +1,30 @@
-//Space Optimization
+//Memoization
 
 class Solution {
-    int mod=2000000000;
+    int mod=(int)(2e9);
 
     public int uniquePaths(int m, int n) {
-        int[] prev=new int[n];
+        int[][] dp=new int[m][n];
+        for (int[] arr: dp)
+            Arrays.fill(arr,-1);
 
-        for (int i=0;i<m;i++)
-        {
-            int[] curr=new int[n];
-            for (int j=0;j<n;j++)
-            {
-                if (i==0 && j==0)
-                    curr[j]=1;
-                else
-                {
-                    int up=0;
-                    int left=0;
+        return solve(m-1,n-1,dp);
+    }
 
-                    if (i>0)
-                        up=prev[j];
+    private int solve(int i,int j,int[][] dp)
+    {
+        if (i==0 && j==0)
+            return 1;
 
-                    if (j>0)
-                        left=curr[j-1];
+        if (i<0 || j<0)
+            return 0;
 
-                    curr[j]=(up+left)%mod;
-                }
-            }
-            System.arraycopy(curr,0,prev,0,n);
-        }
+        if (dp[i][j]!=-1)
+            return dp[i][j];
 
-        return prev[n-1];
+        int left=solve(i,j-1,dp);
+        int top=solve(i-1,j,dp);
+
+        return dp[i][j]=(left+top)%mod;
     }
 }
