@@ -11,13 +11,20 @@ class Solution {
         for (int j=1;j<=m;j++)
             dp[0][j]=false;
 
-        for (int i=1;i<=n;i++)
+        if (n>0)
         {
-            dp[i][0]=true;
+            if (p.charAt(0)=='*')
+                dp[1][0]=true;
+            else
+                dp[1][0]=false;
+        }
 
-            for (int k=0;k<i;k++)
-                if (p.charAt(k)!='*')
-                    dp[i][0]=false;
+        for (int i=2;i<=n;i++)
+        {
+            if (p.charAt(i-1)=='*')
+                dp[i][0]=dp[i-1][0];
+            else
+                dp[i][0]=false;
         }
 
         for (int i=1;i<=n;i++)
