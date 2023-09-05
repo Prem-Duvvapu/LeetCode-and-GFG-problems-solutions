@@ -1,36 +1,35 @@
-//Tabulation(right shift by 1)
+//Space Optimization(right shift by 1)
 
 class Solution {
     public int minDistance(String word1, String word2) {
         int n=word1.length();
         int m=word2.length();
-        int[][] dp=new int[n+1][m+1];
+        int[] prev=new int[m+1];
+        int[] curr=new int[m+1];
 
         for (int j=0;j<=m;j++)
-            dp[0][j]=j;
-
-        for (int i=0;i<=n;i++)
-            dp[i][0]=i;
+            prev[j]=j;
 
         for (int i=1;i<=n;i++)
         {
+            curr[0]=i;
             for (int j=1;j<=m;j++)
             {
-                int match=1000,insert=1000,delete=1000,replace=1000;
                 if (word1.charAt(i-1)==word2.charAt(j-1))
-                    match=dp[i-1][j-1];
+                    curr[j]=prev[j-1];
                 else
                 {
-                    insert=1+dp[i][j-1];
-                    delete=1+dp[i-1][j];
-                    replace=1+dp[i-1][j-1];
+                    int insert=1+curr[j-1];
+                    int delete=1+prev[j];
+                    int replace=1+prev[j-1];
+                    curr[j]=Math.min(insert,Math.min(delete,replace));
                 }
-
-
-                dp[i][j]=Math.min(Math.min(match,insert),Math.min(delete,replace));
             }
+
+            for (int k=0;k<=m;k++)
+                prev[k]=curr[k];
         }
 
-        return dp[n][m];
+        return prev[m];
     }
 }
