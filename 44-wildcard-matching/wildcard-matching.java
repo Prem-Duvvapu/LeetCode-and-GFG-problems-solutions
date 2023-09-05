@@ -1,4 +1,4 @@
-//Memoization (right shift by 1)
+//Tabulation (right shift by 1)
 
 class Solution {
     public boolean isMatch(String s, String p) {
