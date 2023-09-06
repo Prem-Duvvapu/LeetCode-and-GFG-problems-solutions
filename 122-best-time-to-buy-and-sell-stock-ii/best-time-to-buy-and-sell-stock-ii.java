@@ -1,31 +1,39 @@
-//Memoization
+//Tabulation
 
 class Solution {
     public int maxProfit(int[] prices) {
-        int[][] dp=new int[prices.length][2];
-        for (int[] arr: dp)
-            Arrays.fill(arr,-1);
-        return solve(0,1,prices,dp);
-    }
-
-    private int solve(int pos,int canBuy,int[] prices,int[][] dp)
-    {
-        if (pos==prices.length)
-            return 0;
-
-        if (dp[pos][canBuy]!=-1)
-            return dp[pos][canBuy];
-
-        if (canBuy==1)
-        {
-            int buy=-prices[pos]+solve(pos+1,0,prices,dp);
-            int notBuy=solve(pos+1,1,prices,dp);
-            return dp[pos][canBuy]=Math.max(buy,notBuy);
-        }
+        int n=prices.length;
+        int[][] dp=new int[n][2];
         
-        //sell
-        int sell=prices[pos]+solve(pos+1,1,prices,dp);
-        int notSell=solve(pos+1,0,prices,dp);
-        return dp[pos][canBuy]=Math.max(sell,notSell);
+        for (int i=n-1;i>=0;i--)
+        {
+            for (int j=0;j<=1;j++)
+            {
+                if (j==1)
+                {
+                    int buy=-prices[i];
+                    int notBuy=0;
+                    if (i<n-1)
+                    {
+                        buy+=dp[i+1][0];
+                        notBuy=dp[i+1][1];
+                    }
+                    dp[i][j]=Math.max(buy,notBuy);
+                }
+                else
+                {
+                    int sell=prices[i];
+                    int notSell=0;
+                    if (i<n-1)
+                    {
+                        sell+=dp[i+1][1];
+                        notSell=dp[i+1][0];
+                    }
+                    dp[i][j]=Math.max(sell,notSell);
+                }
+            }
+        }
+
+        return dp[0][1];
     }
 }
