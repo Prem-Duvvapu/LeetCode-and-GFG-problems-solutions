@@ -1,9 +1,10 @@
-//Tabulation
+//Space Optimization
 
 class Solution {
     public int maxProfit(int[] prices) {
         int n=prices.length;
-        int[][] dp=new int[n][2];
+        int[] next=new int[2];
+        int[] curr=new int[2];
         
         for (int i=n-1;i>=0;i--)
         {
@@ -15,10 +16,10 @@ class Solution {
                     int notBuy=0;
                     if (i<n-1)
                     {
-                        buy+=dp[i+1][0];
-                        notBuy=dp[i+1][1];
+                        buy+=next[0];
+                        notBuy=next[1];
                     }
-                    dp[i][j]=Math.max(buy,notBuy);
+                    curr[j]=Math.max(buy,notBuy);
                 }
                 else
                 {
@@ -26,14 +27,17 @@ class Solution {
                     int notSell=0;
                     if (i<n-1)
                     {
-                        sell+=dp[i+1][1];
-                        notSell=dp[i+1][0];
+                        sell+=next[1];
+                        notSell=next[0];
                     }
-                    dp[i][j]=Math.max(sell,notSell);
+                    curr[j]=Math.max(sell,notSell);
                 }
             }
+
+            next[0]=curr[0];
+            next[1]=curr[1];
         }
 
-        return dp[0][1];
+        return next[1];
     }
 }
