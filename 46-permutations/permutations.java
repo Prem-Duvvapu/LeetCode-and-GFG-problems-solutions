@@ -1,33 +1,28 @@
 class Solution {
-    private void swap(int[] arr,int i,int j)
-    {
-        int temp=arr[i];
-        arr[i]=arr[j];
-        arr[j]=temp;
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> res=new ArrayList<>();
+        solve(new ArrayList<>(),new boolean[nums.length],nums,res);
+        return res;
     }
 
-    private void solve(int pos,int[] nums,List<List<Integer>> res)
+    private void solve(List<Integer> currList,boolean[] visited,int[] nums,List<List<Integer>> res)
     {
-        if (pos==nums.length)
+        if (currList.size()==nums.length)
         {
-            List<Integer> l=new ArrayList<>();
-            for (int val: nums)
-                l.add(val);
-            res.add(l);
+            res.add(new ArrayList<>(currList));
             return;
         }
 
-        for (int i=pos;i<nums.length;i++)
+        for (int i=0;i<nums.length;i++)
         {
-            swap(nums,pos,i);
-            solve(pos+1,nums,res);
-            swap(nums,pos,i);
-        }
-    }
+            if (visited[i])
+                continue;
 
-    public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>> res=new ArrayList<>();
-        solve(0,nums,res);
-        return res;
+            currList.add(nums[i]);
+            visited[i]=true;
+            solve(currList,visited,nums,res);
+            visited[i]=false;
+            currList.remove(currList.size()-1);
+        }
     }
 }
