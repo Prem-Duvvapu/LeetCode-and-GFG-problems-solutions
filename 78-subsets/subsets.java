@@ -5,20 +5,20 @@ class Solution {
         return res;
     }
 
-    private void solve(int pos,List<Integer> curr,int[] nums,List<List<Integer>> res)
+    private void solve(int pos,List<Integer> currList,int[] nums,List<List<Integer>> res)
     {
         if (pos==nums.length)
         {
-            res.add(new ArrayList<>(curr));
+            res.add(new ArrayList<>(currList));
             return;
         }
 
         //pick
-        curr.add(nums[pos]);
-        solve(pos+1,curr,nums,res);
-        curr.remove(curr.size()-1);
+        currList.add(nums[pos]);
+        solve(pos+1,currList,nums,res);
+        currList.remove(currList.size()-1);
 
         //not pick
-        solve(pos+1,curr,nums,res);
+        solve(pos+1,currList,nums,res);
     }
 }
