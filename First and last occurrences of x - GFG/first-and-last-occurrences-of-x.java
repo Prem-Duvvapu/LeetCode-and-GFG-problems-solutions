@@ -10,40 +10,65 @@ import java.util.*;
 // } Driver Code Ends
 //User function Template for Java
 
-
+//Binary Search
 class GFG
 {
     ArrayList<Integer> find(int arr[], int n, int x)
     {
         ArrayList<Integer> list=new ArrayList<>();
-        int left=0;
-        int right=n-1;
-        
-        for (;left<n;left++)
+        int first=firstOccurence(arr,x);
+        int second=lastOccurence(arr,x);
+        if (first==n || second==n)
         {
-            if (arr[left]==x)
-            {
-                list.add(left);
-                break;
-            }
+            list.add(-1);
+            list.add(-1);
+            return list;
         }
         
-        if (left==n)
-            list.add(-1);
-        
-        for (;right>=0;right--)
-        {
-            if (arr[right]==x)
-            {
-                list.add(right);
-                break;
-            }
-        }
-        
-        if (right<0)
-            list.add(-1);
-        
+        list.add(first);
+        list.add(second);
         return list;
+    }
+    
+    int firstOccurence(int[] arr,int x)
+    {
+        int low=0;
+        int high=arr.length-1;
+        int ans=arr.length;
+        while (low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if (arr[mid]>=x)
+            {
+                ans=mid;
+                high=mid-1;
+            }
+            else
+                low=mid+1;
+        }
+        return ans;
+    }
+    
+    int lastOccurence(int[] arr,int x)
+    {
+        int low=0;
+        int high=arr.length-1;
+        int ans=arr.length;
+        while (low<=high)
+        {
+            int mid=low+(high-low)/2;
+            if (arr[mid]==x)
+            {
+                ans=mid;
+                low=mid+1;
+            }
+            else if (arr[mid]<x)
+                low=mid+1;
+            else
+                high=mid-1;
+        }
+        return ans;
+        
     }
 }
 
