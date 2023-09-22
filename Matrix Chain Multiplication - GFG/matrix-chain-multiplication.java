@@ -26,32 +26,26 @@ class GFG
 // } Driver Code Ends
 
 
-//Memoization
+//Tabulation
 class Solution{
     static int matrixMultiplication(int n, int arr[])
     {
         int[][] dp=new int[n][n];
-        for (int i=0;i<n;i++)
-            for (int j=0;j<n;j++)
-                dp[i][j]=-1;
-        return solve(1,n-1,arr,dp);
-    }
-    
-    static int solve(int left,int right,int[] arr,int[][] dp)
-    {
-        if (left==right)
-            return 0;
-            
-        if (dp[left][right]!=-1)
-            return dp[left][right];
         
-        int minVal=Integer.MAX_VALUE;
-        for (int k=left;k<right;k++)
+        for (int left=n-1;left>0;left--)
         {
-            int currVal=arr[left-1]*arr[k]*arr[right]+solve(left,k,arr,dp)+solve(k+1,right,arr,dp);
-            minVal=Math.min(minVal,currVal);
+            for (int right=left+1;right<n;right++)
+            {
+                int minVal=Integer.MAX_VALUE;
+                for (int k=left;k<right;k++)
+                {
+                    int currVal=arr[left-1]*arr[k]*arr[right]+dp[left][k]+dp[k+1][right];
+                    minVal=Math.min(minVal,currVal);
+                }
+                
+                dp[left][right]=minVal;
+            }
         }
-        
-        return dp[left][right]=minVal;
+        return dp[1][n-1];
     }
 }
