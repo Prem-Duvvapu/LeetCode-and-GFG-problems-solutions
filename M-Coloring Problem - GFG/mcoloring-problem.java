@@ -34,51 +34,49 @@ class solve {
     // Function to determine if graph can be coloured with at most M colours
     // such
     // that no two adjacent vertices of graph are coloured with same colour.
-    private boolean isSafe(int node,List<Integer>[] g,int[] color,int col)
-    {
-        for (int val: g[node])
-            if (color[val]==col)
-                return false;
+    public boolean graphColoring(boolean graph[][], int m, int n) {
+        ArrayList<Integer>[] g=new ArrayList[n];
+        
+        for (int i=0;i<n;i++)
+            g[i]=new ArrayList<>();
             
-        return true;
+        for (int i=0;i<n;i++)
+            for (int j=0;j<n;j++)
+                if (graph[i][j]==true)
+                    g[i].add(j);
+                    
+        int[] colorArr=new int[n];
+        return solve(0,colorArr,g,n,m);
     }
     
-    private boolean solve(int node,List<Integer>[] g,int m,int n,int[] color)
+    private boolean solve(int node,int[] colorArr,ArrayList<Integer>[] g,int n,int m)
     {
+        //base case
         if (node==n)
             return true;
         
-        for (int i=1;i<=m;i++)
+        for (int color=1;color<=m;color++)
         {
-            if (isSafe(node,g,color,i))
+            if (isValid(node,color,g,colorArr))
             {
-                color[node]=i;
-                if (solve(node+1,g,m,n,color))
+                colorArr[node]=color;
+                if (solve(node+1,colorArr,g,n,m))
                     return true;
-                color[node]=0;
+                colorArr[node]=0;
             }
         }
         
         return false;
     }
     
-    public boolean graphColoring(boolean graph[][], int m, int n) {
-        List<Integer>[] g=new ArrayList[n];
-        buildGraph(graph,g,n);
-        int[] color=new int[n];
-        if (solve(0,g,m,n,color))
-            return true;
-        return false;
-    }
-    
-    private void buildGraph(boolean[][] graph,List<Integer>[] g,int n)
+    private boolean isValid(int node,int color,ArrayList<Integer>[] g,int[] colorArr)
     {
-        for (int i=0;i<n;i++)
-            g[i]=new ArrayList<>();
-            
-        for (int i=0;i<n;i++)
-            for (int j=0;j<n;j++)
-                if (graph[i][j])
-                    g[i].add(j);
+        for(int neighbour: g[node])
+        {
+            if (colorArr[neighbour]==color)
+                return false;
+        }
+        
+        return true;
     }
 }
