@@ -26,8 +26,6 @@ class GFG
 // } Driver Code Ends
 
 
-//User function Template for Java
-
 //Memoization
 class Solution{
     static int matrixMultiplication(int n, int arr[])
@@ -46,14 +44,14 @@ class Solution{
             
         if (dp[left][right]!=-1)
             return dp[left][right];
-            
-        int mini=Integer.MAX_VALUE;
+        
+        int minVal=Integer.MAX_VALUE;
         for (int k=left;k<right;k++)
         {
-            int ops=arr[left-1]*arr[k]*arr[right]+solve(left,k,arr,dp)+solve(k+1,right,arr,dp);
-            mini=Math.min(mini,ops);
+            int currVal=arr[left-1]*arr[k]*arr[right]+solve(left,k,arr,dp)+solve(k+1,right,arr,dp);
+            minVal=Math.min(minVal,currVal);
         }
         
-        return dp[left][right]=mini;
+        return dp[left][right]=minVal;
     }
 }
