@@ -31,13 +31,8 @@ class Main {
 }
 // } Driver Code Ends
 
-
+//Prefix Sum
 class Solution {
-
-    
-    // a: input array
-    // n: size of array
-    // Function to find equilibrium point in the array.
     public static int equilibriumPoint(long arr[], int n) {
 
         long totalSum=0;
@@ -47,7 +42,9 @@ class Solution {
             
         for (int i=0;i<n;i++)
         {
-            if (totalSum-arr[i]==2*currSum)
+            totalSum-=arr[i];
+            
+            if (totalSum==currSum)
                 return i+1;
                 
             currSum+=arr[i];
