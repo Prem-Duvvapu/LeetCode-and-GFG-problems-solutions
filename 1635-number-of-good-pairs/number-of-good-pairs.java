@@ -9,7 +9,7 @@ class Solution {
         for (Map.Entry<Integer,Integer> m: map.entrySet())
         {
             int n=m.getValue();
-            int sum=(n*(n-1))/2;
+            int sum=((n-1)*n)/2;
             cnt+=sum;
         }
 
