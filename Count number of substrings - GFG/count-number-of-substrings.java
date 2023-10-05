@@ -27,17 +27,18 @@ class GfG
 
 class Solution
 {
-    long substrCount (String s, int k) {
+    long substrCount (String s, int k)//returns no. of substrings of size=k
+    {
         return solve(s,k)-solve(s,k-1);
     }
     
-    private long solve(String s,int k)
+    private long solve(String s,int k)//returns no. of substrings of size<=k
     {
         int n=s.length();
         long ans=0;
         int left=0;
         int[] cnt=new int[26];
-        int distinct=0;
+        int distinctChar=0;
         
         for (int right=0;right<n;right++)
         {
@@ -45,15 +46,15 @@ class Solution
             cnt[ch-'a']++;
             
             if (cnt[ch-'a']==1)
-                distinct++;
+                distinctChar++;
                 
-            while (distinct>k)
+            while (distinctChar>k)
             {
                 char temp=s.charAt(left);
                 cnt[temp-'a']--;
                 
                 if (cnt[temp-'a']==0)
-                    distinct--;
+                    distinctChar--;
                     
                 left++;
             }
