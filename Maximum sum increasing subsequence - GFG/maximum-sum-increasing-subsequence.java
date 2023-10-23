@@ -44,9 +44,9 @@ class Solution
 	               
 	            if (prev==n || arr[pos]<arr[prev])
 	            {
-	                    pick=arr[pos];
-	                    if (pos>0)
-	                        pick+=dp[pos-1][pos];
+	                pick=arr[pos];
+	                if (pos>0)
+	                   pick+=dp[pos-1][pos];
 	            }
 	       
 	                
@@ -56,20 +56,4 @@ class Solution
 	    
 	    return dp[n-1][n];
 	} 
-	
-	private int solve(int pos,int prev,int[] arr,int[][] dp)
-	{
-	    if (pos<0)
-	        return 0;
-	        
-	    if (dp[pos][prev]!=-1)
-	        return dp[pos][prev];
-	    
-	    int notPick=solve(pos-1,prev,arr,dp);
-	    int pick=0;
-	    if (prev==arr.length || arr[pos]<arr[prev])
-	        pick=arr[pos]+solve(pos-1,pos,arr,dp);
-	        
-	    return dp[pos][prev]=Math.max(pick,notPick);
-	}
 }
