@@ -25,16 +25,36 @@ class GfG
 
 //User function Template for Java
 
-//Memoization
+//Tabulation
 class Solution
 {
 	public int maxSumIS(int arr[], int n)  
 	{
 	    int[][] dp=new int[n][n+1];
-	    for (int i=0;i<n;i++)
-	        for (int j=0;j<=n;j++)
-	            dp[i][j]=-1;
-	    return solve(n-1,n,arr,dp);
+	    
+	    for (int pos=0;pos<n;pos++)
+	    {
+	        for (int prev=pos+1;prev<=n;prev++)
+	        {
+	            int notPick=0;
+	            int pick=0;
+	            
+	            if (pos>0)
+	                notPick=dp[pos-1][prev];
+	               
+	            if (prev==n || arr[pos]<arr[prev])
+	            {
+	                    pick=arr[pos];
+	                    if (pos>0)
+	                        pick+=dp[pos-1][pos];
+	            }
+	       
+	                
+	            dp[pos][prev]=Math.max(pick,notPick);
+	        }
+	    }
+	    
+	    return dp[n-1][n];
 	} 
 	
 	private int solve(int pos,int prev,int[] arr,int[][] dp)
