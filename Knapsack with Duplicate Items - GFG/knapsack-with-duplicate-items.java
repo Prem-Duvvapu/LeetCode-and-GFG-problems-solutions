@@ -31,33 +31,30 @@ class GFG{
 
 
 //User function Template for Java
-
+//Memoization
 class Solution{
-    static int knapSack(int n, int w, int val[], int wt[])
+    static int knapSack(int N, int W, int val[], int wt[])
     {
-        int[] prev=new int[w+1];
-        
-        for (int i=0;i<=w;i++)
-            prev[i]=val[0]*(i/wt[0]);
-            
-        for (int i=1;i<n;i++)
-        {
-            for (int j=0;j<=w;j++)
-            {
-                int notPick=prev[j];
-                int pick=-(int)(1e5);
-                if (wt[i]<=j)
-                    pick=val[i]+prev[j-wt[i]];
-                    
-                prev[j]=Math.max(pick,notPick);
-            }
-        }
-                
-        int ans=prev[w];
-        
-        if (ans<0)
+        int[][] dp=new int[N][W+1];
+        for (int i=0;i<N;i++)
+            for (int j=0;j<=W;j++)
+                dp[i][j]=-1;
+        return solve(N-1,W,val,wt,dp);
+    }
+    
+    static int solve(int pos,int w,int[] val,int[] wt,int[][] dp)
+    {
+        if (pos<0)
             return 0;
             
-        return ans;
+        if (dp[pos][w]!=-1)
+            return dp[pos][w];
+        
+        int notPick=solve(pos-1,w,val,wt,dp);
+        int pick=0;
+        if (wt[pos]<=w)
+            pick=val[pos]+solve(pos,w-wt[pos],val,wt,dp);
+            
+        return dp[pos][w]=Math.max(pick,notPick);
     }
 }
