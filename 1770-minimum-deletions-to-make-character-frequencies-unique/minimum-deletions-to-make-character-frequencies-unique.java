@@ -1,23 +1,23 @@
-//Appraoch-1 -> Greedy
+//Appraoch-2 -> Sorting
 class Solution {
     public int minDeletions(String s) {
         int n=s.length();
         int res=0;
         int[] freq=new int[26];
-        Set<Integer> set=new HashSet<>();
 
         for (char ch: s.toCharArray())
             freq[ch-'a']++;
 
-        for (int i=0;i<26;i++)
-        {
-            while (freq[i]>0 && set.contains(freq[i]))
-            {
-                freq[i]--;
-                res++;
-            }
+        Arrays.sort(freq);
 
-            set.add(freq[i]);
+        for (int i=24;i>=0;i--)
+        {
+            int curr=freq[i];
+
+            if (freq[i]>=freq[i+1])
+                freq[i]=Math.max(0,freq[i+1]-1);
+
+            res+=(curr-freq[i]);
         }
 
         return res;
