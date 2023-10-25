@@ -1,21 +1,23 @@
-//Greedy approach
-
+//Appraoch-1 -> Greedy
 class Solution {
     public int minDeletions(String s) {
-        Set<Integer> set=new HashSet<>();
-        int[] cnt=new int[26];
+        int n=s.length();
         int res=0;
+        int[] freq=new int[26];
+        Set<Integer> set=new HashSet<>();
 
         for (char ch: s.toCharArray())
-            cnt[ch-'a']++;
+            freq[ch-'a']++;
 
         for (int i=0;i<26;i++)
         {
-            while (cnt[i]>0 && !set.add(cnt[i]))
+            while (freq[i]>0 && set.contains(freq[i]))
             {
-                cnt[i]--;
+                freq[i]--;
                 res++;
             }
+
+            set.add(freq[i]);
         }
 
         return res;
