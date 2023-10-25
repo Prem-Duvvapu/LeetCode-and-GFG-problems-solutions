@@ -2,19 +2,17 @@
 class Solution {
     public int[] mostCompetitive(int[] nums, int k) {
         int n=nums.length;
-        Stack<Integer> stack=new Stack<>();
+        int[] res=new int[k];
+        int j=-1;
+
         for (int i=0;i<n;i++)
         {
-            while (!stack.isEmpty() && stack.peek()>nums[i] && (stack.size()-1+n-i)>=k)
-                stack.pop();
+            while (j!=-1 && res[j]>nums[i] && (j+n-i)>=k)
+                j--;
 
-            if (stack.size()<k)
-                stack.push(nums[i]);
+            if (j<k-1)
+                res[++j]=nums[i];
         }
-
-        int[] res=new int[k];
-        for (int i=k-1;i>=0;i--)
-            res[i]=stack.pop();
 
         return res;
     }
