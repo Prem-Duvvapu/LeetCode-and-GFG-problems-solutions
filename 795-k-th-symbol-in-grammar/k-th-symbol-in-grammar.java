@@ -1,4 +1,4 @@
-//Binary Search
+//Binary Search(NeetCode)
 class Solution {
     public int kthGrammar(int n, int k) {
         return solve(0,(int)Math.pow(2,n-1)-1,0,n,k-1);
@@ -10,17 +10,10 @@ class Solution {
             return prev;
 
         int mid=low+(high-low)/2;
-        if (k<=mid)
-        {
-            if (prev==0)
-                return solve(low,mid,0,n,k);
-            else
-                return solve(low,mid,1,n,k);
-        }
         
-        if (prev==0)
-            return solve(mid+1,high,1,n,k);
-
-        return solve(mid+1,high,0,n,k);
+        if (k<=mid)
+            return solve(low,mid,prev,n,k);
+        
+        return solve(mid+1,high,Math.abs(prev-1),n,k);
     }
 }
