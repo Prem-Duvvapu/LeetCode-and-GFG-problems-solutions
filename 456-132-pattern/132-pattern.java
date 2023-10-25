@@ -1,8 +1,5 @@
 class Solution {
     public boolean find132pattern(int[] nums) {
-        if (nums.length<3)
-            return false;
-
         int n=nums.length;
         Stack<Integer> stack=new Stack<>();
         int[] leftMin=new int[n];
@@ -13,22 +10,21 @@ class Solution {
 
         for (int i=n-1;i>0;i--)
         {
-            if (nums[i]>leftMin[i-1]) // middle>left
+            //middle should be greater than left
+            if (nums[i]>leftMin[i-1])
             {
-                //right is not greater than leftMin
+                //right should be less than left
                 while (!stack.isEmpty() && stack.peek()<=leftMin[i-1])
                     stack.pop();
 
-                //right>leftMin and middle>right
-                if (!stack.isEmpty() && nums[i]>stack.peek())
+                //right should be lesser than middle
+                while (!stack.isEmpty() && stack.peek()<nums[i])
                     return true;
 
                 stack.push(nums[i]);
             }
         }
+
         return false;
     }
 }
-
-//TC: O(n)
-//SC: O(n)
