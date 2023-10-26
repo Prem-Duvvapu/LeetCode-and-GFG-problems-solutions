@@ -41,20 +41,4 @@ class Solution
             
         return 1+dp[1];
     }
-    
-    private int solve(int curr,int n,int[] dp)
-    {
-        if (curr==n)
-            return 0;
-            
-        if (dp[curr]!=-1)
-            return dp[curr];
-            
-        int dbNum=1000000;
-        if (curr<=n/2)
-            dbNum=solve(2*curr,n,dp);
-        int addOne=solve(curr+1,n,dp);
-        
-        return dp[curr]=1+Math.min(dbNum,addOne);
-    }
 }
