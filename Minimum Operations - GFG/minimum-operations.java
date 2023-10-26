@@ -27,18 +27,17 @@ class Solution
 {
     public int minOperation(int n)
     {
-        int[] dp=new int[n+1];
-        
-        for (int curr=n-1;curr>0;curr--)
-        {
-            int dbNum=1000000;
-            if (curr<=n/2)
-                dbNum=dp[2*curr];
-            int addOne=dp[curr+1];
-            
-            dp[curr]=1+Math.min(dbNum,addOne);
-        }
-            
-        return 1+dp[1];
+       int minOps=0;
+       
+       while (n>0)
+       {
+            if (n%2==0)
+                n/=2;
+            else
+                n-=1;
+            minOps++;
+       }
+       
+       return minOps;
     }
 }
