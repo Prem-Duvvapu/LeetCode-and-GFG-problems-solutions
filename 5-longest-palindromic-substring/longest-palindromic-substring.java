@@ -1,33 +1,33 @@
-//sliding window
+//Recursion
 class Solution {
+    private boolean isPalindrome(String s,int left,int right)
+    {
+        if (left>=right)
+            return true;
+
+        if (s.charAt(left)==s.charAt(right))
+            return isPalindrome(s,left+1,right-1);
+
+        return false;
+    }
+
     public String longestPalindrome(String s) {
         int n=s.length();
-        String res="";
+        int start=0;
+        int end=0;
 
         for (int i=0;i<n;i++)
         {
-            int left=i;
-            int right=i;
-
-            while (left>=0 && s.charAt(left)==s.charAt(i))
-                left--;
-
-            while (right<n && s.charAt(right)==s.charAt(i))
-                right++;
-
-            while (left>=0 && right<n)
+            for (int j=0;j<i;j++)
             {
-                if (s.charAt(left)!=s.charAt(right))
-                    break;
-
-                left--;
-                right++;
+                if (isPalindrome(s,j,i) && (i-j+1)>(end-start+1))
+                {
+                    start=j;
+                    end=i;
+                }
             }
-
-            if (right-left-1>res.length())
-                res=s.substring(left+1,right);
         }
 
-        return res;
+        return s.substring(start,end+1);
     }
 }
