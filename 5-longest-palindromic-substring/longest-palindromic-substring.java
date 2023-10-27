@@ -1,3 +1,4 @@
+//sliding window
 class Solution {
     public String longestPalindrome(String s) {
         int n=s.length();
