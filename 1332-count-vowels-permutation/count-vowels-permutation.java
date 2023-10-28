@@ -4,7 +4,7 @@ class Solution {
     Map<Character,List<Character>> map=new HashMap<>();
 
     public int countVowelPermutation(int n) {
-        char[] a={'#','a','e','i','o','u'};
+        char[] a={'b','a','e','i','o','u'};
 
         for (char ch: a)
             map.put(ch,new ArrayList<>());
@@ -16,23 +16,23 @@ class Solution {
         List<Character> oList=Arrays.asList('i','u');
         List<Character> uList=Arrays.asList('a');
 
-        map.get('#').addAll(allList);
+        map.get('b').addAll(allList);
         map.get('a').addAll(aList);
         map.get('e').addAll(eList);
         map.get('i').addAll(iList);
         map.get('o').addAll(oList);
         map.get('u').addAll(uList);
 
-        int[][] dp=new int[100][n];
+        int[][] dp=new int[22][n+1];
         for (int[] arr: dp)
             Arrays.fill(arr,-1);
 
-        return solve('#','#'-'#',0,n,dp);
+        return solve('b','b'-'a',n,dp);
     }
 
-    private int solve(char last,int val,int pos,int n,int[][] dp)
+    private int solve(char last,int val,int pos,int[][] dp)
     {
-        if (pos==n)
+        if (pos==0)
             return 1;
 
         if (dp[val][pos]!=-1)
@@ -41,7 +41,7 @@ class Solution {
         List<Character> list=map.get(last);
         int cnt=0;
         for (char ch: list)
-            cnt=(cnt+solve(ch,ch-'#',pos+1,n,dp))%mod;
+            cnt=(cnt+solve(ch,ch-'a',pos-1,dp))%mod;
 
         return dp[val][pos]=cnt%mod;
     }
