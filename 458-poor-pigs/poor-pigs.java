@@ -1,11 +1,11 @@
 class Solution {
     public int poorPigs(int buckets, int minutesToDie, int minutesToTest) {
         int trials=minutesToTest/minutesToDie+1;
-        int ans=0;
+        int pigs=0;
 
-        while ((int)Math.pow(trials,ans)<buckets)
-            ans++;
+        while ((int)Math.pow(trials,pigs)<buckets)
+            pigs++;
 
-        return ans;
+        return pigs;
     }
 }
