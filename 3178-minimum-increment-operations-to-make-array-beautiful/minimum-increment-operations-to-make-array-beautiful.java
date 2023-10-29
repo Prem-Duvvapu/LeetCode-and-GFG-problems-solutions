@@ -1,3 +1,4 @@
+//Memoization
 class Solution {
     public long minIncrementOperations(int[] nums, int k) {
         int n=nums.length;
