@@ -1,27 +1,21 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        int n=nums.length;
-        Arrays.sort(nums);
-        int a=nums[n-1];
-        int b=nums[n-1];
-        System.out.println(Arrays.toString(nums));
+        int[] res=new int[2];
 
-        for (int i=0;i<n-1;i++)
+        int diff=0;
+        for (int val: nums)
+            diff^=val;
+
+        diff&=(-diff);//to find right most set bit
+
+        for (int val: nums)
         {
-            if (nums[i]==nums[i+1])
-                i++;
+            if ((val&diff)>0)
+                res[0]^=val;
             else
-            {
-                if (a==b)
-                    a=nums[i];
-                else
-                {
-                    b=nums[i];
-                    break;
-                }
-            }
+                res[1]^=val;
         }
 
-        return new int[]{a,b};
+        return res;
     }
 }
