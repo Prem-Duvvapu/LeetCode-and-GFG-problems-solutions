@@ -44,9 +44,13 @@ class Solution {
         while (i<n && arr[i]!=0)
             i++;
             
-        for (int j=0;j<n;j++)
+        int j=i;
+        while (j<n && arr[j]==0)
+            j++;
+            
+        for (;j<n;j++)
         {
-            if (arr[j]>0 && i<j)
+            if (arr[j]>0)
             {
                 arr[i]=arr[j];
                 i++;
