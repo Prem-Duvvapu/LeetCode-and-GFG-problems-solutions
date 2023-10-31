@@ -1,17 +1,14 @@
 class Solution {
     public int[] findArray(int[] pref) {
         int n=pref.length;
-        int[] res=new int[n];
-        int[] prefix=new int[n];
-        res[0]=pref[0];
-        prefix[0]=pref[0];
+        int[] arr=new int[n];
+        arr[0]=pref[0];
 
-        for (int i=1;i<n;i++)
-        {
-            res[i]=prefix[i-1]^pref[i];
-            prefix[i]=prefix[i-1]^res[i];
-        }
+        for (int i=n-1;i>0;i--)
+            arr[i]=pref[i-1]^pref[i];
 
-        return res;
+        return arr;
     }
 }
+
+//a^b=c => a^c=b
