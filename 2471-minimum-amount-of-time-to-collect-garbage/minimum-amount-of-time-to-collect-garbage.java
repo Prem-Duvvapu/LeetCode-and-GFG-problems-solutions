@@ -2,54 +2,31 @@ class Solution {
     public int garbageCollection(String[] garbage, int[] travel) {
         int n=garbage.length;
         int ans=0;
-        int lastM=0,lastP=0,lastG=0;
-        int[] g=new int[n];
-        int[] m=new int[n];
-        int[] p=new int[n];
+        int lastG=0,lastM=0,lastP=0;
 
         for (int i=0;i<n;i++)
         {
-            String curr=garbage[i];
-            for (char ch: curr.toCharArray())
-            {
-                if (ch=='G')
-                    g[i]++;
-                else if (ch=='M')
-                    m[i]++;
-                else
-                    p[i]++;
-            }
-            if (g[i]>0)
+            String s=garbage[i];
+            ans+=s.length();
+            if (s.indexOf('G')!=-1)
                 lastG=i;
-            if (m[i]>0)
+            if (s.indexOf('M')!=-1)
                 lastM=i;
-            if (p[i]>0)
+            if (s.indexOf('P')!=-1)
                 lastP=i;
         }
 
-        //for G
-        for (int i=0;i<lastG;i++)
-        {
-            ans+=g[i];
-            ans+=travel[i];
-        }
-        ans+=g[lastG];
+        int[] prefix=new int[n-1];
+        prefix[0]=travel[0];
+        for (int i=1;i<n-1;i++)
+            prefix[i]=travel[i]+prefix[i-1];
 
-        //for M
-        for (int i=0;i<lastM;i++)
-        {
-            ans+=m[i];
-            ans+=travel[i];
-        }
-        ans+=m[lastM];
-
-        //for P
-        for (int i=0;i<lastP;i++)
-        {
-            ans+=p[i];
-            ans+=travel[i];
-        }
-        ans+=p[lastP];
+        if (lastG>0)
+            ans+=prefix[lastG-1];
+        if (lastM>0)
+            ans+=prefix[lastM-1];
+        if (lastP>0)
+            ans+=prefix[lastP-1];
 
         return ans;
     }
