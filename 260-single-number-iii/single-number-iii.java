@@ -6,7 +6,8 @@ class Solution {
         for (int val: nums)
             diff^=val;
 
-        diff&=(-diff);//to find right most set bit
+        //2's complement
+        diff&=(~diff+1);//to find right most set bit
 
         for (int val: nums)
         {
