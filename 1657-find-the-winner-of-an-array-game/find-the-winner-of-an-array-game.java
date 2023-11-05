@@ -12,27 +12,28 @@ class Solution {
             maxVal=Math.max(maxVal,val);
         }
 
+        int i=0;
+        int j=1;
+
         while (true)
         {
-            if (list.get(0)==maxVal || list.get(1)==maxVal)
+            if (list.get(i)==maxVal || list.get(j)==maxVal)
                 return maxVal;
-            if (list.get(0)>list.get(1))
+            if (list.get(i)>list.get(j))
             {
-                map.put(list.get(0),map.getOrDefault(list.get(0),0)+1);
-                if (map.get(list.get(0))==k)
-                    return list.get(0);
-                int temp=list.get(1);
-                list.remove(1);
-                list.add(temp);
+                map.put(list.get(i),map.getOrDefault(list.get(i),0)+1);
+                if (map.get(list.get(i))==k)
+                    return list.get(i);
+                
+                j=(Math.max(i,j)+1)%n;
             }
             else
             {
-                map.put(list.get(1),map.getOrDefault(list.get(1),0)+1);
-                if (map.get(list.get(1))==k)
-                    return list.get(1);
-                int temp=list.get(0);
-                list.remove(0);
-                list.add(temp);
+                map.put(list.get(j),map.getOrDefault(list.get(j),0)+1);
+                if (map.get(list.get(j))==k)
+                    return list.get(j);
+                
+                i=(Math.max(i,j)+1)%n;
             }
         }
     }
