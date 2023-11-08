@@ -24,19 +24,32 @@ class Solution {
             return res;
         
         Stack<TreeNode> stack=new Stack<>();
-        stack.push(root);
+        TreeNode curr=root;
 
-        while (!stack.isEmpty())
+        while (curr!=null || !stack.isEmpty())
         {
-            TreeNode curr=stack.pop();
-            if (curr.left!=null)
-                stack.push(curr.left);
-            if (curr.right!=null)
-                stack.push(curr.right);
-            res.add(0,curr.val);
+            if (curr!=null)
+            {
+                stack.add(curr);
+                curr=curr.left;
+            }
+            else
+            {
+                TreeNode temp=stack.peek().right;
+                if (temp==null)
+                {
+                    temp=stack.pop();
+                    res.add(temp.val);
+                    while (!stack.isEmpty() && stack.peek().right==temp)
+                    {
+                        temp=stack.pop();
+                        res.add(temp.val);
+                    }
+                }
+                else
+                    curr=temp;
+            }
         }
-
-        // Collections.reverse(res);
 
         return res;
     }
