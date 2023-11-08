@@ -33,10 +33,10 @@ class Solution {
                 stack.push(curr.left);
             if (curr.right!=null)
                 stack.push(curr.right);
-            res.add(curr.val);
+            res.add(0,curr.val);
         }
 
-        Collections.reverse(res);
+        // Collections.reverse(res);
 
         return res;
     }
