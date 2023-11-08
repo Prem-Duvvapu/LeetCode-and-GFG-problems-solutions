@@ -14,22 +14,37 @@
  * }
  */
 
- //Recursive
+ //Iterative
  //Left Root Right
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
-        solve(root,res);
-        return res;
-    }
 
-    private void solve(TreeNode root,List<Integer> res)
-    {
         if (root==null)
-            return;
+            return res;
 
-        solve(root.left,res);
-        res.add(root.val);
-        solve(root.right,res);
+        Stack<TreeNode> stack=new Stack<>();
+        TreeNode curr=root;
+
+        while (true)
+        {
+            if (curr!=null)
+            {
+                stack.push(curr);
+                curr=curr.left;
+            }
+            else
+            {
+                if (stack.isEmpty())
+                    break;
+                
+                TreeNode temp=stack.pop();
+                res.add(temp.val);
+                curr=temp.right;
+            }
+        }
+
+        return res;
+        
     }
 }
