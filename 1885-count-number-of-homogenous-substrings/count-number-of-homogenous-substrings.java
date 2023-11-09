@@ -8,14 +8,9 @@ class Solution {
         for (int right=0;right<n;right++)
         {
             if (s.charAt(left)==s.charAt(right))
-            {
                 res=(res+right-left+1)%mod;
-            }
             else
-            {
-                left=right;
-                res=(res+1)%mod;
-            }
+                left=right--;
         }
 
         return res;
