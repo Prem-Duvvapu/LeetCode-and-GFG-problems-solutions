@@ -4,13 +4,17 @@ class Solution {
         int n=s.length();
         int res=0;
         int left=0;
+        int right=0;
 
-        for (int right=0;right<n;right++)
+        while (right<n)
         {
             if (s.charAt(left)==s.charAt(right))
+            {
                 res=(res+right-left+1)%mod;
+                right++;
+            }
             else
-                left=right--;
+                left=right;
         }
 
         return res;
