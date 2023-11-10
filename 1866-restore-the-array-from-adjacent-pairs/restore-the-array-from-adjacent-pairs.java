@@ -36,12 +36,12 @@ class Solution {
             if (map.containsKey(a[0]))
                 map.put(a[0],new int[]{map.get(a[0])[0],a[1]});
             else
-                map.put(a[0],new int[]{a[1],1000000});
+                map.put(a[0],new int[]{a[1],0});
 
             if (map.containsKey(a[1]))
                 map.put(a[1],new int[]{map.get(a[1])[0],a[0]});
             else
-                map.put(a[1],new int[]{a[0],1000000});
+                map.put(a[1],new int[]{a[0],0});
         }
 
         res[0]=start;
