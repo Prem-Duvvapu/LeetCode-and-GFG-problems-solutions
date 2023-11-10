@@ -29,14 +29,16 @@ class Solution {
             while (qlen-- > 0)
             {
                 TreeNode t=q.poll();
-                currLevel.add(t.val);
+                if (rightToLeft)
+                    currLevel.add(0,t.val);
+                else
+                    currLevel.add(t.val);
                 if (t.left!=null)
                     q.add(t.left);
                 if (t.right!=null)
                     q.add(t.right);
             }
-            if (rightToLeft)
-                Collections.reverse(currLevel);
+            
             rightToLeft=!rightToLeft;
             res.add(currLevel);
         }
