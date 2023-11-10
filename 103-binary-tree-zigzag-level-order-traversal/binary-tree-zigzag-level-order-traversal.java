@@ -24,8 +24,8 @@ class Solution {
 
         while (!q.isEmpty())
         {
-            List<Integer> currLevel=new ArrayList<>();
             int qlen=q.size();
+            List<Integer> currLevel=new ArrayList<>();
             while (qlen-- > 0)
             {
                 TreeNode t=q.poll();
