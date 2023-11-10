@@ -2,7 +2,7 @@
 class Solution {
     public int[] restoreArray(int[][] adjacentPairs) {
         int n=adjacentPairs.length+1;
-        int[] res=new int[n];
+        int[] arr=new int[n];
         int start=0;
         int end=0;
         int diff=0;
@@ -29,32 +29,37 @@ class Solution {
                 end^=a[1];
         }
 
-        Map<Integer,int[]> map=new HashMap<>();
+        Map<Integer,List<Integer>> graph=new HashMap<>();
+        for (int[] a: adjacentPairs)
+        {
+            graph.put(a[0],new ArrayList<>());
+            graph.put(a[1],new ArrayList<>());
+        }
 
         for (int[] a: adjacentPairs)
         {
-            if (map.containsKey(a[0]))
-                map.put(a[0],new int[]{map.get(a[0])[0],a[1]});
-            else
-                map.put(a[0],new int[]{a[1],0});
-
-            if (map.containsKey(a[1]))
-                map.put(a[1],new int[]{map.get(a[1])[0],a[0]});
-            else
-                map.put(a[1],new int[]{a[0],0});
+            graph.get(a[0]).add(a[1]);
+            graph.get(a[1]).add(a[0]);
         }
 
-        res[0]=start;
-        int curr=map.get(start)[0];
-        for (int i=1;i<n;i++)
-        {
-            res[i]=curr;
-            if (res[i-1]!=map.get(curr)[0])
-                curr=map.get(curr)[0];
-            else
-                curr=map.get(curr)[1];
-        } 
+        List<Integer> res=new ArrayList<>();
+        dfs(start,graph,n,res,new HashSet<>());
 
-        return res;
+        for (int i=0;i<n;i++)
+            arr[i]=res.get(i);
+
+        return arr;
+    }
+
+    private void dfs(int curr,Map<Integer,List<Integer>> graph,int v,List<Integer> res,Set<Integer> set)
+    {
+        res.add(curr);
+        set.add(curr);
+
+        for (int i=0;i<graph.get(curr).size();i++)
+        {
+            if (!set.contains(graph.get(curr).get(i)))
+                dfs(graph.get(curr).get(i),graph,v,res,set);
+        }
     }
 }
