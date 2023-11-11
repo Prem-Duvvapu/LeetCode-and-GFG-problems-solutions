@@ -26,11 +26,11 @@ class Solution {
         if (root==null)
             return 0;
 
-        int leftSum=solve(root.left,maxi);
-        int rightSum=solve(root.right,maxi);
+        int leftMax=Math.max(0,solve(root.left,maxi));
+        int rightMax=Math.max(0,solve(root.right,maxi));
 
-        maxi[0]=Math.max(maxi[0],root.val+Math.max(0,leftSum)+Math.max(0,rightSum));
+        maxi[0]=Math.max(maxi[0],root.val+leftMax+rightMax);
 
-        return root.val+Math.max(0,Math.max(leftSum,rightSum));
+        return root.val+Math.max(leftMax,rightMax);
     }
 }
