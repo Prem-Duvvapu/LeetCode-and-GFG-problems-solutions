@@ -18,7 +18,6 @@ class Solution {
         for (Map.Entry<String,List<Integer>> m: map.entrySet())
         {
             Collections.sort(m.getValue());
-            // System.out.println(m.getValue());
             if (m.getValue().size()<3)
                 continue;
 
