@@ -16,3 +16,6 @@ class Solution {
         return ans;
     }
 }
+
+//Math.max(0,n-2*limit) <= a <= Math.min(limit,n)
+//Math.max(0,n-a-limit) <= a <= Math.min(limit,n-a);
