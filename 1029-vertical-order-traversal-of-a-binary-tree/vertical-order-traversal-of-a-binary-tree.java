@@ -30,8 +30,7 @@ class Solution {
     public List<List<Integer>> verticalTraversal(TreeNode root) {
         TreeMap<Integer,TreeMap<Integer,PriorityQueue<Integer>>> map=new TreeMap<>();
         Queue<Tuple> q=new ArrayDeque<>();
-        Tuple t=new Tuple(root,0,0);
-        q.add(t);
+        q.add(new Tuple(root,0,0));
 
         while (!q.isEmpty())
         {
