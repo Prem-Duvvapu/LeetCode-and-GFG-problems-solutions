@@ -151,7 +151,7 @@ class Solution
             Node curr=t.node;
             int c=t.col;
             
-            if (!map.containsKey(c))
+            if (map.get(c)==null)
                 map.put(c,curr.data);
                 
             if (curr.left!=null)
