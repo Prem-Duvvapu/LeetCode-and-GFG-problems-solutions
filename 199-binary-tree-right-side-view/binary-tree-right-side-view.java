@@ -13,6 +13,8 @@
  *     }
  * }
  */
+
+ //from vertical order traversal
 class Tuple
 {
     TreeNode node;
