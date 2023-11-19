@@ -7,7 +7,7 @@ class Solution {
 
         for (int i=1;i<n;i++)
         {
-            if (nums[i]!=nums[i-1])
+            if (nums[i]>nums[i-1])
                 k++;
 
             res+=k;
