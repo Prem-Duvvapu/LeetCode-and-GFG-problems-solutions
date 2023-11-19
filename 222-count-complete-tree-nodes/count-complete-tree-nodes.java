@@ -19,7 +19,7 @@ class Solution {
             return 0;
 
         if (leftHeight(root)==rightHeight(root))
-            return (1<<leftHeight(root))-1;
+            return ((1<<leftHeight(root))-1);
 
         return 1+countNodes(root.left)+countNodes(root.right);
     }
