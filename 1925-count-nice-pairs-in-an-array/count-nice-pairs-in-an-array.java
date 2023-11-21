@@ -2,19 +2,34 @@
 class Solution {
     public int countNicePairs(int[] nums) {
         int n=nums.length;
-        int res=0;
-        int mod=(int)1e9+7;
+        long res=0;
+        long mod=(int)1e9+7;
         Map<Integer,Integer> map=new HashMap<>();
 
         for (int i=0;i<n;i++)
         {
             int key=nums[i]-rev(nums[i]);
-            int value=map.getOrDefault(key,0);
-            map.put(key,value+1);
-            res=(res+value)%mod;
+            map.put(key,map.getOrDefault(key,0)+1);
         }
 
-        return res;
+        System.out.println(map);
+        for (Integer val: map.values())
+        {
+            long temp=0;
+            if (val%2==0)
+            {
+                temp=val/2;
+                temp=(temp*(val-1))%mod;
+            }
+            else
+            {
+                temp=(val-1)/2;
+                temp=(temp*val);
+            }
+            res=(res+temp)%mod;
+        }
+
+        return (int)res;
     }
 
     private int rev(int n)
