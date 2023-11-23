@@ -1,15 +1,7 @@
 class Solution {
     public int minimizeXor(int num1, int num2) {
-        int cnt1=0;
-        int cnt2=0;
-        
-        for (int i=0;i<32;i++)
-        {
-            if ((num1&(1<<i))>0)
-                cnt1++;
-            if ((num2&(1<<i))>0)
-                cnt2++;
-        }
+        int cnt1=Integer.bitCount(num1);
+        int cnt2=Integer.bitCount(num2);
 
         if (cnt1==cnt2)
             return num1;
@@ -30,7 +22,7 @@ class Solution {
 
         x=num1;
         cnt2-=cnt1;
-        for (int i=0;i<31 && cnt2>0;i++)
+        for (int i=0;i<32 && cnt2>0;i++)
         {
             if ((num1&(1<<i))==0)
             {
