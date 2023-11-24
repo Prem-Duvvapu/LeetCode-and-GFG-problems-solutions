@@ -14,26 +14,38 @@
  * }
  */
 
- //Recursive
+ //Morris Traversal
  //Root Left Right
 class Solution {
     public List<Integer> preorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
+        TreeNode curr=root;
 
-        if (root==null)
-            return res;
-
-        Stack<TreeNode> stack=new Stack<>();
-        stack.push(root);
-
-        while (!stack.isEmpty())
+        while (curr!=null)
         {
-            TreeNode curr=stack.pop();
-            res.add(curr.val);
-            if (curr.right!=null)
-                stack.push(curr.right);
-            if (curr.left!=null)
-                stack.push(curr.left);
+            if (curr.left==null)
+            {
+                res.add(curr.val);
+                curr=curr.right;
+            }
+            else
+            {
+                TreeNode prev=curr.left;
+                while (prev.right!=null && prev.right!=curr)
+                    prev=prev.right;
+
+                if (prev.right==null)
+                {
+                    prev.right=curr;
+                    res.add(curr.val);
+                    curr=curr.left;
+                }
+                else
+                {
+                    prev.right=null;
+                    curr=curr.right;
+                }
+            }
         }
 
         return res;
