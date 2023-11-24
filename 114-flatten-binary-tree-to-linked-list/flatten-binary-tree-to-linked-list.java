@@ -13,6 +13,8 @@
  *     }
  * }
  */
+
+//Recursion
 class Solution {
     TreeNode prev=null;
     public void flatten(TreeNode root) {
