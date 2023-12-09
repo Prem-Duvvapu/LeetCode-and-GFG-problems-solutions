@@ -14,37 +14,33 @@
  * }
  */
 
- //Morris Traversal
+ //Morris
  //Left Root Right
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
+
+        if (root==null)
+            return res;
+
+        Stack<TreeNode> stack=new Stack<>();
         TreeNode curr=root;
 
-        while (curr!=null)
+        while (true)
         {
-            if (curr.left==null)
+            if (curr!=null)
             {
-                res.add(curr.val);
-                curr=curr.right;
+                stack.push(curr);
+                curr=curr.left;
             }
             else
             {
-                TreeNode prev=curr.left;
-                while (prev.right!=null && prev.right!=curr)
-                    prev=prev.right;
-
-                if (prev.right==null)
-                {
-                    prev.right=curr;
-                    curr=curr.left;
-                }
-                else
-                {
-                    prev.right=null;
-                    res.add(curr.val);
-                    curr=curr.right;
-                }
+                if (stack.isEmpty())
+                    break;
+                
+                TreeNode temp=stack.pop();
+                res.add(temp.val);
+                curr=temp.right;
             }
         }
 
