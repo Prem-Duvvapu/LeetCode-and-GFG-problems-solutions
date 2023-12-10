@@ -26,9 +26,6 @@ class Solution {
         if (i<s1.length() && s1.charAt(i)==s3.charAt(i+j))
             b1=solve(i+1,j,s1,s2,s3,dp);
 
-        if (b1)
-            return b1;
-
         if (j<s2.length() && s2.charAt(j)==s3.charAt(i+j))
             b2=solve(i,j+1,s1,s2,s3,dp);
 
