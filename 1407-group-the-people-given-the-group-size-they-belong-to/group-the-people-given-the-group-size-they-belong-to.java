@@ -5,23 +5,15 @@ class Solution {
         Map<Integer,List<Integer>> map=new HashMap<>();
         for (int i=0;i<n;i++)
         {
-            int curr=groupSizes[i];
-            if (!map.containsKey(curr))
-                map.put(curr,new ArrayList<>());
+            int currSize=groupSizes[i];
+            if (!map.containsKey(currSize))
+                map.put(currSize,new ArrayList<>());
 
-            map.get(curr).add(i);
-        }
-
-        for (Map.Entry<Integer,List<Integer>> m: map.entrySet())
-        {
-            int currSize=m.getKey();
-            List<Integer> currList=m.getValue();
-            for (int i=0;i<currList.size();i+=currSize)
+            map.get(currSize).add(i);
+            if (map.get(currSize).size()==currSize)
             {
-                List<Integer> temp=new ArrayList<>();
-                for (int j=i;j<i+currSize;j++)
-                    temp.add(currList.get(j));
-                res.add(temp);
+                res.add(map.get(currSize));
+                map.put(currSize,new ArrayList<>());
             }
         }
 
