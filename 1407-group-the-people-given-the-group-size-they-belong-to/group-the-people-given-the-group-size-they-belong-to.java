@@ -6,13 +6,12 @@ class Solution {
         for (int i=0;i<n;i++)
         {
             int currSize=groupSizes[i];
-            if (!map.containsKey(currSize))
-                map.put(currSize,new ArrayList<>());
-
-            map.get(currSize).add(i);
-            if (map.get(currSize).size()==currSize)
+            List<Integer> currList=map.getOrDefault(currSize,new ArrayList<>());
+            currList.add(i);
+            map.put(currSize,currList);
+            if (currList.size()==currSize)
             {
-                res.add(map.get(currSize));
+                res.add(currList);
                 map.put(currSize,new ArrayList<>());
             }
         }
