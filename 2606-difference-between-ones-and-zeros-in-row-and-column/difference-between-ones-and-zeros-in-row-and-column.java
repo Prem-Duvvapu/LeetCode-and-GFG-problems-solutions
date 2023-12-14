@@ -19,7 +19,7 @@ class Solution {
         {
             for (int j=0;j<m;j++)
             {
-                diff[i][j]=onesRow[i]+onesCol[j]-(n-onesRow[i])-(m-onesCol[j]);
+                diff[i][j]=2*onesRow[i]+2*onesCol[j]-n-m;
             }
         }
 
