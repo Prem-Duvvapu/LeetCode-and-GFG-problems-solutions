@@ -1,15 +1,17 @@
 class Solution {
     public List<String> buildArray(int[] target, int n) {
-        List<String> result = new ArrayList<>();
-        int j=0;
-        for (int i=1;i<=n && j<target.length;i++) {
-            result.add("Push");
-            if(target[j]==i) {
-                j++;
-            } else {
-                result.add("Pop");
-            }
+        List<String> res=new ArrayList<>();
+        int curr=1;
+
+        for (int i=0;i<target.length;curr++)
+        {
+            res.add("Push");
+            if (curr==target[i])
+                i++;
+            else
+                res.add("Pop");
         }
-        return result;
+
+        return res;
     }
 }
