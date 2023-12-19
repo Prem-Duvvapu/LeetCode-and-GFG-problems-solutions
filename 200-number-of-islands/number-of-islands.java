@@ -35,6 +35,7 @@ class Solution {
     private void bfs(int r,int c,char[][] grid,boolean[][] visited,int m,int n) {
         Queue<Pair> q=new LinkedList<>();
         q.add(new Pair(r,c));
+        visited[r][c]=true;
 
         while (!q.isEmpty()) {
             Pair curr=q.poll();
