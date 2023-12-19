@@ -1,12 +1,10 @@
 //BFS
 
-class Pair
-{
+class Pair {
     int row;
     int col;
 
-    Pair(int _row,int _col)
-    {
+    Pair(int _row,int _col) {
         row=_row;
         col=_col;
     }
@@ -43,7 +41,6 @@ class Solution {
             for (int i=0;i<4;i++) {
                 int newRow=curr.row+dx[i];
                 int newCol=curr.col+dy[i];
-
                 if (newRow>=0 && newRow<m && newCol>=0 && newCol<n && grid[newRow][newCol]=='1' && !visited[newRow][newCol]) {
                     q.add(new Pair(newRow,newCol));
                     visited[newRow][newCol]=true;
