@@ -17,12 +17,14 @@ class Solution {
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
                 res[i][j]=-1;
-                if (mat[i][j]==0)
+                if (mat[i][j]==0) {
                     q.add(new Pair(i,j));
+                    res[i][j]=0;
+                }
             }
         }
 
-        int cnt=0;
+        int cnt=1;
         int[] drow={-1,0,1,0};
         int[] dcol={0,1,0,-1};
 
@@ -30,12 +32,11 @@ class Solution {
             int qlen=q.size();
             while (qlen-- > 0) {
                 Pair curr=q.poll();
-                res[curr.row][curr.col]=cnt;
                 for (int i=0;i<4;i++) {
                     int nrow=curr.row+drow[i];
                     int ncol=curr.col+dcol[i];
                     if (nrow>=0 && nrow<m && ncol>=0 && ncol<n && mat[nrow][ncol]==1 && res[nrow][ncol]==-1) {
-                        res[nrow][ncol]=0;
+                        res[nrow][ncol]=cnt;
                         q.add(new Pair(nrow,ncol));
                     }
                 }
