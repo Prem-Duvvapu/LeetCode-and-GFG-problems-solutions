@@ -6,13 +6,13 @@ class Solution {
         Arrays.fill(color,-1);
         for (int i=0;i<n;i++)
             if (color[i]==-1)
-                if (!bfs(i,graph,color,n))
+                if (!bfs(i,graph,color))
                     return false;
 
         return true;
     }
 
-    private boolean bfs(int start,int[][] graph,int[] color,int n) {
+    private boolean bfs(int start,int[][] graph,int[] color) {
         Queue<Integer> q=new LinkedList<>();
         q.add(start);
         color[start]=0;
