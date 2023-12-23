@@ -12,10 +12,10 @@ class Solution {
         return true;
     }
 
-    private boolean bfs(int node,int[][] graph,int[] color,int n) {
+    private boolean bfs(int start,int[][] graph,int[] color,int n) {
         Queue<Integer> q=new LinkedList<>();
-        q.add(node);
-        color[node]=0;
+        q.add(start);
+        color[start]=0;
 
         while (!q.isEmpty()) {
             int curr=q.poll();
