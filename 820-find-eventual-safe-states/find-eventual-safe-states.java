@@ -20,13 +20,11 @@ class Solution {
 
         for (int neighbour: graph[i]) {
             if (!visited[neighbour]) {
-                if (dfs(neighbour,visited,path,res,graph)) {
+                if (dfs(neighbour,visited,path,res,graph))
                     return true;
-                }
             }
-            else if (path[neighbour]) {
+            else if (path[neighbour])
                 return true;
-            }
         }
 
         res.add(i);
