@@ -37,7 +37,7 @@ class Solution {
 
         for (int i=0;i<v;i++)
             if (indegree[i]>0)
-                return new int[0];
+                return new int[]{};
 
         return res;
     }
