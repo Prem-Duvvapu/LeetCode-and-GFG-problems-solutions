@@ -5,8 +5,8 @@ class Solution {
         if (n<d)
             return -1;
 
-        int[][] dp=new int[n+1][d+1];
-        for (int i=0;i<=n;i++)
+        int[][] dp=new int[n][d+1];
+        for (int i=0;i<n;i++)
             for (int j=0;j<=d;j++)
                 dp[i][j]=-1;
 
