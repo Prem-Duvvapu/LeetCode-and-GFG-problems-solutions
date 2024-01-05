@@ -1,29 +1,24 @@
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n=nums.length;
-        int res=1;
-        int[] dp=new int[n];
-        Arrays.fill(dp,1);
-        List<Integer> l=new ArrayList<>();
+        int[][] dp=new int[n][n];
+        for (int[] a: dp)
+            Arrays.fill(a,-1);
+        return solve(0,-1,nums,dp);
+    }
 
-        for (int i=1;i<n;i++)
-        {
-            List<Integer> temp=new ArrayList<>();
-            for (int j=0;j<i;j++)
-            {
-                if (nums[j]<nums[i] && dp[i]==dp[j])
-                {
-                    temp.add(nums[j]);
-                    dp[i]=1+dp[j];
-                }
-            }
-            temp.add(nums[i]);
-            if (temp.size()>l.size())
-                l=temp;
-            res=Math.max(res,dp[i]);
-        }
+    private int solve(int pos,int prev,int[] nums,int[][] dp) {
+        if (pos==nums.length)
+            return 0;
 
-        System.out.println(l);
-        return res;
+        if (dp[pos][prev+1]!=-1)
+            return dp[pos][prev+1];
+
+        int notPick=solve(pos+1,prev,nums,dp);
+        int pick=0;
+        if (prev==-1 || nums[pos]>nums[prev])
+            pick=1+solve(pos+1,pos,nums,dp);
+
+        return dp[pos][prev+1]=Math.max(pick,notPick);
     }
 }
