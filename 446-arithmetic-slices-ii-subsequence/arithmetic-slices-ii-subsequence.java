@@ -14,12 +14,10 @@ class Solution {
                     continue;
 
                 int diff=(int)temp;
+                int countAtj=dp[j].getOrDefault(diff,0);
 
-                dp[i].put(diff,dp[i].getOrDefault(diff,0)+1);
-                if (dp[j].containsKey(diff)) {
-                    total+=dp[j].get(diff);
-                    dp[i].put(diff,dp[i].get(diff)+dp[j].get(diff));
-                }
+                total+=countAtj;
+                dp[i].put(diff,dp[i].getOrDefault(diff,0)+countAtj+1);
             }
         }
 
