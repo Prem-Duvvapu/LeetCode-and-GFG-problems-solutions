@@ -1,35 +1,25 @@
-//Space Optimization
-
 class Solution {
     public int minPathSum(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
-        int[] prev=new int[n];
+        int[][] dp=new int[grid.length][grid[0].length];
+        for (int[] a: dp)
+            Arrays.fill(a,-1);
 
-        for (int i=0;i<m;i++)
-        {
-            int[] curr=new int[n];
-            for (int j=0;j<n;j++)
-            {
-                if (i==0 && j==0)
-                    curr[j]=grid[i][j];
-                else
-                {
-                    int up=Integer.MAX_VALUE;
-                    int left=Integer.MAX_VALUE;
+        return solve(0,0,grid,dp);
+    }
 
-                    if (i>0)
-                        up=prev[j];
+    private int solve(int i,int j,int[][] grid,int[][] dp) {
+        if (i==grid.length || j==grid[0].length)
+            return 1000000;
 
-                    if (j>0)
-                        left=curr[j-1];
+        if (i==grid.length-1 && j==grid[0].length-1)
+            return  grid[i][j];
 
-                    curr[j]=grid[i][j]+Math.min(up,left);
-                }
-            }
-            System.arraycopy(curr,0,prev,0,n);
-        }
+        if (dp[i][j]!=-1)
+            return dp[i][j];
 
-        return prev[n-1];
+        int down=grid[i][j]+solve(i+1,j,grid,dp);
+        int right=grid[i][j]+solve(i,j+1,grid,dp);
+
+        return dp[i][j]=Math.min(down,right);
     }
 }
