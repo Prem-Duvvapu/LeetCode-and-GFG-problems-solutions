@@ -22,7 +22,7 @@ class Solution {
                     break;
             }
 
-            long curr=(long)(i-left+1)*(long)(right-i+1)*(long)arr[i];
+            long curr=(long)(i-left+1)*(right-i+1)*arr[i];
             res=(res+curr)%mod;
         }
 
