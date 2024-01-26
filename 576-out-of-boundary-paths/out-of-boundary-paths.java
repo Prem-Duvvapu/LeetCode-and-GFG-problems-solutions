@@ -1,43 +1,29 @@
 class Solution {
-    public int findPaths(int m, int n, int maxMove, int i, int j) {
-        
-        if(i<0 || j<0 || i>=m  || j>=n || maxMove==0) return 0;
-        int mod = (int)1e9 + 7;
-        
-        long[][][]dp= new long[m][n][maxMove+1];
-        
-        for(long[] []row: dp){
-            for(long [] col : row){
-                Arrays.fill(col, -1);
-            }
-        }
-        
-        long ans = getAns(i, j ,m , n ,maxMove , dp ,mod);
-        return (int)ans%mod;
+    int mod=(int)1e9+7;
+    public int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
+        int[][][] dp=new int[m][n][maxMove+1];
+        for (int i=0;i<m;i++)
+            for (int j=0;j<n;j++)
+                for (int k=0;k<maxMove+1;k++)
+                    dp[i][j][k]=-1;
+        return solve(startRow,startColumn,maxMove,m,n,dp);
     }
-    
-    public static long getAns(int i , int j , int r , int c , int max, long[][][]dp , int mod){
-        if(i<0 || j<0 || i>=r  || j>=c) return 1;
-        
-        
-        if(dp[i][j][max]!=-1) return dp[i][j][max];
-        
-        if(max==0){
-            if(i<0 || j<0 || i>=r  || j>=c) return 1;
-            return 0;
-        }
-        
-        
-        
-        long up = getAns(i-1, j , r, c,max-1, dp ,mod)%mod;
-        long down = getAns(i+1 , j, r, c, max-1, dp , mod)%mod;
-        long rt = getAns(i, j+1 , r, c, max-1, dp , mod)%mod;
-        long lft = getAns(i , j-1 , r, c, max-1, dp , mod)%mod;
-        
 
-        
-        return dp[i][j][max]=(up+down+rt+lft)%mod;
-        
-        
+    private int solve(int i,int j,int x,int m,int n,int[][][] dp) {
+        if (i<0 || i==m || j<0 || j==n)
+            return 1;
+
+        if (x==0)
+            return 0;
+
+        if (dp[i][j][x]!=-1)
+            return dp[i][j][x];
+
+        int top=solve(i-1,j,x-1,m,n,dp)%mod;
+        int bottom=solve(i+1,j,x-1,m,n,dp)%mod;
+        int left=solve(i,j-1,x-1,m,n,dp)%mod;
+        int right=solve(i,j+1,x-1,m,n,dp)%mod;
+
+        return dp[i][j][x]=((top+bottom)%mod+(left+right)%mod)%mod;
     }
 }
