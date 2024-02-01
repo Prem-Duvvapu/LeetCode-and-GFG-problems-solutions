@@ -7,14 +7,10 @@ class Solution {
 
         for (int i=0;i<n;i+=3) {
             for (int j=i;j<i+3;j++) {
-                if (j==i)
-                    res[i/3][j%3]=nums[j];
-                else {
-                    if (nums[j]-nums[i]>k)
-                        return new int[0][0];
-                    else
-                        res[i/3][j%3]=nums[j];
-                }
+                if (nums[j]-nums[i]>k)
+                    return new int[0][0];
+                
+                res[i/3][j%3]=nums[j];
             }
         }
 
