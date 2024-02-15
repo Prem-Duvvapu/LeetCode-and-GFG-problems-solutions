@@ -1,7 +1,6 @@
 class Solution {
     public long largestPerimeter(int[] nums) {
         int n=nums.length;
-        long res=-1;
         long[] prefix=new long[n];
 
         Arrays.sort(nums);
