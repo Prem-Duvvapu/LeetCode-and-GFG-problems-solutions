@@ -15,9 +15,10 @@ class Solution {
     }
 
     private void dfs(int curr, boolean[] visited, int[][] isConnected) {
+        visited[curr]=true;
+
         for (int j=0;j<isConnected.length;j++) {
             if (isConnected[curr][j]==1 && curr!=j && !visited[j]) {
-                visited[j]=true;
                 dfs(j,visited,isConnected);
             }
         }
