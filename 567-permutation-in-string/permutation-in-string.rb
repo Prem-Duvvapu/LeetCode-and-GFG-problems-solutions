@@ -19,10 +19,8 @@ def check_inclusion(s1, s2)
 
     while right < s2.length
         if right >= s1.length
-            if s2[left] != s2[right]
-                curr_res[s2[left]] -= 1
-                curr_res[s2[right]] += 1
-            end
+            curr_res[s2[left]] -= 1
+            curr_res[s2[right]] += 1
             left += 1
         else
             curr_res[s2[right]] += 1
