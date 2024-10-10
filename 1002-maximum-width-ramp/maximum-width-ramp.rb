@@ -12,8 +12,7 @@ def max_width_ramp(nums)
 
     (nums.length - 1).downto(0) do |index|
         while ((stack.any?) && (nums[index] >= nums[stack.last]))
-            max_width = [max_width, index - stack.last].max
-            stack.pop
+            max_width = [max_width, index - stack.pop].max
         end
     end
 
