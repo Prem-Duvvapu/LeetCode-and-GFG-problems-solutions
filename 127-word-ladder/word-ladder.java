@@ -29,10 +29,9 @@ class Solution {
             for (int i=0; i<currWord.length(); i++) {
                 StringBuilder temp = new StringBuilder(currWord);
                 for (char ch='a'; ch<='z'; ch++) {
-                    // System.out.println(set);
                     temp.setCharAt(i, ch);
                     if (set.contains(temp.toString())) {
-                        System.out.println(temp);
+                        // System.out.println(temp);
                         set.remove(temp.toString());
                         q.add(new Pair(temp.toString(), currLevel+1));
                     }
