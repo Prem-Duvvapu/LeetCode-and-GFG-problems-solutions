@@ -33,6 +33,9 @@ class Solution {
             int currRow = curr.row;
             int currColumn = curr.column;
 
+            if (currRow == noOfRows-1 && currColumn == noOfColumns-1)
+                return minEffort[currRow][currColumn];
+
             for (int i=0;i<4;i++) {
                 int newRow = currRow + deltaRow[i];
                 int newColumn = currColumn + deltaColumn[i];
@@ -44,13 +47,12 @@ class Solution {
 
                     if (minEffort[newRow][newColumn] > currMinEffort) {
                         minEffort[newRow][newColumn]=currMinEffort;
-                        System.out.println(currDiff + " "+newRow+ " "+newColumn);
                         pq.add(new Node(currDiff,newRow,newColumn));
                     }
                 }
             }
         }
 
-        return minEffort[noOfRows-1][noOfColumns-1];
+        return 0;
     }
 }
