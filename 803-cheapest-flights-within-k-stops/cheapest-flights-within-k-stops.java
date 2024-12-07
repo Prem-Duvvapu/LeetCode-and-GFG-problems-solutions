@@ -1,38 +1,64 @@
+class Node {
+    int stops;
+    int dest;
+    int price;
+
+    Node(int _stops, int _dest, int _price) {
+        stops = _stops;
+        dest = _dest;
+        price = _price;
+    }
+}
+
+class Pair {
+    int dest;
+    int price;
+
+    Pair(int _dest, int _price) {
+        dest = _dest;
+        price = _price;
+    }
+}
+
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        Map<Integer, List<int[]>> adj = new HashMap<>();
-        for (int[] flight : flights) {
-            adj.computeIfAbsent(flight[0], key -> new ArrayList<>()).add(new int[] {flight[1], flight[2]});
-        }
+        List<List<Pair>> graph = new ArrayList<>();
+        for (int i=0; i<n; i++)
+            graph.add(new ArrayList<>());
 
-        int[] dist = new int[n];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        dist[src] = 0;
+        for (int i=0; i<flights.length; i++)
+            graph.get(flights[i][0]).add(new Pair(flights[i][1], flights[i][2]));
 
-        Queue<int[]> q = new LinkedList<>();
-        q.offer(new int[] {src, 0});
-        int stops = 0;
+        int[] price = new int[n];
+        Arrays.fill(price, (int)1e5);
+        price[src]=0;
 
-        while (!q.isEmpty() && stops <= k) {
-            int sz = q.size();
-            while (sz-- > 0) {
-                int[] curr = q.poll();
-                int node = curr[0];
-                int distance = curr[1];
+        Queue<Node> q=new ArrayDeque<>();
+        q.add(new Node(0,src,0));
 
-                if (!adj.containsKey(node)) continue;
+        while (!q.isEmpty()) {
+            Node curr = q.poll();
+            int currStops = curr.stops;
+            int currPrice = curr.price;
+            int currNode = curr.dest;
 
-                for (int[] next : adj.get(node)) {
-                    int neighbour = next[0];
-                    int price = next[1];
-                    if (price + distance >= dist[neighbour]) continue;
-                    dist[neighbour] = price + distance;
-                    q.offer(new int[] {neighbour, dist[neighbour]});
+            for (Pair pair: graph.get(currNode)) {
+                if (currStops == k && pair.dest != dst)
+                        continue;
+
+                int newPrice = currPrice + pair.price;
+
+                if (price[pair.dest] > newPrice) {
+                    price[pair.dest] = newPrice;
+                    if (pair.dest != dst)
+                        q.add(new Node(currStops+1, pair.dest, price[pair.dest]));
                 }
             }
-            stops++;
         }
 
-        return dist[dst] == Integer.MAX_VALUE ? -1 : dist[dst];
+        if (price[dst]==(int)1e5)
+            return -1;
+
+        return price[dst];
     }
 }
