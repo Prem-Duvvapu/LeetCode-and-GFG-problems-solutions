@@ -1,53 +1,72 @@
-class TrieNode
-{
-    TrieNode[] children;
-    boolean endOfWord;
+class Node {
+    Node[] chars;
+    boolean flag;
 
-    TrieNode()
-    {
-        children=new TrieNode[26];
-        endOfWord=false;
+    Node() {
+        chars = new Node[26];
+        flag=false;
+    }
+
+    boolean containsKey(char ch) {
+        return (chars[ch-'a']!=null);
+    }
+
+    Node insertChar(char ch) {
+        chars[ch-'a']=new Node();
+        return chars[ch-'a'];
+    }
+
+    void setEnd(){
+        flag=true;
+    }
+
+    boolean isEnd() {
+        return flag;
     }
 }
 
 class Trie {
-
-    TrieNode root;
+    Node root;
 
     public Trie() {
-        root=new TrieNode();
+        root = new Node();
     }
     
     public void insert(String word) {
-        TrieNode curr=root;
-        for (char ch: word.toCharArray())
-        {
-            if (curr.children[ch-'a']==null)
-                curr.children[ch-'a']=new TrieNode();
-            curr=curr.children[ch-'a'];
+        Node curr = root;
+        for (char ch: word.toCharArray()) {
+            if (curr.containsKey(ch))
+                curr=curr.chars[ch-'a'];
+            else
+                curr = curr.insertChar(ch);
         }
-        curr.endOfWord=true;
+
+        curr.setEnd();
     }
     
     public boolean search(String word) {
-        TrieNode curr=root;
-        for (char ch: word.toCharArray())
-        {
-            if (curr.children[ch-'a']==null)
+        Node curr=root;
+
+        for (char ch: word.toCharArray()) {
+            if (curr.containsKey(ch))
+                curr=curr.chars[ch-'a'];
+            else
                 return false;
-            curr=curr.children[ch-'a'];
         }
-        return curr.endOfWord;
+
+        return curr.isEnd();
     }
     
     public boolean startsWith(String prefix) {
-        TrieNode curr=root;
-        for (char ch: prefix.toCharArray())
-        {
-            if (curr.children[ch-'a']==null)
+        Node curr=root;
+
+        for (char ch: prefix.toCharArray()) {
+            if (curr.containsKey(ch))
+                curr=curr.chars[ch-'a'];
+            else
                 return false;
-            curr=curr.children[ch-'a'];
         }
+
         return true;
     }
 }
