@@ -1,22 +1,17 @@
 class Solution {
     public int climbStairs(int n) {
         int[] dp=new int[n+1];
-        Arrays.fill(dp,-1);
-        return solve(n,dp);
-    }
+        dp[0] = 1;
 
-    private int solve(int pos,int[] dp) {
-        if (pos==0)
-            return 1;
+        for (int i=1;i<=n;i++) {
+            int oneStep = dp[i-1];
+            int twoSteps = 0;
 
-        if (dp[pos]!=-1)
-            return dp[pos];
-
-        int oneStep = solve(pos-1,dp);
-        int twoSteps = 0;
-        if (pos>1)
-            twoSteps = solve(pos-2,dp);
-
-        return dp[pos]=oneStep + twoSteps;
+            if (i>1)
+                twoSteps=dp[i-2];
+            dp[i]=oneStep + twoSteps;
+        }
+        
+        return dp[n];
     }
 }
