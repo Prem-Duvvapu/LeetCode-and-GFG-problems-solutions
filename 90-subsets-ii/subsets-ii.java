@@ -2,21 +2,19 @@ class Solution {
     public List<List<Integer>> subsetsWithDup(int[] nums) {
         List<List<Integer>> res=new ArrayList<>();
         Arrays.sort(nums);
-        solve(0,new ArrayList<>(),nums,res);
-        return res;
+        solve(0,nums,res,new ArrayList<>());
+        return res;   
     }
 
-    private void solve(int pos,List<Integer> currList,int[] nums,List<List<Integer>> res)
-    {
+    private void solve(int pos,int[] nums,List<List<Integer>> res,List<Integer> currList) {
         res.add(new ArrayList<>(currList));
 
-        for (int i=pos;i<nums.length;i++)
-        {
+        for (int i=pos;i<nums.length;i++) {
             if (i>pos && nums[i]==nums[i-1])
                 continue;
 
             currList.add(nums[i]);
-            solve(i+1,currList,nums,res);
+            solve(i+1,nums,res,currList);
             currList.remove(currList.size()-1);
         }
     }
