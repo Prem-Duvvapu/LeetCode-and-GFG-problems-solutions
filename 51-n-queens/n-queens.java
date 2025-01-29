@@ -2,14 +2,12 @@ class Solution {
     private void solve(int col,int n,char[][] chessBoard,boolean[] rowCheck,boolean[] lowerDiagonalCheck,boolean[] upperDiagonalCheck,List<List<String>> res) {
         if (col==n) {
             List<String> currList=new ArrayList<>();
-            for (int i=0;i<n;i++) {
-                String boardRow="";
-                for (int j=0;j<n;j++) {
-                    boardRow+=chessBoard[i][j];
-                }
-                currList.add(boardRow);
-            }
-            res.add(new ArrayList<>(currList));
+
+            for (char[] arr: chessBoard)
+                currList.add(new String(arr));
+
+            res.add(currList
+            );
             return;
         }
 
