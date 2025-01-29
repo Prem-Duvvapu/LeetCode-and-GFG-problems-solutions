@@ -1,52 +1,47 @@
-//Striver's approach
-
 class Solution {
-    private void solve(int col,int n,char[][] curr,boolean[] rc,boolean[] udc,boolean[] ldc,List<List<String>> res)
-    {
-        if (col==n)
-        {
-            List<String> l=new ArrayList<>();
-            for (char[] arr: curr)
-                l.add(new String(arr));
-            
-            res.add(l);
+    private void solve(int col,int n,char[][] chessBoard,boolean[] rowCheck,boolean[] lowerDiagonalCheck,boolean[] upperDiagonalCheck,List<List<String>> res) {
+        if (col==n) {
+            List<String> currList=new ArrayList<>();
+            for (int i=0;i<n;i++) {
+                String boardRow="";
+                for (int j=0;j<n;j++) {
+                    boardRow+=chessBoard[i][j];
+                }
+                currList.add(boardRow);
+            }
+            res.add(new ArrayList<>(currList));
             return;
         }
 
-        for (int row=0;row<n;row++)
-        {
-            if (!rc[row] && !ldc[row+col] && !udc[n-1+col-row]) //is safe or not
-            {
-                //mark as present
-                rc[row]=true;
-                ldc[row+col]=true;
-                udc[n-1+col-row]=true;
+        for (int row=0;row<n;row++) {
+            if (!rowCheck[row] && !lowerDiagonalCheck[row+col] && !upperDiagonalCheck[n-1+row-col]) {
+                chessBoard[row][col]='Q';
+                rowCheck[row]=true;
+                lowerDiagonalCheck[row+col]=true;
+                upperDiagonalCheck[n-1+row-col]=true;
 
-                curr[row][col]='Q';
-                solve(col+1,n,curr,rc,udc,ldc,res);
+                solve(col+1,n,chessBoard,rowCheck,lowerDiagonalCheck,upperDiagonalCheck,res);
 
-                //remove the mark
-                curr[row][col]='.';
-                rc[row]=false;
-                ldc[row+col]=false;
-                udc[n-1+col-row]=false;
+                chessBoard[row][col]='.';
+                rowCheck[row]=false;
+                lowerDiagonalCheck[row+col]=false;
+                upperDiagonalCheck[n-1+row-col]=false;
             }
         }
     }
 
     public List<List<String>> solveNQueens(int n) {
         List<List<String>> res=new ArrayList<>();
-        char[][] curr=new char[n][n];
+        char[][] chessBoard=new char[n][n];
+        boolean[] rowCheck=new boolean[n];
+        boolean[] lowerDiagonalCheck=new boolean[2*n-1];
+        boolean[] upperDiagonalCheck=new boolean[2*n-1];
 
         for (int i=0;i<n;i++)
             for (int j=0;j<n;j++)
-                curr[i][j]='.';
+                chessBoard[i][j]='.';
 
-        boolean[] rc=new boolean[n];//row check
-        boolean[] udc=new boolean[2*n-1];//upper diagonal check
-        boolean[] ldc=new boolean[2*n-1];//lower diagonal check
-
-        solve(0,n,curr,rc,udc,ldc,res);
+        solve(0,n,chessBoard,rowCheck,lowerDiagonalCheck,upperDiagonalCheck,res);
         return res;
     }
 }
