@@ -3,23 +3,17 @@ class Solution {
         int n=triangle.size();
         int[][] dp=new int[n][n];
 
-        for (int i=0;i<n;i++)
-            for (int j=0;j<n;j++)
-                dp[i][j]=-1;
+        for (int j=0;j<n;j++)
+                dp[n-1][j]=triangle.get(n-1).get(j);
 
-        return solve(0,0,triangle,dp);
-    }
+        for (int r=n-2;r>=0;r--) {
+            for (int c=r;c>=0;c--) {
+                int below = dp[r+1][c];
+                int diagonal = dp[r+1][c+1];
+                dp[r][c]=triangle.get(r).get(c) + Math.min(below,diagonal);
+            }
+        }
 
-    private int solve(int r,int c,List<List<Integer>> triangle,int[][] dp) {
-        if (r==triangle.size()-1)
-            return triangle.get(r).get(c);
-
-        if (dp[r][c]!=-1)
-            return dp[r][c];
-
-        int below = solve(r+1,c,triangle,dp);
-        int diagonal = solve(r+1,c+1,triangle,dp);
-
-        return dp[r][c]=triangle.get(r).get(c) + Math.min(below,diagonal);
+        return dp[0][0];
     }
 }
