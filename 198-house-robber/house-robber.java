@@ -1,29 +1,21 @@
-//Space optimization
-
 class Solution {
     public int rob(int[] nums) {
         int n=nums.length;
-        if (n==1)
-            return nums[0];
+        int[] dp=new int[n];
+        Arrays.fill(dp,-1);
+        return solve(0,n-1,nums,dp);
+    }
 
-        if (n==2)
-            return Math.max(nums[1],nums[0]);
+    private int solve(int pos,int last,int[] nums,int[] dp) {
+        if (pos>last)
+            return 0;
 
-        int prev2=nums[0];
-        int prev1=Math.max(nums[1],nums[0]);
+        if (dp[pos]!=-1)
+            return dp[pos];
 
-        for (int i=2;i<n;i++)
-        {
-            int pick=nums[i]+prev2;
-            int notPick=prev1;
-            int curr=Math.max(pick,notPick);
-            prev2=prev1;
-            prev1=curr;
-        }
+        int pick=nums[pos]+solve(pos+2,last,nums,dp);
+        int notPick=solve(pos+1,last,nums,dp);
 
-        return prev1;
+        return dp[pos]=Math.max(pick,notPick);
     }
 }
-
-//TC:- O(n)
-//SC:- O(1)
