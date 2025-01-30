@@ -1,44 +1,34 @@
 class Solution {
     public int minFallingPathSum(int[][] matrix) {
         int n=matrix.length;
-        int minVal=Integer.MAX_VALUE;
+        int res=Integer.MAX_VALUE;
         int[][] dp=new int[n][n];
-        System.out.println(n);
 
         for (int i=0;i<n;i++)
             for (int j=0;j<n;j++)
                 dp[i][j]=-1000000;
-                
-        for (int j=0;j<n;j++)
-            minVal=Math.min(minVal,solve(0,j,matrix,n,dp));
 
-        return minVal;
+        for (int c=0;c<n;c++)
+            for (int i=-1;i<=1;i++)
+                res=Math.min(res,matrix[0][c] + solve(1,c+i,n,matrix,dp));
+
+        return res;
     }
 
-    private int solve(int i,int j,int[][] matrix,int n,int[][] dp) {
-        if (i==n)
+    private int solve(int r,int c,int n,int[][] matrix,int[][] dp) {
+        if (c<0 || c==n)
+            return (int)1e5;
+
+        if (r==n)
             return 0;
 
-        if (j==n)
-            return 1000000;
+        if (dp[r][c]!=-1000000)
+            return dp[r][c];
 
-        if (dp[i][j]!=-1000000)
-            return dp[i][j];
+        int res = (int)1e8;
+        for (int i=-1;i<=1;i++)
+            res = Math.min(res,matrix[r][c]+solve(r+1,c+i,n,matrix,dp));
 
-        int left=1000000;
-        int right=1000000;
-
-        //left
-        if (j-1>=0)
-            left=solve(i+1,j-1,matrix,n,dp);
-
-        //down
-        int down=solve(i+1,j,matrix,n,dp);
-
-        //right
-        if (j+1<n)
-            right=solve(i+1,j+1,matrix,n,dp);
-
-        return dp[i][j]=matrix[i][j]+Math.min(down,Math.min(left,right));
+        return dp[r][c]=res;
     }
 }
