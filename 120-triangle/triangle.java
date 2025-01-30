@@ -1,25 +1,25 @@
-//Space Optimization
-
 class Solution {
     public int minimumTotal(List<List<Integer>> triangle) {
         int n=triangle.size();
-        int[] next=new int[n];
-        
+        int[][] dp=new int[n][n];
+
         for (int i=0;i<n;i++)
-            next[i]=triangle.get(n-1).get(i);
+            for (int j=0;j<n;j++)
+                dp[i][j]=-1;
 
-        for (int i=n-2;i>=0;i--)
-        {
-            int[] curr=new int[i+1];
-            for (int j=0;j<=i;j++)
-            {
-                int down=next[j];
-                int diag=next[j+1];
-                curr[j]=triangle.get(i).get(j)+Math.min(down,diag);
-            }
-            System.arraycopy(curr,0,next,0,i+1);
-        }
+        return solve(0,0,triangle,dp);
+    }
 
-        return next[0];
+    private int solve(int r,int c,List<List<Integer>> triangle,int[][] dp) {
+        if (r==triangle.size())
+            return 0;
+
+        if (dp[r][c]!=-1)
+            return dp[r][c];
+
+        int below = solve(r+1,c,triangle,dp);
+        int diagonal = solve(r+1,c+1,triangle,dp);
+
+        return dp[r][c]=triangle.get(r).get(c) + Math.min(below,diagonal);
     }
 }
