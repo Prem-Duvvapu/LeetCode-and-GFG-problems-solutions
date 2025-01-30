@@ -1,43 +1,46 @@
-//DP on subsequences
-//Space Optimization
-
 class Solution {
     public boolean canPartition(int[] nums) {
         int n=nums.length;
         int sum=0;
-        for (int val: nums)
-            sum+=val;
+        
+        for (int i=0;i<n;i++)
+            sum+=nums[i];
 
-        if (sum%2==1)//odd
+        if (sum%2==1)
             return false;
 
-        //subset sum equal to target problem from here
-        int target=sum/2;
-        boolean[] prev=new boolean[target+1];
-        boolean[] curr=new boolean[target+1];
+        int[][] dp=new int[n][sum+1];
 
-        prev[0]=true;
-        curr[0]=true;
+        for (int i=0;i<n;i++)
+            for (int j=0;j<=sum;j++)
+                dp[i][j]=-1;
 
-        if (nums[0]<=target)
-            prev[nums[0]]=true;
 
-        for (int i=1;i<n;i++)
-        {
-            for (int j=1;j<=target;j++)
-            {
-                boolean notTake=prev[j];
-                boolean take=false;
-                if (nums[i]<=j)
-                    take=prev[j-nums[i]];
+        return solve(0,nums,sum/2,dp);
+    }
 
-                curr[j]=(take || notTake);
-            }
+    private boolean solve(int pos,int[] nums,int target,int[][] dp) {
+        if (target==0)
+            return true;
 
-            for (int k=0;k<=target;k++)
-                prev[k]=curr[k];
-        }
+        if (pos==nums.length || target<0)
+            return false;
 
-        return prev[target];
+        if (dp[pos][target]==1)
+            return true;
+        else if (dp[pos][target]==0)
+            return false;
+
+        boolean pick=solve(pos+1,nums,target-nums[pos],dp);
+        boolean notPick=solve(pos+1,nums,target,dp);
+
+        boolean res=(pick || notPick);
+
+        if (res)
+            dp[pos][target]=1;
+        else
+            dp[pos][target]=0;
+
+        return res;
     }
 }
