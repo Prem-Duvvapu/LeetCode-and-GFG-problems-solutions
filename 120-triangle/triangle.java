@@ -11,8 +11,8 @@ class Solution {
     }
 
     private int solve(int r,int c,List<List<Integer>> triangle,int[][] dp) {
-        if (r==triangle.size())
-            return 0;
+        if (r==triangle.size()-1)
+            return triangle.get(r).get(c);
 
         if (dp[r][c]!=-1)
             return dp[r][c];
