@@ -15,6 +15,7 @@ class DisjointSet {
     public int uPar(int node) {
         if (parent[node]==node)
             return node;
+
         return parent[node]=uPar(parent[node]);
     }
 
@@ -25,7 +26,7 @@ class DisjointSet {
         if (uParU==uParV)
             return;
 
-        if (size[uParU]>=size[uParV]) {
+        if (size[uParU]>=uParV) {
             parent[uParV]=uParU;
             size[uParU]+=size[uParV];
         } else {
@@ -39,58 +40,63 @@ class Solution {
     public int largestIsland(int[][] grid) {
         int n=grid.length;
         DisjointSet ds=new DisjointSet(n*n);
-        // boolean[] visited=new boolean[n*n];
         int[] dRow={-1,0,1,0};
         int[] dCol={0,1,0,-1};
-        int res=1;
 
         for (int i=0;i<n;i++) {
             for (int j=0;j<n;j++) {
-                int node=(n*i+j);
-
                 if (grid[i][j]==0)
                     continue;
 
+                int node=i*n+j;
                 for (int k=0;k<4;k++) {
                     int newRow=i+dRow[k];
                     int newCol=j+dCol[k];
-                    int newNode=(newRow*n+newCol);
+                    int newNode=n*newRow+newCol;
 
                     if (newRow>=0 && newRow<n && newCol>=0 && newCol<n && grid[newRow][newCol]==1) {
                         ds.unionBySize(node,newNode);
+                        // System.out.println(""+i+" "+j+" "+newRow+" "+newCol+" "+Arrays.toString(ds.size));
                     }
                 }
             }
         }
 
+        int finalRes=1;
         for (int i=0;i<n;i++) {
             for (int j=0;j<n;j++) {
                 if (grid[i][j]==1)
                     continue;
 
+                int node=i*n+j;
                 Set<Integer> set=new HashSet<>();
                 for (int k=0;k<4;k++) {
                     int newRow=i+dRow[k];
                     int newCol=j+dCol[k];
-                    int newNode=(newRow*n+newCol);
+                    int newNode=n*newRow+newCol;
 
                     if (newRow>=0 && newRow<n && newCol>=0 && newCol<n && grid[newRow][newCol]==1) {
                         set.add(ds.uPar(newNode));
                     }
                 }
 
-                int curr=1;
-                for (int node: set) {
-                    curr += ds.size[node];
+                int currRes=1;
+                for (int uniqueParent: set) {
+                    currRes+=ds.size[uniqueParent];
                 }
-
-                res=Math.max(res,curr);
+                finalRes=Math.max(finalRes,currRes);
             }
         }
 
-        if (ds.size[0]==n*n)
-            return n*n;
+        // System.out.println(Arrays.toString(ds.size));
+        for (int i=0;i<n;i++) {
+            for (int j=0;j<n;j++) {
+                int node=n*i+j;
+                if (ds.size[node]==n*n)
+                    return n*n;
+            }
+        }
 
-        return res;
+        return finalRes;
     }
 }
