@@ -1,3 +1,4 @@
+//tabulation
 class Solution {
     public boolean canPartition(int[] nums) {
         int n=nums.length;
@@ -34,32 +35,5 @@ class Solution {
         }
 
         return dp[n-1][target];
-    }
-
-    private boolean solve(int pos,int[] nums,int target,int[][] dp) {
-        if (target==0)
-            return true;
-
-        if (pos==0)
-            return (nums[pos]==target);
-
-        if (dp[pos][target]==1)
-            return true;
-        else if (dp[pos][target]==0)
-            return false;
-
-        boolean notPick=solve(pos-1,nums,target,dp);
-        boolean pick=false;
-        if (target-nums[pos]>=0)
-            pick=solve(pos-1,nums,target-nums[pos],dp);
-
-        boolean res=(pick || notPick);
-
-        if (res)
-            dp[pos][target]=1;
-        else
-            dp[pos][target]=0;
-
-        return res;
     }
 }
