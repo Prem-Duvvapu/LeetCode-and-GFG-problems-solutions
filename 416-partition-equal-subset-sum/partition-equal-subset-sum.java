@@ -10,17 +10,36 @@ class Solution {
             return false;
 
         int target=sum/2;
-        int[][] dp=new int[n][target+1];
+        boolean[][] dp=new boolean[n][target+1];
 
+        //base cases
         for (int i=0;i<n;i++)
-            for (int j=0;j<=target;j++)
-                dp[i][j]=-1;
+            dp[i][0]=true;
 
+        for (int t=1;t<=target;t++)
+            if (nums[0]==t)
+                dp[0][t]=true;
 
-        return solve(n-1,nums,target,dp);
+        for (int pos=1;pos<n;pos++) {
+            for (int t=1;t<=target;t++) {
+                boolean notPick=dp[pos-1][t];
+                boolean pick=false;
+                if (t-nums[pos]>=0)
+                    pick=dp[pos-1][t-nums[pos]];
+
+                boolean res=(pick || notPick);
+
+                dp[pos][t]=res;
+            }
+        }
+
+        return dp[n-1][target];
     }
 
     private boolean solve(int pos,int[] nums,int target,int[][] dp) {
+        if (target==0)
+            return true;
+
         if (pos==0)
             return (nums[pos]==target);
 
