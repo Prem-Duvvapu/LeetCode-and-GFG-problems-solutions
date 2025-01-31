@@ -26,7 +26,7 @@ class DisjointSet {
         if (uParU==uParV)
             return;
 
-        if (size[uParU]>=uParV) {
+        if (size[uParU]>=size[uParV]) {
             parent[uParV]=uParU;
             size[uParU]+=size[uParV];
         } else {
@@ -89,13 +89,8 @@ class Solution {
         }
 
         // System.out.println(Arrays.toString(ds.size));
-        for (int i=0;i<n;i++) {
-            for (int j=0;j<n;j++) {
-                int node=n*i+j;
-                if (ds.size[node]==n*n)
-                    return n*n;
-            }
-        }
+        if (ds.size[0]==n*n)
+            return n*n;
 
         return finalRes;
     }
