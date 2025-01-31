@@ -17,23 +17,22 @@ class Solution {
                 dp[i][j]=-1;
 
 
-        return solve(0,nums,target,dp);
+        return solve(n-1,nums,target,dp);
     }
 
     private boolean solve(int pos,int[] nums,int target,int[][] dp) {
-        if (target==0)
-            return true;
-
-        if (pos==nums.length || target<0)
-            return false;
+        if (pos==0)
+            return (nums[pos]==target);
 
         if (dp[pos][target]==1)
             return true;
         else if (dp[pos][target]==0)
             return false;
 
-        boolean pick=solve(pos+1,nums,target-nums[pos],dp);
-        boolean notPick=solve(pos+1,nums,target,dp);
+        boolean notPick=solve(pos-1,nums,target,dp);
+        boolean pick=false;
+        if (target-nums[pos]>=0)
+            pick=solve(pos-1,nums,target-nums[pos],dp);
 
         boolean res=(pick || notPick);
 
