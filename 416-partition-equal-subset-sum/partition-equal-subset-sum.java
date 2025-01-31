@@ -17,9 +17,8 @@ class Solution {
         for (int i=0;i<n;i++)
             dp[i][0]=true;
 
-        for (int t=1;t<=target;t++)
-            if (nums[0]==t)
-                dp[0][t]=true;
+        if (nums[0]<=target)
+                dp[0][nums[0]]=true;
 
         for (int pos=1;pos<n;pos++) {
             for (int t=1;t<=target;t++) {
