@@ -9,14 +9,15 @@ class Solution {
         if (sum%2==1)
             return false;
 
-        int[][] dp=new int[n][sum+1];
+        int target=sum/2;
+        int[][] dp=new int[n][target+1];
 
         for (int i=0;i<n;i++)
-            for (int j=0;j<=sum;j++)
+            for (int j=0;j<=target;j++)
                 dp[i][j]=-1;
 
 
-        return solve(0,nums,sum/2,dp);
+        return solve(0,nums,target,dp);
     }
 
     private boolean solve(int pos,int[] nums,int target,int[][] dp) {
