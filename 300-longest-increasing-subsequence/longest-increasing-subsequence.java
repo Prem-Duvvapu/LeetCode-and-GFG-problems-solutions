@@ -2,8 +2,11 @@ class Solution {
     public int lengthOfLIS(int[] nums) {
         int n=nums.length;
         int[][] dp=new int[n][n];
-        for (int[] a: dp)
-            Arrays.fill(a,-1);
+
+        for (int i=0;i<n;i++)
+            for (int j=0;j<n;j++)
+                dp[i][j]=-1;
+
         return solve(0,-1,nums,dp);
     }
 
