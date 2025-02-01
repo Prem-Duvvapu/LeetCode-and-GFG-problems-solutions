@@ -1,98 +1,43 @@
 class Solution {
     public boolean isMatch(String s, String p) {
-        int n=s.length();
-        int m=p.length();
+        int n=p.length();
+        int m=s.length();
         int[][] dp=new int[n][m];
 
         for (int i=0;i<n;i++)
             for (int j=0;j<m;j++)
                 dp[i][j]=-1;
 
-        return solve(n-1,m-1,s,p,dp);
+        int res=solve(n-1,m-1,p,s,dp);
+        if (res==1)
+            return true;
+
+        return false;
     }
 
-    private boolean solve(int i,int j,String s,String p,int[][] dp) {
+    private int solve(int i,int j,String s1,String s2,int[][] dp) {
         if (i<0 && j<0)
-            return true;
+            return 1;
 
-        if (j<0 && i>=0)
-            return false;
+        if (i<0 && j>=0)
+            return 0;
 
-        if (i<0 && j>=0) {
-            for (int k=j;k>=0;k--)
-                if (p.charAt(k)!='*')
-                    return false;
+        if (j<0 && i>=0) {
+            for (int k=i;k>=0;k--)
+                if (s1.charAt(k)!='*')
+                    return 0;
 
-            return true;
-        }
-        
-        if (i<0) {
-            if (j<0)
-                return true;
-            
-            if (j==0 && p.charAt(j)=='*')
-                return true;
-            
-            int k=j;
-            for (;k>=0;k--)
-                if (p.charAt(j)!='*')
-                    return false;
-
-            if (k<0)
-                return true;
-
-            return false;
-        }
-            
-        if (j<0)
-            return false;
-
-        if (dp[i][j]!=-1) {
-            if (dp[i][j]==1)
-                return true;
-            return false;
+            return 1;
         }
 
-        boolean res=false;
+        if (dp[i][j]!=-1)
+            return dp[i][j];
 
-        if (p.charAt(j)!='*' && p.charAt(j)!='?') {
-            if (p.charAt(j)==s.charAt(i)) {
-                res=solve(i-1,j-1,s,p,dp);
-                if (res)
-                    dp[i][j]=1;
-                else
-                    dp[i][j]=0;
-                return res;
-            } else {
-                res=false;
-                if (res)
-                    dp[i][j]=1;
-                else
-                    dp[i][j]=0;
-                return res;
-            }
-        }
+        if ((s1.charAt(i)=='?') || s1.charAt(i)==s2.charAt(j))
+            return dp[i][j]=solve(i-1,j-1,s1,s2,dp);
+        else if (s1.charAt(i)=='*')
+            return dp[i][j]=(solve(i-1,j,s1,s2,dp) | solve(i,j-1,s1,s2,dp));
 
-        if (p.charAt(j)=='?') {
-            res=solve(i-1,j-1,s,p,dp);
-            if (res)
-                dp[i][j]=1;
-            else
-                dp[i][j]=0;
-            return res;
-        }
-
-        //*
-        boolean x=solve(i,j-1,s,p,dp);
-        boolean y=solve(i-1,j-1,s,p,dp);
-        boolean z=solve(i-1,j,s,p,dp);
-
-        res=(x || y|| z);
-        if (res)
-            dp[i][j]=1;
-        else
-            dp[i][j]=0;
-
-        return res;
+        return dp[i][j]=0;
     }
 }
