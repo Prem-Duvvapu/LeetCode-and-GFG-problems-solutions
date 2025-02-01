@@ -1,43 +1,35 @@
-//Space Optimization
-
 class Solution {
     public int maxProfit(int[] prices) {
         int n=prices.length;
-        int[] next=new int[2];
-        int[] curr=new int[2];
-        
-        for (int i=n-1;i>=0;i--)
-        {
-            for (int j=0;j<=1;j++)
-            {
-                if (j==1)
-                {
-                    int buy=-prices[i];
-                    int notBuy=0;
-                    if (i<n-1)
-                    {
-                        buy+=next[0];
-                        notBuy=next[1];
-                    }
-                    curr[j]=Math.max(buy,notBuy);
-                }
-                else
-                {
-                    int sell=prices[i];
-                    int notSell=0;
-                    if (i<n-1)
-                    {
-                        sell+=next[1];
-                        notSell=next[0];
-                    }
-                    curr[j]=Math.max(sell,notSell);
-                }
-            }
+        int[][] dp=new int[n][2];
 
-            next[0]=curr[0];
-            next[1]=curr[1];
+        for (int i=0;i<n;i++)
+            for (int j=0;j<2;j++)
+                dp[i][j]=-1;
+
+        return solve(0,prices,1,dp);
+    }
+
+    private int solve(int pos,int[] prices,int canBuy,int[][] dp) {
+        if (pos==prices.length)
+            return 0;
+
+        if (dp[pos][canBuy]!=-1)
+            return dp[pos][canBuy];
+
+        int res=0;
+        int b=0;
+        int s=0;
+        if (canBuy==1) {
+            int bought=-1*prices[pos]+solve(pos+1,prices,0,dp);
+            int notBought=0+solve(pos+1,prices,canBuy,dp);
+            b=Math.max(bought,notBought);
+        } else {
+            int sell=prices[pos]+solve(pos+1,prices,1,dp);
+            int notSell=0+solve(pos+1,prices,canBuy,dp);
+            s=Math.max(sell,notSell);
         }
 
-        return next[1];
+        return dp[pos][canBuy]=Math.max(b,s);
     }
 }
