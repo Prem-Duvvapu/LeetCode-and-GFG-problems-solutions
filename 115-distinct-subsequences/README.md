@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/distinct-subsequences">Distinct Subsequences</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p>Given two strings <code>s</code> and <code>t</code>, return <em>the number of distinct</em> <span data-keyword="subsequence-string"><strong><em>subsequences</em></strong></span><em> of </em><code>s</code><em> which equals </em><code>t</code>.</p>
+<h2><a href="https://leetcode.com/problems/distinct-subsequences">Distinct Subsequences</a></h2> <img src='https://img.shields.io/badge/Difficulty-Hard-red' alt='Difficulty: Hard' /><hr><p>Given two strings s and t, return <i>the number of distinct</i> <b><i>subsequences</i></b><i> of </i>s<i> which equals </i>t.</p>
 
 <p>The test cases are generated so that the answer fits on a 32-bit signed integer.</p>
 
