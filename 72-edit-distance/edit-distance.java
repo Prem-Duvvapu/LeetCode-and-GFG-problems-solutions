@@ -1,35 +1,39 @@
-//Space Optimization(right shift by 1)
-
 class Solution {
     public int minDistance(String word1, String word2) {
         int n=word1.length();
         int m=word2.length();
-        int[] prev=new int[m+1];
-        int[] curr=new int[m+1];
+        int[][] dp=new int[n][m];
 
-        for (int j=0;j<=m;j++)
-            prev[j]=j;
+        for (int i=0;i<n;i++)
+            for (int j=0;j<m;j++)
+                dp[i][j]=-1;
 
-        for (int i=1;i<=n;i++)
-        {
-            curr[0]=i;
-            for (int j=1;j<=m;j++)
-            {
-                if (word1.charAt(i-1)==word2.charAt(j-1))
-                    curr[j]=prev[j-1];
-                else
-                {
-                    int insert=1+curr[j-1];
-                    int delete=1+prev[j];
-                    int replace=1+prev[j-1];
-                    curr[j]=Math.min(insert,Math.min(delete,replace));
-                }
-            }
+        return solve(n-1,m-1,word1,word2,dp);
+    }
 
-            for (int k=0;k<=m;k++)
-                prev[k]=curr[k];
-        }
+    private int solve(int i,int j,String word1,String word2,int[][] dp) {
+        if (j<0)
+            return i+1;
 
-        return prev[m];
+        if (i<0)
+            return j+1;
+
+        if (dp[i][j]!=-1)
+            return dp[i][j];
+
+        //if matching
+        if (word1.charAt(i)==word2.charAt(j))
+            return solve(i-1,j-1,word1,word2,dp);
+
+        //insert char
+        int insert=1+solve(i,j-1,word1,word2,dp);
+
+        //delete char
+        int delete=1+solve(i-1,j,word1,word2,dp);
+
+        //replace char
+        int replace=1+solve(i-1,j-1,word1,word2,dp);
+
+        return dp[i][j]=Math.min(insert,Math.min(delete,replace));
     }
 }
