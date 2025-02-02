@@ -1,19 +1,37 @@
+//using binary search
 class Solution {
     public int lengthOfLIS(int[] nums) {
         int n=nums.length;
-        int[] dp=new int[n];
-        int res=1;
-        Arrays.fill(dp,1);
+        List<Integer> l=new ArrayList<>();
+        l.add(nums[0]);
 
-        for (int i=0;i<n;i++) {
-            for (int prev=0;prev<i;prev++) {
-                if (nums[i]>nums[prev] && dp[prev]+1>dp[i]) {
-                    dp[i]=1+dp[prev];
-                }
-                res=Math.max(res,dp[i]);
+        for (int i=1;i<n;i++) {
+            if (nums[i]>l.get(l.size()-1)) {
+                l.add(nums[i]);
+            } else {
+                int index=lowerBound(l,nums[i]);
+                l.set(index,nums[i]);
             }
         }
 
-        return res;
+        return l.size();
+    }
+
+    private int lowerBound(List<Integer> list,int value) {
+        int left=0;
+        int right=list.size()-1;
+        int ans=0;
+
+        while (left<=right) {
+            int mid=left+(right-left)/2;
+            if (value<=list.get(mid)) {
+                ans=mid;
+                right=mid-1;
+            } else {
+                left=mid+1;
+            }
+        }
+
+        return ans;
     }
 }
