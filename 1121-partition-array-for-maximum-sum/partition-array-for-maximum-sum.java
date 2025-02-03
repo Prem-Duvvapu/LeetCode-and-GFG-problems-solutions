@@ -1,28 +1,26 @@
-//Memoization
 class Solution {
     public int maxSumAfterPartitioning(int[] arr, int k) {
         int n=arr.length;
         int[] dp=new int[n];
         Arrays.fill(dp,-1);
-        return solve(0,arr,k,n,dp);
+        return solve(0,arr,k,dp);
     }
 
-    private int solve(int pos,int[] arr,int k,int n,int[] dp)
-    {
-        if (pos==n)
+    private int solve(int pos,int[] arr,int k,int[] dp) {
+        if (pos==arr.length)
             return 0;
 
         if (dp[pos]!=-1)
             return dp[pos];
 
-        int maxSum=Integer.MIN_VALUE;
-        int maxVal=Integer.MIN_VALUE;
+        int len=0;
+        int maxi=0;
+        int maxSum=0;
+        for (int i=pos;i<Math.min(arr.length,pos+k);i++) {
+            maxi=Math.max(maxi,arr[i]);
+            len++;
 
-        for (int i=pos;i<Math.min(pos+k,n);i++)
-        {
-            maxVal=Math.max(maxVal,arr[i]);
-            int len=i-pos+1;
-            int currSum=len*maxVal+solve(i+1,arr,k,n,dp);
+            int currSum=(len*maxi)+solve(i+1,arr,k,dp);
             maxSum=Math.max(maxSum,currSum);
         }
 
