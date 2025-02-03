@@ -1,41 +1,46 @@
-//Memoization
 class Solution {
     Boolean[][] dpPalindrome;
     public int minCut(String s) {
         int n=s.length();
-        Integer[][] dp=new Integer[n][n];
         dpPalindrome=new Boolean[n][n];
+        int[][] dp=new int[n][n];
+
+        for (int i=0;i<n;i++)
+            for (int j=0;j<n;j++)
+                dp[i][j]=-1;
+
         return solve(0,n-1,s,dp);
     }
 
-    private int solve(int left,int right,String s,Integer[][] dp)
-    {
-        if (left==right || isPalindrome(s,left,right))
+    private int solve(int left,int right,String s,int[][] dp) {
+        if (isPalindrome(left,right,s))
             return 0;
 
-        if (dp[left][right]!=null)
+        if (dp[left][right]!=-1)
             return dp[left][right];
 
-        int minVal=s.length()-1;
+        int minCuts=2000;
 
-        for (int i=left;i<right;i++)
-            if (isPalindrome(s,left,i))
-                minVal=Math.min(minVal,1+solve(i+1,right,s,dp));
+        for (int i=left+1;i<=right;i++) {
+            if (isPalindrome(left,i-1,s)) {
+                int currCuts=1+solve(i,right,s,dp);
+                minCuts=Math.min(minCuts,currCuts);
+            }
+        }
 
-        return dp[left][right]=minVal;
+        return dp[left][right]=minCuts;
     }
 
-    private boolean isPalindrome(String s,int left,int right)
-    {
+    private boolean isPalindrome(int left,int right,String s) {
         if (left>=right)
             return true;
 
         if (dpPalindrome[left][right]!=null)
             return dpPalindrome[left][right];
-        
-        boolean currCharCheck=s.charAt(left)==s.charAt(right);
-        boolean remCharsCheck=isPalindrome(s,left+1,right-1);
-        
-        return dpPalindrome[left][right]=(currCharCheck && remCharsCheck);
+
+        boolean currCharsCheck=(s.charAt(left)==s.charAt(right));
+        boolean remainingCharsCheck=isPalindrome(left+1,right-1,s);
+
+        return dpPalindrome[left][right]=(currCharsCheck && remainingCharsCheck);
     }
 }
