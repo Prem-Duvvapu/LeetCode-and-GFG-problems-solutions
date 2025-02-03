@@ -13,38 +13,29 @@
  *     }
  * }
  */
-
- //Morris
- //Left Root Right
 class Solution {
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
-
         if (root==null)
             return res;
 
         Stack<TreeNode> stack=new Stack<>();
         TreeNode curr=root;
 
-        while (true)
-        {
-            if (curr!=null)
-            {
-                stack.push(curr);
+        while (true) {
+            if (curr!=null) {
+                stack.add(curr);
                 curr=curr.left;
-            }
-            else
-            {
+            } else {
                 if (stack.isEmpty())
                     break;
-                
-                TreeNode temp=stack.pop();
-                res.add(temp.val);
-                curr=temp.right;
+
+                curr=stack.pop();
+                res.add(curr.val);
+                curr=curr.right;
             }
         }
 
         return res;
-        
     }
 }
