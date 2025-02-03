@@ -13,44 +13,27 @@
  *     }
  * }
  */
-
- //Iterative using 1 stack
- //Left Right Root
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> res=new ArrayList<>();
-
         if (root==null)
             return res;
-        
-        Stack<TreeNode> stack=new Stack<>();
-        TreeNode curr=root;
 
-        while (curr!=null || !stack.isEmpty())
-        {
-            if (curr!=null)
-            {
-                stack.add(curr);
-                curr=curr.left;
-            }
-            else
-            {
-                TreeNode temp=stack.peek().right;
-                if (temp==null)
-                {
-                    temp=stack.pop();
-                    res.add(temp.val);
-                    while (!stack.isEmpty() && stack.peek().right==temp)
-                    {
-                        temp=stack.pop();
-                        res.add(temp.val);
-                    }
-                }
-                else
-                    curr=temp;
-            }
+        Stack<TreeNode> stack=new Stack<>();
+        stack.add(root);
+        while (!stack.isEmpty()) {
+            TreeNode curr=stack.pop();
+
+            if (curr.left!=null)
+                stack.push(curr.left);
+
+            if (curr.right!=null)
+                stack.push(curr.right);
+
+            res.add(curr.val);
         }
 
+        Collections.reverse(res);
         return res;
     }
 }
