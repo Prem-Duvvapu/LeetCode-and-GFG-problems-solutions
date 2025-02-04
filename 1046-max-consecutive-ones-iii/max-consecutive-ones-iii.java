@@ -1,4 +1,4 @@
-//optimal
+//Optimal
 class Solution {
     public int longestOnes(int[] nums, int k) {
         int n=nums.length;
@@ -11,15 +11,16 @@ class Solution {
             if (nums[right]==0)
                 zeroesCnt++;
 
-            while (zeroesCnt>k) {
+            if (zeroesCnt > k) {
                 if (nums[left]==0)
                     zeroesCnt--;
-                
-                left++;
-            }
 
-            int currLen=right-left+1;
-            maxLen=Math.max(maxLen,currLen);
+                left++;
+            } else {
+                int currLen=right-left+1;
+                maxLen=Math.max(maxLen,currLen);
+            }
+            
             right++;
         }
         
