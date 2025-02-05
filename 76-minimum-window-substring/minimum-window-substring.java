@@ -1,47 +1,42 @@
 class Solution {
     public String minWindow(String s, String t) {
         int n=s.length();
-
-        if (t.length()>n)
-            return "";
-
-        Map<Character,Integer> map=new HashMap<>();
-        int minWindowSize=Integer.MAX_VALUE;
-        int requiredCount=t.length();
-        int left=0,right=0;
-        int startIndex=0;
+        int m=t.length();
+        int left=0;
+        int right=0;
+        int[] hash=new int[256];
+        int cnt=0;
+        int minLen=(int)1e8;
+        int startIndex=-1;
 
         for (char ch: t.toCharArray())
-            map.put(ch,map.getOrDefault(ch,0)+1);
+            hash[ch]++;
 
-        while (right<n) {
-            char curr=s.charAt(right);
+        while (right < n) {
+            char ch=s.charAt(right);
+            hash[ch]--;
 
-            if (map.getOrDefault(curr,0)>0)
-                requiredCount--;
+            if (hash[ch]>=0)
+                cnt++;
 
-            map.put(curr,map.getOrDefault(curr,0)-1);
-
-            while (requiredCount==0) {
-                int currWindowSize=right-left+1;
-                if (currWindowSize<minWindowSize) {
-                    minWindowSize=currWindowSize;
+            while (cnt == m) {
+                if ((right-left+1) < minLen) {
+                    minLen=right-left+1;
                     startIndex=left;
                 }
-                
-                char leftChar=s.charAt(left);
-                map.put(leftChar,map.getOrDefault(leftChar,0)+1);
-                if (map.get(leftChar)>0)
-                    requiredCount++;
+
+                hash[s.charAt(left)]++;
+                if (hash[s.charAt(left)]>0)
+                    cnt--;
                 left++;
             }
 
             right++;
         }
 
-        if (minWindowSize==Integer.MAX_VALUE)
+        if (startIndex==-1)
             return "";
 
-        return s.substring(startIndex,startIndex+minWindowSize);
+        return s.substring(startIndex,startIndex+minLen);
     }
 }
