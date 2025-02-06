@@ -15,9 +15,11 @@ class Solution {
 
                 int val=productFreq.get(product);
 
-                resCnt += (8*(val-1));
+                resCnt += (val-1);
             }
         }
+
+        resCnt *= 8;
 
         return resCnt;
     }
