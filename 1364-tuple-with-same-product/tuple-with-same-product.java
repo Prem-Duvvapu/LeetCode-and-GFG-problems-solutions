@@ -12,14 +12,16 @@ class Solution {
                     productFreq.put(product,1);
                 else
                     productFreq.put(product,productFreq.get(product)+1);
-
-                int val=productFreq.get(product);
-
-                resCnt += (val-1);
             }
         }
 
-        resCnt *= 8;
+        for (Map.Entry<Integer,Integer> m: productFreq.entrySet()) {
+            int val=m.getValue();
+            int sum=0;
+            for (int i=1;i<val;i++)
+                sum+=i;
+            resCnt+=(8*sum);
+        }
 
         return resCnt;
     }
