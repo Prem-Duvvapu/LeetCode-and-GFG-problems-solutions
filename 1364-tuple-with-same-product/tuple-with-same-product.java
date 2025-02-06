@@ -17,9 +17,7 @@ class Solution {
 
         for (Map.Entry<Integer,Integer> m: productFreq.entrySet()) {
             int val=m.getValue();
-            int sum=0;
-            for (int i=1;i<val;i++)
-                sum+=i;
+            int sum=(val * (val-1))/2;
             resCnt+=(8*sum);
         }
 
