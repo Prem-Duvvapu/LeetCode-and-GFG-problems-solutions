@@ -1,4 +1,3 @@
-//brute force
 class Solution {
     public int[] queryResults(int limit, int[][] queries) {
         int n=queries.length;
