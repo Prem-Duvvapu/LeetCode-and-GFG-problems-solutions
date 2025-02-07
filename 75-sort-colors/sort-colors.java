@@ -1,24 +1,31 @@
-//Better
-//T.C.: O(2*n)
+//Optimal -> (Dutch National Flag Algorithm)
+//T.C.: O(n)
 //S.C.: O(1)
 
 class Solution {
     public void sortColors(int[] nums) {
         int n=nums.length;
-        int[] cnt=new int[3];
+        int low=0;
+        int mid=0;
+        int high=n-1;
 
-        for (int i=0;i<n;i++)
-            cnt[nums[i]]++;
+        while (mid<=high) {
+            if (nums[mid]==0) {
+                swap(nums,low,mid);
+                low++;
+                mid++;
+            } else if (nums[mid]==1) {
+                mid++;
+            } else {
+                swap(nums,mid,high);
+                high--;
+            }
+        }
+    }
 
-        int pos=0;
-        
-        while (cnt[0]-- > 0)
-            nums[pos++]=0;
-
-        while (cnt[1]-- > 0)
-            nums[pos++]=1;
-
-        while (cnt[2]-- > 0)
-            nums[pos++]=2;
+    public void swap(int[] nums,int i,int j) {
+        int temp=nums[i];
+        nums[i]=nums[j];
+        nums[j]=temp;
     }
 }
