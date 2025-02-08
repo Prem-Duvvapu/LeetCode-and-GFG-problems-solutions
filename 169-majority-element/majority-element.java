@@ -1,17 +1,21 @@
-//Better
+//Optimal - Boyer Moore Majority Voting Alogrithm
 class Solution {
     public int majorityElement(int[] nums) {
         int n=nums.length;
-        Map<Integer,Integer> map=new HashMap<>();
+        int res=nums[0];
+        int cnt=1;
 
-        for (int i=0;i<n;i++) {
-            map.put(nums[i],map.getOrDefault(nums[i],0)+1);
+        for (int i=1;i<n;i++)  {
+            if (cnt==0) {
+                res=nums[i];
+                cnt=1;
+            } else if (nums[i]==res) {
+                cnt++;
+            } else {
+                cnt--;
+            }
         }
 
-        for (Map.Entry<Integer,Integer> m: map.entrySet())
-            if (m.getValue() >= (n/2+n%2))
-                return m.getKey();
-
-        return 0;
+        return res;
     }
 }
