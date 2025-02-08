@@ -1,24 +1,20 @@
-//Boyer-Moore Voting algorithm
-
+//Brute force
 class Solution {
     public int majorityElement(int[] nums) {
         int n=nums.length;
-        int res=nums[0];
-        int cnt=1;
 
-        for (int i=1;i<n;i++)
-        {
-            if (nums[i]==res)
-                cnt++;
-            else if (cnt==0)
-            {
-                res=nums[i];
-                cnt=1;
+        for (int i=0;i<n;i++) {
+            int cnt=0;
+
+            for (int j=0;j<n;j++) {
+                if (nums[j]==nums[i])
+                    cnt++;
             }
-            else
-                cnt--;
+
+            if (cnt>=(n/2+n%2))
+                return nums[i];
         }
 
-        return res;
+        return 0;
     }
 }
