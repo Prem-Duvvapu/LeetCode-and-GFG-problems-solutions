@@ -3,30 +3,16 @@ class Solution {
         int n=nums.length;
         int[] res=new int[n];
         int positiveIndex=0;
-        int negativeIndex=0;
+        int negativeIndex=1;
 
-        while (nums[positiveIndex]<0)
-            positiveIndex++;
-
-        while (nums[negativeIndex]>0)
-            negativeIndex++;
-
-        int pos=0;
-        while (pos<n && positiveIndex<n) {
-            res[pos]=nums[positiveIndex];
-            positiveIndex++;
-            pos+=2;
-            while (positiveIndex<n && nums[positiveIndex]<0)
-                positiveIndex++;
-        }
-
-        pos=1;
-        while (pos<n && negativeIndex<n) {
-            res[pos]=nums[negativeIndex];
-            negativeIndex++;
-            pos+=2;
-            while (negativeIndex<n && nums[negativeIndex]>0)
-                negativeIndex++;
+        for (int i=0;i<n;i++) {
+            if (nums[i]>0) {
+                res[positiveIndex]=nums[i];
+                positiveIndex+=2;
+            } else {
+                res[negativeIndex]=nums[i];
+                negativeIndex+=2;
+            }
         }
 
         return res;
