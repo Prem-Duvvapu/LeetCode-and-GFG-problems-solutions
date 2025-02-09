@@ -1,4 +1,4 @@
-//Optimal
+//Print the subarray which gives the maximum sum
 class Solution {
     public int maxSubArray(int[] nums) {
         int n=nums.length;
