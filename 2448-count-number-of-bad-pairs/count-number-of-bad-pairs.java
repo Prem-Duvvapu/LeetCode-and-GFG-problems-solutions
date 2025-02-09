@@ -1,18 +1,30 @@
 class Solution {
     public long countBadPairs(int[] nums) {
         int n=nums.length;
-        long good=0;
         Map<Integer,Integer> map=new HashMap<>();
-        long total=1L*n*(n-1)/2;
 
-        for (int i=0;i<n;i++)
-        {
-            int key=i-nums[i];
-            int value=map.getOrDefault(key,0);
-            map.put(key,value+1);
-            good+=value;
+        for (int i=0;i<n;i++) {
+            int diff=(i-nums[i]);
+            map.putIfAbsent(diff,0);
+            map.put(diff,map.get(diff)+1);
         }
 
-        return (total-good);
+        int m=map.size();
+        int[] a=new int[m];
+        int pos=0;
+        for (Map.Entry<Integer,Integer> mp: map.entrySet())
+            a[pos++]=mp.getValue();
+
+        long res=0L;
+        int sum=0;
+        for (int i=0;i<m;i++)
+            sum+=a[i];
+
+        for (int i=0;i<m;i++) {
+            sum-=a[i];
+            res+=((long)a[i]*(long)sum);
+        }
+
+        return res;
     }
 }
