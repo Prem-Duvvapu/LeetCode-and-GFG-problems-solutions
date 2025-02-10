@@ -5,7 +5,7 @@ class Solution {
         int longest=0;
         int curr=1;
 
-        if (n<=1)
+        if (n==1)
             return n;
 
         Arrays.sort(nums);
