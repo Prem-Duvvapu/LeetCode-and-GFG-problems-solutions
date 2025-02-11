@@ -6,11 +6,11 @@ class Solution {
         if (n<m)
             return s;
 
-        String res="";
+        StringBuilder res=new StringBuilder();
 
         for (int i=0;i<n;i++) {
             char ch=s.charAt(i);
-            res+=ch;
+            res.append(ch);
             if (res.length()>=m && ch==part.charAt(m-1)) {
                 int p1=res.length()-1;
                 int p2=m-1;
@@ -25,13 +25,13 @@ class Solution {
                 }
 
                 if (p2<0) {
-                    res=res.substring(0,p1+1);
+                    res=new StringBuilder(res.toString().substring(0,p1+1));
                 }
 
                 // System.out.println(i+" "+p1+" "+p2+" "+res);
             }
         }
 
-        return res;
+        return res.toString();
     }
 }
