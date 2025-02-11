@@ -3,18 +3,18 @@ class Solution {
         int n=nums.length;
         Map<Integer,Integer> map=new HashMap<>();
         int res=0;
-        int currSum=0;
+        int prefixSum=0;
 
         map.put(0,1);
         for (int i=0;i<n;i++) {
-            currSum+=nums[i];
-            int remSum=currSum-k;
+            prefixSum+=nums[i];
+            int remSum=prefixSum-k;
 
             if (map.containsKey(remSum))
                 res+=(map.get(remSum));
 
-            map.putIfAbsent(currSum,0);
-            map.put(currSum,map.get(currSum)+1);
+            map.putIfAbsent(prefixSum,0);
+            map.put(prefixSum,map.get(prefixSum)+1);
         }
 
         return res;
