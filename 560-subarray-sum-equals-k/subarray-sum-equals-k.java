@@ -10,8 +10,7 @@ class Solution {
             prefixSum+=nums[i];
             int remSum=prefixSum-k;
 
-            if (map.containsKey(remSum))
-                res+=(map.get(remSum));
+            res+=(map.getOrDefault(remSum,0));
 
             map.putIfAbsent(prefixSum,0);
             map.put(prefixSum,map.get(prefixSum)+1);
