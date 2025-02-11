@@ -8,8 +8,8 @@ class Solution {
         for (int i=0;i<elements.length;i++)
             map.putIfAbsent(elements[i],i);
 
-        for (int i=0;i<n;i++) {
-            for (int factor=1;factor*factor<=groups[i];factor++) {
+        for (int i=0;i<n;i++) {//O(n)
+            for (int factor=1;factor*factor<=groups[i];factor++) {//O(sqrt(k))
                 int otherFactor=groups[i]/factor;
 
                 if (groups[i]%factor==0 && map.containsKey(factor))
