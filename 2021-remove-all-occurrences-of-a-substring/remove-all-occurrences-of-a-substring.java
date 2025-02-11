@@ -2,10 +2,6 @@ class Solution {
     public String removeOccurrences(String s, String part) {
         int n=s.length();
         int m=part.length();
-
-        if (n<m)
-            return s;
-
         StringBuilder res=new StringBuilder();
 
         for (int i=0;i<n;i++) {
@@ -24,11 +20,8 @@ class Solution {
                     }
                 }
 
-                if (p2<0) {
+                if (p2<0)
                     res=res.delete(p1+1,p1+1+m);
-                }
-
-                // System.out.println(i+" "+p1+" "+p2+" "+res);
             }
         }
 
