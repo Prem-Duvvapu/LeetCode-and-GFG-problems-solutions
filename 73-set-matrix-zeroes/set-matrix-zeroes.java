@@ -1,6 +1,6 @@
-//Better
+//Optimal
 //T.C. : O(m*n)
-//S.C. : O(m+n)
+//S.C. : O(1)
 class Solution {
     public void setZeroes(int[][] matrix) {
         int m=matrix.length;
