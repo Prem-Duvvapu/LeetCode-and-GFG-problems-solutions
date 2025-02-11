@@ -13,7 +13,7 @@ class Solution {
         int n=matrix.length;
             
         for (int i=0;i<n;i++)
-            for (int j=i;j<n;j++)
+            for (int j=i+1;j<n;j++)
                 swap(matrix,i,j,j,i);
 
         for (int i=0;i<n;i++)
