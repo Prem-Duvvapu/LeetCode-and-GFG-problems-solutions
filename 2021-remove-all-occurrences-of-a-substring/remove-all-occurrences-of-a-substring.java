@@ -25,7 +25,7 @@ class Solution {
                 }
 
                 if (p2<0) {
-                    res=new StringBuilder(res.toString().substring(0,p1+1));
+                    res=res.delete(p1+1,p1+1+m);
                 }
 
                 // System.out.println(i+" "+p1+" "+p2+" "+res);
