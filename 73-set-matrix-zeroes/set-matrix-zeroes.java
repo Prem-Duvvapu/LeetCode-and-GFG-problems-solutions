@@ -18,13 +18,8 @@ class Solution {
         }
 
         for (int i=0;i<m;i++)
-            if (rowsMark[i]==1)
-                for (int j=0;j<n;j++)
-                    matrix[i][j]=0;
-
-        for (int j=0;j<n;j++)
-            if (colsMark[j]==1)
-                for (int i=0;i<m;i++)
+            for (int j=0;j<n;j++)
+                if (rowsMark[i]==1 || colsMark[j]==1)
                     matrix[i][j]=0;
     }
 }
