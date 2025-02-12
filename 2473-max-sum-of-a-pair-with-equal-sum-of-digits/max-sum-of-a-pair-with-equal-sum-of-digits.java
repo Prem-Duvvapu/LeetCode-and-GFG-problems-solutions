@@ -1,4 +1,6 @@
 //better
+//T.C. : O(n*10)
+//S.C. : O(n)
 class Solution {
     public int maximumSum(int[] nums) {
         int n=nums.length;
