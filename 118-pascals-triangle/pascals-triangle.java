@@ -1,13 +1,18 @@
-//brute
+//optimal
 class Solution {
     public List<List<Integer>> generate(int numRows) {
         List<List<Integer>> resList=new ArrayList<>();
 
         for (int i=0;i<numRows;i++) {
             List<Integer> currList=new ArrayList<>();
+            int currEle=1;
 
-            for (int j=0;j<=i;j++)
-                currList.add(findNcR(i,j));
+            currList.add(currEle);
+            for (int j=1;j<=i;j++) {
+                currEle=(currEle*(i-(j-1)));
+                currEle=(currEle/j);
+                currList.add(currEle);
+            }
 
             resList.add(currList);
         }
@@ -16,6 +21,7 @@ class Solution {
     }
 
     //O(r)
+    /*
     public int findNcR(int n,int r) {
         int res=1;
         r=Math.min(r,n-r);
@@ -27,4 +33,5 @@ class Solution {
 
         return res;
     }
+    */
 }
