@@ -12,7 +12,6 @@ class ProductOfNumbers {
             list.add(num);
         else
             list.add(list.get(list.size()-1)*num);
-        // System.out.println(list);
     }
     
     public int getProduct(int k) {
