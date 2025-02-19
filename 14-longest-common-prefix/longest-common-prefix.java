@@ -1,64 +1,30 @@
-class TrieNode
-{
-    Map<Character,TrieNode> children;
-    boolean endOfWord;
-
-    TrieNode()
-    {
-        children=new HashMap<>();
-        endOfWord=false;
-    }
-}
-
-class Trie
-{
-    TrieNode root;
-
-    Trie()
-    {
-        root=new TrieNode();
-    }
-
-    public void insert(String word)
-    {
-        TrieNode curr=root;
-        for (char ch: word.toCharArray())
-        {
-            if (!curr.children.containsKey(ch))
-                curr.children.put(ch,new TrieNode());
-            curr=curr.children.get(ch);
-        }
-        curr.endOfWord=true;
-    }
-}
-
 class Solution {
     public String longestCommonPrefix(String[] strs) {
-        Trie t=new Trie();
-        for (String word: strs)
-            t.insert(word);
+        int n=strs.length;
+        String res=strs[0];
 
-        StringBuilder res=new StringBuilder();
-        TrieNode curr=t.root;
-        
-        if (curr.endOfWord)
-            return "";
-        
-        while (true) 
-        {
-            if (curr.children.size()!=1)
-                break;
+        for (int i=1;i<n;i++) {
+            int j=0; //res pointer
+            int k=0; //strs[i] pointer
 
-            for (Map.Entry<Character,TrieNode> m: curr.children.entrySet())
-            {
-                res.append(m.getKey());
-                curr=m.getValue();
+            while (j<res.length() && k<strs[i].length()) {
+                if (res.charAt(j)!=strs[i].charAt(k)) {
+                    if (j==0)
+                        return "";
+                    
+                    res=res.substring(0,j);
+                    break;
+                }
+
+                j++;
+                k++;
             }
 
-            if (curr.endOfWord)
-                break;
+            if (k<res.length())
+                res=res.substring(0,k);
+
         }
 
-        return res.toString();
+        return res;
     }
 }
