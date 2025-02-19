@@ -13,21 +13,16 @@ class Solution {
             char tChar=t.charAt(i);
 
             //s to t checking
-            if (sTot[sChar]!=-1) {
-                if (sTot[sChar]!=tChar)
-                    return false;
-            } else {
+            if (sTot[sChar]!=-1 && sTot[sChar]!=tChar)
+                return false;
+            else
                 sTot[sChar]=tChar;
-            }
 
             //t to s checking
-            if (tTos[tChar]!=-1) {
-                if (tTos[tChar]!=sChar)
-                    return false;
-            } else {
+            if (tTos[tChar]!=-1 && tTos[tChar]!=sChar)
+                return false;
+            else
                 tTos[tChar]=sChar;
-            }
-
         }
 
         return true;
