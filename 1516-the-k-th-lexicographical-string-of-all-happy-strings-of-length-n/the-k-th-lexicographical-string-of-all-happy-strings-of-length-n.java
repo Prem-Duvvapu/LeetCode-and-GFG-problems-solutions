@@ -1,29 +1,28 @@
 class Solution {
-    int pos=0;
-    String res="";
-
     public String getHappyString(int n, int k) {
         int total=(1<<(n-1))*3;
         if (k>total)
             return "";
 
-        String[] arr=new String[total];
+        String[] res=new String[1];
+        int[] reqPos=new int[]{k};
         
-        solve("",-1,n,arr,new int[]{k});
-        return res;
+        solve("",-1,n,res,reqPos);
+        return res[0];
     }
 
-    private void solve(String curr,int last,int n,String[] arr,int[] k) {
+    private void solve(String curr,int last,int n,String[] res,int[] reqPos) {
         if (curr.length()==n) {
-            k[0]--;
-            if (k[0]==0)
-                res=new String(curr);
+            reqPos[0]--;
+
+            if (reqPos[0]==0)
+                res[0]=new String(curr);
+
             return;
         }
 
-        for (int i=0;i<3;i++) {
+        for (int i=0;i<3;i++)
             if (last!=i)
-                solve(curr+(char)(i+'a'),i,n,arr,k);
-        }
+                solve(curr+(char)(i+'a'),i,n,res,reqPos);
     }
 }
