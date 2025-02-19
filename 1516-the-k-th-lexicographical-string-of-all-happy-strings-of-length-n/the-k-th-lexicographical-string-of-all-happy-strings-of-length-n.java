@@ -12,22 +12,27 @@ class Solution {
         return res[0];
     }
 
-    private void solve(StringBuilder curr,int last,int n,String[] res,int[] reqPos) {
+    private boolean solve(StringBuilder curr,int last,int n,String[] res,int[] reqPos) {
         if (curr.length()==n) {
             reqPos[0]--;
 
-            if (reqPos[0]==0)
+            if (reqPos[0]==0) {
                 res[0]=new String(curr);
+                return true;
+            }
 
-            return;
+            return false;
         }
 
         for (int i=0;i<3;i++) {
             if (last!=i) {
                 curr.append((char)(i+'a'));
-                solve(curr,i,n,res,reqPos);
+                if (solve(curr,i,n,res,reqPos))
+                    return true;
                 curr.deleteCharAt(curr.length()-1);
             }
         }
+
+        return false;
     }
 }
