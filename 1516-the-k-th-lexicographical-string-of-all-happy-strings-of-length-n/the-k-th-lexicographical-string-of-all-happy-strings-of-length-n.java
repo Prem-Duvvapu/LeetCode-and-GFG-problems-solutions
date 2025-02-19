@@ -1,17 +1,18 @@
 class Solution {
     public String getHappyString(int n, int k) {
-        int total=(1<<(n-1))*3;
+        int total=3 * (1<<(n-1));
+
         if (k>total)
             return "";
 
         String[] res=new String[1];
         int[] reqPos=new int[]{k};
         
-        solve("",-1,n,res,reqPos);
+        solve(new StringBuilder(),-1,n,res,reqPos);
         return res[0];
     }
 
-    private void solve(String curr,int last,int n,String[] res,int[] reqPos) {
+    private void solve(StringBuilder curr,int last,int n,String[] res,int[] reqPos) {
         if (curr.length()==n) {
             reqPos[0]--;
 
@@ -21,8 +22,12 @@ class Solution {
             return;
         }
 
-        for (int i=0;i<3;i++)
-            if (last!=i)
-                solve(curr+(char)(i+'a'),i,n,res,reqPos);
+        for (int i=0;i<3;i++) {
+            if (last!=i) {
+                curr.append((char)(i+'a'));
+                solve(curr,i,n,res,reqPos);
+                curr.deleteCharAt(curr.length()-1);
+            }
+        }
     }
 }
