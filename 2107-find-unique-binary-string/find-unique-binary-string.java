@@ -2,34 +2,38 @@ class Solution {
     public String findDifferentBinaryString(String[] nums) {
         int n=nums.length;
         Set<String> set=new HashSet<>();
+        String[] res=new String[1];
+
         for (String s: nums)
             set.add(s);
 
-        return solve(0,new StringBuilder(),n,set);
+        solve(new StringBuilder(),n,res,set);
+
+        return res[0];
     }
 
-    private String solve(int pos,StringBuilder sb,int n,Set<String> set)
-    {
-        if (pos==n)
-        {
-            if (!set.contains(sb.toString()))
-                return sb.toString();
+    private boolean solve(StringBuilder curr,int n,String[] res,Set<String> set) {
+        if (curr.length()==n) {
+            String s=new String(curr);
+            
+            if (!set.contains(s)) {
+                res[0]=s;
+                return true;
+            }
 
-            return "";
+            return false;
         }
 
-        sb.append('0');
-        String a=solve(pos+1,sb,n,set);
-        sb.deleteCharAt(pos);
-        if (a.length()>0)
-            return a;
-        
-        sb.append('1');
-        String b=solve(pos+1,sb,n,set);
-        sb.deleteCharAt(pos);
-        if (b.length()>0)
-            return b;
+        curr.append('0');
+        if (solve(curr,n,res,set))
+            return true;
+        curr.deleteCharAt(curr.length()-1);
 
-        return "";
+        curr.append('1');
+        if (solve(curr,n,res,set))
+            return true;
+        curr.deleteCharAt(curr.length()-1);
+
+        return false;
     }
 }
