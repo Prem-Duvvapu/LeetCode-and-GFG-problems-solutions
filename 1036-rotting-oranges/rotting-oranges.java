@@ -36,7 +36,7 @@ class Solution {
         
         while (!q.isEmpty()) {
             int qlen=q.size();
-            boolean flag=false;
+            int prevFreshCnt=freshCnt;
 
             while (qlen-- > 0) {
                 Pair curr=q.poll();
@@ -51,12 +51,11 @@ class Solution {
                         visited[newRow][newCol]=true;
                         freshCnt--;
                         q.add(new Pair(newRow,newCol));
-                        flag=true;
                     }
                 }
             }
 
-            if (flag)
+            if (freshCnt < prevFreshCnt)
                 time++;
         }
 
