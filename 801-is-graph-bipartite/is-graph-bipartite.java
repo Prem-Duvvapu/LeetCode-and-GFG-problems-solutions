@@ -1,4 +1,3 @@
-//DFS
 class Solution {
     public boolean isBipartite(int[][] graph) {
         int n=graph.length;
@@ -13,16 +12,16 @@ class Solution {
         return true;
     }
 
-    private boolean dfs(int pos,int currColor,int[] color,int[][] graph) {
-        color[pos]=currColor;
+    public boolean dfs(int curr,int currColor,int[] color,int[][] graph) {
+        color[curr]=currColor;
 
-        for (int neighbour: graph[pos]) {
+        for (int neighbour: graph[curr]) {
             if (color[neighbour]==-1) {
                 if (!dfs(neighbour,1-currColor,color,graph))
                     return false;
-            }
-            else if (color[neighbour]==currColor)
+            } else if (color[neighbour]==currColor) {
                 return false;
+            }
         }
 
         return true;
