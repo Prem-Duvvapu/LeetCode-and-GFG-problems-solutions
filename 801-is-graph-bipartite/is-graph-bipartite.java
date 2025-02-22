@@ -6,8 +6,28 @@ class Solution {
 
         for (int i=0;i<n;i++)
             if (color[i]==-1)
-                if (!dfs(i,0,color,graph))
+                if (!bfs(i,color,graph))
                     return false;
+
+        return true;
+    }
+
+    public boolean bfs(int start,int[] color,int[][] graph) {
+        color[start]=0;
+        Queue<Integer> q=new LinkedList<>();
+        q.add(start);
+
+        while (!q.isEmpty()) {
+            int curr=q.poll();
+            for (int neighbour: graph[curr]) {
+                if (color[neighbour]==-1) {
+                    color[neighbour]=1-color[curr];
+                    q.add(neighbour);
+                } else if (color[neighbour]==color[curr]) {
+                    return false;
+                }
+            }
+        }
 
         return true;
     }
