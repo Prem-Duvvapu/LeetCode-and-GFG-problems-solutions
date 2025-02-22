@@ -1,36 +1,38 @@
+//toposort(dfs)
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        int n = prerequisites.length;
-        int[] indegree = new int[numCourses];
-        List<List<Integer>> adj = new ArrayList<>();
-        Queue<Integer> q = new ArrayDeque<>();
+        boolean[] visited=new boolean[numCourses];
+        boolean[] path=new boolean[numCourses];
+        List<List<Integer>> adjList=new ArrayList<>();
 
-        for (int i=0; i<numCourses; i++)
-            adj.add(new ArrayList<>());
+        for (int i=0;i<numCourses;i++)
+            adjList.add(new ArrayList<>());
 
-        for (int i=0; i<n; i++) {
-            adj.get(prerequisites[i][1]).add(prerequisites[i][0]);
-            indegree[prerequisites[i][0]]++;
-        }
+        for (int[] e: prerequisites)
+            adjList.get(e[1]).add(e[0]);
 
-        for (int i=0; i<numCourses; i++)
-            if (indegree[i]==0)
-                q.add(i);
+        for (int i=0;i<numCourses;i++)
+            if (!visited[i])
+                if (!dfs(i,visited,path,numCourses,adjList))
+                    return false;
 
-        while (!q.isEmpty()) {
-            int curr = q.poll();
+        return true;
+    }
 
-            for (int neighbour: adj.get(curr)) {
-                indegree[neighbour]--;
-                if (indegree[neighbour]==0)
-                    q.add(neighbour);
+    public boolean dfs(int curr,boolean[] visited,boolean[] path,int numCourses,List<List<Integer>> adjList) {
+        visited[curr]=true;
+        path[curr]=true;
+
+        for (int neighbour: adjList.get(curr)) {
+            if (!visited[neighbour]) {
+                if (!dfs(neighbour,visited,path,numCourses,adjList))
+                    return false;
+            } else if (path[neighbour]){
+                return false;
             }
         }
 
-        for (int i=0; i<numCourses; i++)
-            if (indegree[i]!=0)
-                return false;
-
+        path[curr]=false;
         return true;
     }
 }
