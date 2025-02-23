@@ -13,8 +13,8 @@ class Solution {
         int initialSource=k;
         List<List<Node>> adjList=new ArrayList<>();
         int[] dist=new int[n+1];
-        Queue<Integer> q=new LinkedList<>();
-        q.add(initialSource);
+        PriorityQueue<Node> q=new PriorityQueue<>((x,y)->(x.wt-y.wt));
+        q.add(new Node(initialSource,0));
 
         Arrays.fill(dist,(int)1e5);
         dist[initialSource]=0;
@@ -31,11 +31,14 @@ class Solution {
         }
 
         while (!q.isEmpty()) {
-            int curr=q.poll();
-            for (Node neighbour: adjList.get(curr)) {
-                if (dist[curr]+neighbour.wt<dist[neighbour.dest]) {
-                    dist[neighbour.dest]=dist[curr]+neighbour.wt;
-                    q.add(neighbour.dest);
+            Node curr=q.poll();
+            int currSrc=curr.dest;
+            int currWt=curr.wt;
+
+            for (Node neighbour: adjList.get(currSrc)) {
+                if (dist[currSrc]+neighbour.wt<dist[neighbour.dest]) {
+                    dist[neighbour.dest]=dist[currSrc]+neighbour.wt;
+                    q.add(new Node(neighbour.dest,dist[neighbour.dest]));
                 }
             }
         }
