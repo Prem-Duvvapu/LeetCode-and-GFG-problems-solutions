@@ -1,40 +1,33 @@
+//Memoization
+//Time: O(n^2)
+//Space: O(n^2)
+
 class Solution {
     public boolean checkValidString(String s) {
         int n=s.length();
-        int openCnt=0;
-        int closeCnt=0;
-        int symbolCnt=0;
+        Boolean[][] dp=new Boolean[n][n];
 
-        for (int i=n-1;i>=0;i--) {
-            char ch=s.charAt(i);
-            if (ch=='(') {
-                openCnt++;
-                if (openCnt>closeCnt+symbolCnt)
-                    return false;
-            } else if (ch==')') {
-                closeCnt++;
-            } else {
-                symbolCnt++;
-            }
-        }
+        return solve(0,0,dp,s);
+    }
 
-        openCnt=0;
-        closeCnt=0;
-        symbolCnt=0;
+    public boolean solve(int index,int cnt,Boolean[][] dp,String s) {
+        if (cnt<0)
+            return false;
 
-        for (int i=0;i<n;i++) {
-            char ch=s.charAt(i);
-            if (ch==')') {
-                closeCnt++;
-                if (closeCnt>openCnt+symbolCnt)
-                    return false;
-            } else if (ch=='(') {
-                openCnt++;
-            } else {
-                symbolCnt++;
-            }
-        }
+        if (index==s.length())
+            return (cnt==0);
 
-        return true;
+        if (dp[index][cnt]!=null)
+            return dp[index][cnt];
+
+        char ch=s.charAt(index);
+
+        if (ch=='(')
+            return dp[index][cnt]=solve(index+1,cnt+1,dp,s);
+
+        if (ch==')')
+            return dp[index][cnt]=solve(index+1,cnt-1,dp,s);
+
+        return dp[index][cnt]=(solve(index+1,cnt+1,dp,s) || solve(index+1,cnt-1,dp,s) || solve(index+1,cnt,dp,s));
     }
 }
