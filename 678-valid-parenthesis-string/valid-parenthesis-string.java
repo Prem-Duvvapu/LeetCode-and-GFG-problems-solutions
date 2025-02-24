@@ -35,25 +35,25 @@ class Solution {
             }
         }
 
-        openCnt=0;
-        closeCnt=0;
-        symbolCnt=0;
+        // openCnt=0;
+        // closeCnt=0;
+        // symbolCnt=0;
 
-        for (int i=0;i<n;i++) {
-            char ch=s.charAt(i);
-            if (ch=='(') {
-                openCnt++;
-            } else if (ch==')') {
-                closeCnt++;
-                if (closeCnt>openCnt+symbolCnt)
-                    return false;
-            } else {
-                symbolCnt++;
-            }
-        }
+        // for (int i=0;i<n;i++) {
+        //     char ch=s.charAt(i);
+        //     if (ch=='(') {
+        //         openCnt++;
+        //     } else if (ch==')') {
+        //         closeCnt++;
+        //         if (closeCnt>openCnt+symbolCnt)
+        //             return false;
+        //     } else {
+        //         symbolCnt++;
+        //     }
+        // }
 
-        if (Math.abs(openCnt-closeCnt)>symbolCnt)
-            return false;
+        // if (Math.abs(openCnt-closeCnt)>symbolCnt)
+        //     return false;
 
         return true;
     }
