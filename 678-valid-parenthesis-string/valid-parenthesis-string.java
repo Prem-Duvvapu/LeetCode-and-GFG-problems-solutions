@@ -1,33 +1,28 @@
-//Memoization
-//Time: O(n^2)
-//Space: O(n^2)
-
 class Solution {
     public boolean checkValidString(String s) {
         int n=s.length();
-        Boolean[][] dp=new Boolean[n][n];
+        int minVal=0;
+        int maxVal=0;
 
-        return solve(0,0,dp,s);
-    }
+        for (int i=0;i<n;i++) {
+            char ch=s.charAt(i);
+            if (ch=='(') {
+                minVal++;
+                maxVal++;
+            } else if (ch==')') {
+                minVal--;
+                maxVal--;
+            } else {
+                minVal--;
+                maxVal++;
+            }
 
-    public boolean solve(int index,int cnt,Boolean[][] dp,String s) {
-        if (cnt<0)
-            return false;
+            minVal=Math.max(0,minVal);
 
-        if (index==s.length())
-            return (cnt==0);
+            if (maxVal<0)
+                return false;
+        }
 
-        if (dp[index][cnt]!=null)
-            return dp[index][cnt];
-
-        char ch=s.charAt(index);
-
-        if (ch=='(')
-            return dp[index][cnt]=solve(index+1,cnt+1,dp,s);
-
-        if (ch==')')
-            return dp[index][cnt]=solve(index+1,cnt-1,dp,s);
-
-        return dp[index][cnt]=(solve(index+1,cnt+1,dp,s) || solve(index+1,cnt-1,dp,s) || solve(index+1,cnt,dp,s));
+        return (minVal==0);
     }
 }
