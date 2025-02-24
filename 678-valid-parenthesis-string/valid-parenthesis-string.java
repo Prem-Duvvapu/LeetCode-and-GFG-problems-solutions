@@ -47,12 +47,6 @@ class Solution {
                 closeCnt++;
                 if (closeCnt>openCnt+symbolCnt)
                     return false;
-
-                // closeCnt--;
-                // if (openCnt>0)
-                //     openCnt--;
-                // else
-                //     symbolCnt--;
             } else {
                 symbolCnt++;
             }
