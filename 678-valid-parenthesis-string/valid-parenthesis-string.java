@@ -48,17 +48,17 @@ class Solution {
                 if (closeCnt>openCnt+symbolCnt)
                     return false;
 
-                closeCnt--;
-                if (openCnt>0)
-                    openCnt--;
-                else
-                    symbolCnt--;
+                // closeCnt--;
+                // if (openCnt>0)
+                //     openCnt--;
+                // else
+                //     symbolCnt--;
             } else {
                 symbolCnt++;
             }
         }
 
-        if (openCnt>symbolCnt)
+        if (Math.abs(openCnt-closeCnt)>symbolCnt)
             return false;
 
         return true;
