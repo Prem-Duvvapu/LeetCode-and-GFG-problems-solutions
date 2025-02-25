@@ -10,11 +10,10 @@ class Solution {
         for (int i=0;i<n;i++) {
             currSum+=arr[i];
 
-            if (currSum%2==1) {
+            if (currSum%2==1)
                 res=(res+evenCnt)%mod;
-            } else {
+            else
                 res=(res+oddCnt)%mod;
-            }
 
             if (currSum%2==1)
                 oddCnt++;
