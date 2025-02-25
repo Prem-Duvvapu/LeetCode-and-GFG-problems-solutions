@@ -8,9 +8,8 @@ class Solution {
         while (maxIndex<n-1) {
             int newMaxIndex=maxIndex;
 
-            for (int i=minIndex;i<=maxIndex;i++) {
+            for (int i=minIndex;i<=maxIndex;i++)
                 newMaxIndex=Math.max(newMaxIndex,i+nums[i]);
-            }
 
             minJumps++;
             minIndex=maxIndex+1;
