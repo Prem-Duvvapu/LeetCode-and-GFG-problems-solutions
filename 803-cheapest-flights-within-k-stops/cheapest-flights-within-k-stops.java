@@ -30,7 +30,7 @@ class Solution {
             dist[i]=(int)1e7;
 
         dist[src]=0;
-        Queue<Node> pq=new LinkedList<>();
+        Queue<Node> pq=new PriorityQueue<>((x,y)->(x.stops-y.stops));
         pq.add(new Node(0,0,src));
 
         while (!pq.isEmpty()) {
