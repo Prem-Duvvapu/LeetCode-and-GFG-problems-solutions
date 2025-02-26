@@ -2,21 +2,18 @@ class Solution {
     public int maxAbsoluteSum(int[] nums) {
         int n=nums.length;
         int maxSum=0;
-        int currSum=0;
+        int currPositiveSum=0;
+        int currNegativeSum=0;
 
-        //kadane's algorithm to calculate maximum positive sum
         for (int i=0;i<n;i++) {
-            currSum+=nums[i];
-            maxSum=Math.max(maxSum,currSum);
-            currSum=Math.max(currSum,0);
-        }
+            currPositiveSum+=nums[i];
+            currNegativeSum+=nums[i];
 
-        //kadane's algorithm to calculate maximum negative sum
-        currSum=0;
-        for (int i=0;i<n;i++) {
-            currSum+=nums[i];
-            maxSum=Math.max(maxSum,Math.abs(currSum));
-            currSum=Math.min(currSum,0);
+            maxSum=Math.max(maxSum,currPositiveSum);
+            maxSum=Math.max(maxSum,Math.abs(currNegativeSum));
+
+            currPositiveSum=Math.max(currPositiveSum,0);
+            currNegativeSum=Math.min(currNegativeSum,0);
         }
 
         return maxSum;
