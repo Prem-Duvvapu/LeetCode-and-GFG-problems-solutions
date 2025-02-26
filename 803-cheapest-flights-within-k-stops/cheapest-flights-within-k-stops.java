@@ -30,7 +30,7 @@ class Solution {
             dist[i]=(int)1e7;
 
         dist[src]=0;
-        Queue<Node> pq=new PriorityQueue<>((x,y)->(x.stops-y.stops));
+        PriorityQueue<Node> pq=new PriorityQueue<>((x,y)->(x.stops-y.stops));
         pq.add(new Node(0,0,src));
 
         while (!pq.isEmpty()) {
@@ -41,15 +41,12 @@ class Solution {
             int newSrc=curr.dest;
             
             for (int[] ngbr: adjList.get(newSrc)) {
-                if (currStops==k && ngbr[0]!=dst)
-                    continue;
-
                 int oldDist=dist[ngbr[0]];
                 int newDist=currDist+ngbr[1];
 
-                if (newDist<oldDist) {
+                if (newDist<oldDist && currStops<=k) {
                     dist[ngbr[0]]=newDist;
-                    pq.add(new Node(currStops+1,newDist,ngbr[0]));
+                    pq.add(new Node(currStops+1,dist[ngbr[0]],ngbr[0]));
                 }
             }
         }
