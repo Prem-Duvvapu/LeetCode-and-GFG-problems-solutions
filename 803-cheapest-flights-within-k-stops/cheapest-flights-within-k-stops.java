@@ -1,64 +1,62 @@
 class Node {
     int stops;
+    int dist;
     int dest;
-    int price;
 
-    Node(int _stops, int _dest, int _price) {
-        stops = _stops;
-        dest = _dest;
-        price = _price;
-    }
-}
-
-class Pair {
-    int dest;
-    int price;
-
-    Pair(int _dest, int _price) {
-        dest = _dest;
-        price = _price;
+    Node(int stops,int dist,int dest) {
+        this.stops=stops;
+        this.dist=dist;
+        this.dest=dest;
     }
 }
 
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        List<List<Pair>> graph = new ArrayList<>();
-        for (int i=0; i<n; i++)
-            graph.add(new ArrayList<>());
+        List<List<int[]>> adjList=new ArrayList<>();
 
-        for (int i=0; i<flights.length; i++)
-            graph.get(flights[i][0]).add(new Pair(flights[i][1], flights[i][2]));
+        for (int i=0;i<n;i++)
+            adjList.add(new ArrayList<>());
 
-        int[] price = new int[n];
-        Arrays.fill(price, (int)1e5);
-        price[src]=0;
+        for (int[] e: flights) {
+            int u=e[0];
+            int v=e[1];
+            int d=e[2];
 
-        Queue<Node> q=new ArrayDeque<>();
-        q.add(new Node(0,src,0));
+            adjList.get(u).add(new int[]{v,d});
+        }
 
-        while (!q.isEmpty()) {
-            Node curr = q.poll();
-            int currStops = curr.stops;
-            int currPrice = curr.price;
-            int currNode = curr.dest;
+        int[] dist=new int[n];
+        for (int i=0;i<n;i++)
+            dist[i]=(int)1e7;
 
-            for (Pair pair: graph.get(currNode)) {
-                if (currStops == k && pair.dest != dst)
-                        continue;
+        dist[src]=0;
+        Queue<Node> pq=new LinkedList<>();
+        pq.add(new Node(0,0,src));
 
-                int newPrice = currPrice + pair.price;
+        while (!pq.isEmpty()) {
+            Node curr=pq.poll();
 
-                if (price[pair.dest] > newPrice) {
-                    price[pair.dest] = newPrice;
-                    if (pair.dest != dst)
-                        q.add(new Node(currStops+1, pair.dest, price[pair.dest]));
+            int currStops=curr.stops;
+            int currDist=curr.dist;
+            int newSrc=curr.dest;
+            
+            for (int[] ngbr: adjList.get(newSrc)) {
+                if (currStops==k && ngbr[0]!=dst)
+                    continue;
+
+                int oldDist=dist[ngbr[0]];
+                int newDist=currDist+ngbr[1];
+
+                if (newDist<oldDist) {
+                    dist[ngbr[0]]=newDist;
+                    pq.add(new Node(currStops+1,newDist,ngbr[0]));
                 }
             }
         }
 
-        if (price[dst]==(int)1e5)
+        if (dist[dst]==(int)1e7)
             return -1;
 
-        return price[dst];
+        return dist[dst];
     }
 }
