@@ -1,3 +1,6 @@
+//Time: O(3*n)
+//Space: O(2*n)
+
 class Solution {
     public int candy(int[] ratings) {
         int n=ratings.length;
