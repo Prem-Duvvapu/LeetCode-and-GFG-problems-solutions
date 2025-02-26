@@ -1,32 +1,38 @@
-//Time: O(2*n)
-//Space: O(n)
+//Optimal
+//Time: O(n)
+//Space: O(1)
 
 class Solution {
     public int candy(int[] ratings) {
         int n=ratings.length;
-        if (n==1)
-            return 1;
+        int res=1;
+        int peak=0;
+        int down=0;
+        int i=1;
 
-        int[] left=new int[n];
-        int right=1;
-        int res=0;
+        while (i<n) {
+            while (i<n && ratings[i]==ratings[i-1]) {
+                res+=1;
+                i++;
+                continue;
+            }
 
-        left[0]=1;
+            peak=1;
+            while (i<n && ratings[i]>ratings[i-1]) {
+                peak+=1;
+                res+=peak;
+                i++;
+            }
 
-        for (int i=1;i<n;i++) {
-            if (ratings[i]>ratings[i-1])
-                left[i]=1+left[i-1];
-            else
-                left[i]=1;
-        }
+            down=1;
+            while (i<n && ratings[i]<ratings[i-1]) {
+                res+=down;
+                i++;
+                down++;
+            }
 
-        res+=Math.max(left[n-1],right);
-        for (int i=n-2;i>=0;i--) {
-            if (ratings[i]>ratings[i+1])
-                right++;
-            else
-                right=1;
-            res+=Math.max(left[i],right);
+            if (down>peak)
+                res=res+(down-peak);
         }
 
         return res;
