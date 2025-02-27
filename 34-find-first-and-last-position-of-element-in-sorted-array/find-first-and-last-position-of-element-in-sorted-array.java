@@ -1,37 +1,57 @@
 class Solution {
     public int[] searchRange(int[] nums, int target) {
+        int n=nums.length;
         int[] res=new int[2];
-        int start=bSearch(target,nums,0);
-        if (start==nums.length || nums[start]!=target)
-        {
-            res[0]=-1;
-            res[1]=-1;
-            return res;
-        }
-        int end=bSearch(target+1,nums,start)-1;
-        res[0]=start;
-        res[1]=end;
+
+        res[0]=lowerBound(0,n-1,nums,target);
+        res[1]=upperBound(0,n-1,nums,target);
+
         return res;
     }
 
+    public int lowerBound(int low,int high,int[] arr,int target) {
+        int res=-1;
 
-        private int bSearch(int target,int[] nums,int left)
-        {
-            int right=nums.length-1;
-            while (left<=right)
-            {
-                int mid=(left+right)/2;
-                if (nums[mid]<target)
-                {
-                    left=mid+1;
-                }
-                else
-                {
-                    right=mid-1;
-                }
+        while (low<=high) {
+            int mid=low+(high-low)/2;
+
+            if (arr[mid]>=target) {
+                res=mid;
+                high=mid-1;
+            } else {
+                low=mid+1;
             }
-            return left;
         }
-        
-        
+
+        if (res!=-1 && arr[res]!=target)
+            res=-1;
+
+        return res;
+    }
+
+    public int upperBound(int low,int high,int[] arr,int target) {
+        int res=arr.length;
+
+        while (low<=high) {
+            int mid=low+(high-low)/2;
+
+            if (arr[mid]>target) {
+                res=mid;
+                high=mid-1;
+            } else {
+                low=mid+1;
+            }
+        }
+
+        if (arr.length==0)
+            return -1;
+
+        if (res==0)
+            return -1;
+
+        if (arr[res-1]==target)
+            return res-1;
+
+        return -1;
+    }
 }
