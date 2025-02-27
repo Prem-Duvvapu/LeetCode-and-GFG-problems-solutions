@@ -23,10 +23,10 @@ class Solution {
             }
         }
 
-        if (res!=-1 && arr[res]!=target)
-            res=-1;
+        if (res!=-1 && arr[res]==target)
+            return res;
 
-        return res;
+        return -1;
     }
 
     public int upperBound(int low,int high,int[] arr,int target) {
