@@ -8,14 +8,12 @@ class Solution {
         while (low<=high) {
             int mid=low+(high-low)/2;
 
-            if (nums[low]<=nums[mid] && nums[mid]<=nums[high])
-                res=Math.min(res,nums[low]);
-
-            res=Math.min(res,nums[mid]);
             //if left half is sorted
             if (nums[low]<=nums[mid] && nums[mid]>=nums[high]) {
+                res=Math.min(res,nums[low]);
                 low=mid+1;
             } else {
+                res=Math.min(res,nums[mid]);
                 high=mid-1;
             }
         }
