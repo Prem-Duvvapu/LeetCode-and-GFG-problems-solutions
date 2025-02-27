@@ -1,11 +1,11 @@
-//upper bound
+//lower bound
 class Solution {
     public int searchInsert(int[] nums, int target) {
         int n=nums.length;
-        return upperBound(0,n-1,nums,target);
+        return lowerBound(0,n-1,nums,target);
     }
 
-    public int upperBound(int low,int high,int[] nums,int target) {
+    public int lowerBound(int low,int high,int[] nums,int target) {
         int res=nums.length;
         while (low<=high) {
             int mid=low+(high-low)/2;
