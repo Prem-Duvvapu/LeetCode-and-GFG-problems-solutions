@@ -20,7 +20,7 @@ class Solution {
             if (nums[mid-1]<nums[mid] && nums[mid]>nums[mid+1])
                 return mid;
 
-            if (nums[mid-1]<nums[mid] && nums[mid]<nums[mid+1])
+            if (nums[mid-1]<nums[mid])
                 low=mid+1;
             else
                 high=mid-1;
