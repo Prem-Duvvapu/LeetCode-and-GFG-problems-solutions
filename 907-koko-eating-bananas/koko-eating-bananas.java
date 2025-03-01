@@ -1,38 +1,35 @@
 class Solution {
+    public boolean func(int[]piles,int h,int a){
+        int hrs=0;
+        for(int i=0;i<piles.length;i++){
+            int val=(int)Math.ceil((double)piles[i]/a);
+            if ((long)hrs+(long)val>(long)h)
+                return false;
+            hrs+=val;
+        }
+
+        return hrs<=h;
+    }
     public int minEatingSpeed(int[] piles, int h) {
-        int n=piles.length;
+        int low=1;
+        int high=piles[0];
+        
+        for(int i=0;i<piles.length;i++){
+            high=Math.max(piles[i],high);
+        }
 
-        long low=1;
-        long high=1;
+        int ans=high;
 
-        for (int i=0;i<n;i++)
-            high=Math.max(high,piles[i]);
-
-        long res=high;
-        while (low<=high) {
-            long mid=low+(high-low)/2;
-
-            if (isPossible(mid,piles,h)) {
-                res=mid;
+        while(low<=high){
+            int mid=low+((high-low)/2);
+            if(func(piles,h,mid)){
+                ans=mid;
                 high=mid-1;
-            } else {
+            }
+            else{
                 low=mid+1;
             }
         }
-
-        return (int)res;
-    }
-
-    public boolean isPossible(long k,int[] piles,int h) {
-        long cnt=0;
-
-        for (int i=0;i<piles.length;i++) {
-            cnt += (piles[i]/k);
-            if (piles[i]%k!=0)
-                cnt+=1;
-        }
-
-        return (cnt<=(long)h);
+        return ans;
     }
 }
-
