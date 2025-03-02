@@ -3,8 +3,13 @@ class Solution {
         int diff=start^goal;
         int res=0;
 
-        for (int i=0;i<31;i++)
-            res+=(diff>>i)&1;
+        while (diff>1) {
+            res+=(diff&1);
+            diff>>=1;
+        }
+
+        if (diff==1)
+            res+=1;
 
         return res;
     }
