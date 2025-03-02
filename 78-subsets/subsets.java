@@ -1,24 +1,19 @@
 class Solution {
     public List<List<Integer>> subsets(int[] nums) {
+        int n=nums.length;
         List<List<Integer>> res=new ArrayList<>();
-        solve(0,new ArrayList<>(),nums,res);
-        return res;
-    }
 
-    private void solve(int pos,List<Integer> currList,int[] nums,List<List<Integer>> res)
-    {
-        if (pos==nums.length)
-        {
-            res.add(new ArrayList<>(currList));
-            return;
+        int num=(1<<n);
+
+        for (int i=0;i<num;i++) {
+            List<Integer> subset=new ArrayList<>();
+            for (int pos=0;pos<n;pos++) {
+                if (((i>>pos)&1)==1)
+                    subset.add(nums[pos]);
+            }
+            res.add(subset);
         }
 
-        //pick
-        currList.add(nums[pos]);
-        solve(pos+1,currList,nums,res);
-        currList.remove(currList.size()-1);
-
-        //not pick
-        solve(pos+1,currList,nums,res);
+        return res;
     }
 }
