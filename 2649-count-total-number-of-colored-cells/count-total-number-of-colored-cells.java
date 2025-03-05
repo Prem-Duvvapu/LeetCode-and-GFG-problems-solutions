@@ -1,4 +1,4 @@
-//optimized
+//optimial
 
 /*
 1st term: 1
