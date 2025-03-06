@@ -16,11 +16,6 @@ class Solution {
             }
         }
 
-        // System.out.println(sumOfN);
-        // System.out.println(sumOfSqOfN);
-        // System.out.println(sumOfGrid);
-        // System.out.println(sumOfSqOfGrid);
-
         long x=sumOfGrid-sumOfN; //a-b
         long y=sumOfSqOfGrid-sumOfSqOfN; //a^2-b^2=(a+b)*(a-b)=(a+b)*x;
         /*
