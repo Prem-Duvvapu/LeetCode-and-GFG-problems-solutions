@@ -1,3 +1,6 @@
+//Time:O(n*sqrt(n))
+//Space:O(1)
+
 class Solution {
     public int[] closestPrimes(int left, int right) {
         int[] res=new int[2];
@@ -5,7 +8,8 @@ class Solution {
         Arrays.fill(res,-1);
 
         int last=-1;
-
+        
+        //O(n)
         for (int i=left;i<=right;i++) {
             if (isPrime(i)) {
                 if (last!=-1 && i-last<minDiff) {
@@ -21,6 +25,7 @@ class Solution {
         return res;
     }
 
+    //O(sqrt(n))
     public boolean isPrime(int n) {
         if (n==1)
             return false;
