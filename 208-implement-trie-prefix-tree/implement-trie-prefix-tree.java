@@ -1,70 +1,58 @@
-class Node {
-    Node[] chars;
-    boolean flag;
+class TrieNode {
+    TrieNode[] charExist;
+    boolean endOfWord;
 
-    Node() {
-        chars = new Node[26];
-        flag=false;
-    }
-
-    boolean containsKey(char ch) {
-        return (chars[ch-'a']!=null);
-    }
-
-    Node insertChar(char ch) {
-        chars[ch-'a']=new Node();
-        return chars[ch-'a'];
-    }
-
-    void setEnd(){
-        flag=true;
-    }
-
-    boolean isEnd() {
-        return flag;
+    TrieNode() {
+        charExist=new TrieNode[26];
+        endOfWord=false;
     }
 }
 
+
 class Trie {
-    Node root;
+    TrieNode root;
 
     public Trie() {
-        root = new Node();
+        root=new TrieNode();
     }
     
     public void insert(String word) {
-        Node curr = root;
+        TrieNode curr=root;
+
         for (char ch: word.toCharArray()) {
-            if (curr.containsKey(ch))
-                curr=curr.chars[ch-'a'];
-            else
-                curr = curr.insertChar(ch);
+            if (curr.charExist[ch-'a']!=null) {
+                curr=curr.charExist[ch-'a'];
+            } else {
+                TrieNode newNode=new TrieNode();
+                curr.charExist[ch-'a']=newNode;
+                curr=curr.charExist[ch-'a'];
+            }
         }
 
-        curr.setEnd();
+        curr.endOfWord=true;
     }
     
     public boolean search(String word) {
-        Node curr=root;
+        TrieNode curr=root;
 
         for (char ch: word.toCharArray()) {
-            if (curr.containsKey(ch))
-                curr=curr.chars[ch-'a'];
-            else
+            if (curr.charExist[ch-'a']==null)
                 return false;
+
+            curr=curr.charExist[ch-'a'];
         }
 
-        return curr.isEnd();
+        return curr.endOfWord;
     }
     
     public boolean startsWith(String prefix) {
-        Node curr=root;
+        TrieNode curr=root;
 
         for (char ch: prefix.toCharArray()) {
-            if (curr.containsKey(ch))
-                curr=curr.chars[ch-'a'];
-            else
+            if (curr.charExist[ch-'a']==null)
                 return false;
+
+            curr=curr.charExist[ch-'a'];
         }
 
         return true;
