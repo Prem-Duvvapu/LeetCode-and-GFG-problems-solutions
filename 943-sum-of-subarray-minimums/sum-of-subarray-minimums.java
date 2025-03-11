@@ -9,7 +9,7 @@ class Solution {
         int nextMinValIndex=-1;
 
         for (int i=0;i<n;i++) {
-            while (!inStack.isEmpty() && arr[inStack.peek()]>=arr[i])
+            while (!inStack.isEmpty() && arr[inStack.peek()]>arr[i])
                 inStack.pop();
 
             if (!inStack.isEmpty())
@@ -35,7 +35,7 @@ class Solution {
         Stack<Integer> decStack=new Stack<>();
 
         for (int i=n-1;i>=0;i--) {
-            while (!decStack.isEmpty() && arr[decStack.peek()]>arr[i])
+            while (!decStack.isEmpty() && arr[decStack.peek()]>=arr[i])
                 decStack.pop();
 
             if (decStack.isEmpty())
