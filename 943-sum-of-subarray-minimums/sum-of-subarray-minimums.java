@@ -1,44 +1,51 @@
 class Solution {
     public int sumSubarrayMins(int[] arr) {
-        long mod=(long)1e9+7;
         int n=arr.length;
-        long res=0L;
-        int[] left=new int[n];
-        int[] right=new int[n];
-        Stack<Integer> stack=new Stack<>();
+        int[] nse=nextSmallerElement(arr,n);
+        long sum=0L;
+        long mod=(long)1e9+7;
+        Stack<Integer> inStack=new Stack<>();
+        int prevMinValIndex=-1;
+        int nextMinValIndex=-1;
 
-        Arrays.fill(left,-1);
-        Arrays.fill(right,n);
-
-        //before smaller element
         for (int i=0;i<n;i++) {
-            while (!stack.isEmpty() && arr[stack.peek()]>=arr[i])
-                stack.pop();
+            while (!inStack.isEmpty() && arr[inStack.peek()]>=arr[i])
+                inStack.pop();
 
-            if (!stack.isEmpty())
-                left[i]=stack.peek();
+            if (!inStack.isEmpty())
+                prevMinValIndex=inStack.peek();
+            else
+                prevMinValIndex=-1;
 
-            stack.push(i);
+            inStack.push(i);
+
+            nextMinValIndex=nse[i];
+            long currVal=arr[i]%mod;
+            currVal=(currVal*(i-prevMinValIndex))%mod;
+            currVal=(currVal*(nextMinValIndex-i))%mod;
+
+            sum=(sum+currVal)%mod;
         }
 
-        stack.clear();
+        return (int)sum;
+    }
 
-        //next smaller element
+    public int[] nextSmallerElement(int[] arr,int n) {
+        int[] nge=new int[n];
+        Stack<Integer> decStack=new Stack<>();
+
         for (int i=n-1;i>=0;i--) {
-            while (!stack.isEmpty() && arr[stack.peek()]>arr[i])
-                stack.pop();
+            while (!decStack.isEmpty() && arr[decStack.peek()]>arr[i])
+                decStack.pop();
 
-            if (!stack.isEmpty())
-                right[i]=stack.peek();
+            if (decStack.isEmpty())
+                nge[i]=n;
+            else
+                nge[i]=decStack.peek();
 
-            stack.push(i);
+            decStack.push(i);
         }
 
-        for (int i=0;i<n;i++) {
-            long curr=(long)(i-left[i])*(right[i]-i)*arr[i];
-            res=(res+curr)%mod;
-        }
-
-        return (int)res;
+        return nge;
     }
 }
