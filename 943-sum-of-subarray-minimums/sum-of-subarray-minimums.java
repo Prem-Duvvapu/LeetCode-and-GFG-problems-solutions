@@ -1,51 +1,89 @@
 class Solution {
     public int sumSubarrayMins(int[] arr) {
         int n=arr.length;
-        int[] nse=nextSmallerElement(arr,n);
-        long sum=0L;
+        long cnt=0;
         long mod=(long)1e9+7;
-        Stack<Integer> inStack=new Stack<>();
-        int prevMinValIndex=-1;
-        int nextMinValIndex=-1;
 
         for (int i=0;i<n;i++) {
-            while (!inStack.isEmpty() && arr[inStack.peek()]>arr[i])
-                inStack.pop();
+            int leftCnt=0;
+            int rightCnt=1;
 
-            if (!inStack.isEmpty())
-                prevMinValIndex=inStack.peek();
-            else
-                prevMinValIndex=-1;
+            for (int j=i;j>=0;j--) {
+                if (arr[j]>=arr[i])
+                    leftCnt++;
+                else
+                    break;
+            }
 
-            inStack.push(i);
+            for (int k=i+1;k<n;k++) {
+                if (arr[k]>arr[i])
+                    rightCnt++;
+                else
+                    break;
+            }
 
-            nextMinValIndex=nse[i];
-            long currVal=arr[i]%mod;
-            currVal=(currVal*(i-prevMinValIndex))%mod;
-            currVal=(currVal*(nextMinValIndex-i))%mod;
-
-            sum=(sum+currVal)%mod;
+            long val=arr[i]*((long)leftCnt*rightCnt);
+            val%=mod;
+            cnt=(cnt+val)%mod;
         }
 
-        return (int)sum;
-    }
-
-    public int[] nextSmallerElement(int[] arr,int n) {
-        int[] nge=new int[n];
-        Stack<Integer> decStack=new Stack<>();
-
-        for (int i=n-1;i>=0;i--) {
-            while (!decStack.isEmpty() && arr[decStack.peek()]>=arr[i])
-                decStack.pop();
-
-            if (decStack.isEmpty())
-                nge[i]=n;
-            else
-                nge[i]=decStack.peek();
-
-            decStack.push(i);
-        }
-
-        return nge;
+        return (int)cnt;
     }
 }
+
+
+/*
+arr  = [2, 6, 4, 3, 5, 1]
+
+arr = [3 ,1, 2, 4]
+       0  1  2  3
+
+ele=1
+
+//left=2
+[1]
+[3,1]
+
+//right=3
+[1]
+[1,2]
+[1,2,4]
+
+//total
+[3,1]
+[3,1,2]
+[3,1,2,4]
+[1]
+[1,2]
+[1,2,4]
+
+
+
+left=1
+right=2
+
+cnt=ele*(left*right)
+
+
+3 - 3
+3,1 - 1
+3,1,2 - 1
+3,1,2,4 - 1
+
+1 - 1
+1,2 - 1
+1,2,3 - 1
+
+2 - 2
+2,4 - 2
+
+4 - 4
+
+
+1 -> 6
+2 -> 2
+3 -> 1
+4 -> 1
+
+6*1 + 2*2 + 3*1 + 4*1
+*/
