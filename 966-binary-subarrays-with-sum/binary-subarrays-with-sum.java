@@ -1,30 +1,37 @@
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
-        int res=solve(nums,goal)-solve(nums,goal-1);
-        return res;
-    }
+        int n=nums.length;
+        Map<Integer,Integer> map=new HashMap<>();
+        map.put(0,1);
+        int res=0;
+        int currSum=0;
 
-    private int solve(int[] nums,int goal) {
-        if (goal<0)
-            return 0;
-            
-        int left=0;
-        int right=0;
-        int cnt=0;
-        int sum=0;
-
-        while (right < nums.length) {
-            sum+=nums[right];
-
-            while (sum > goal) {
-                sum-=nums[left];
-                left++;
-            }
-
-            cnt+=(right-left+1);
-            right++;
+        for (int i=0;i<n;i++) {
+            currSum+=nums[i];
+            int diff=currSum-goal;
+            if (map.containsKey(diff))
+                res+=map.get(diff);
+            map.put(currSum,map.getOrDefault(currSum,0)+1);
         }
 
-        return cnt;
+        return res;
     }
 }
+
+/*
+brute - time: O(n^2), space: O(1)
+better - prefix sum time: O(n), space: O(n)
+
+map={0,2},{1,2},{2,2}
+ans=2+2+2
+nums = [0, 1, 0, 1, 0, 1], goal = 2
+sum=    0. 1. 1. 2  2. 3
+
+map={0,1},{1,2},{2,2}
+res=0+1+1+2
+ nums = [1,0,1,0,1], goal = 2
+sum =    1 1.2 2 3
+
+{0,1}
+[0,1,1,1,1,1]
+*/
