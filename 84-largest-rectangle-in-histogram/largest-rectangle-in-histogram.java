@@ -5,7 +5,7 @@ class Solution {
         Stack<Integer> stack=new Stack<>();
 
         for (int i=0;i<n;i++) {
-            while (!stack.isEmpty() && heights[stack.peek()]>=heights[i]) {
+            while (!stack.isEmpty() && heights[stack.peek()]>heights[i]) {
                 int height=heights[stack.pop()];
                 int prevSmallerValIndex=stack.isEmpty() ? -1 : stack.peek();
                 int width=i-prevSmallerValIndex-1;
