@@ -6,27 +6,18 @@ class Solution {
         int n=nums.length;
         int[] res=new int[n-k+1];
         Deque<Integer> q=new ArrayDeque<>();
-        int right=0;
 
-        while (right<k) {
-            while (!q.isEmpty() && nums[q.peekLast()]<=nums[right])
-                q.removeLast();
-            q.addLast(right);
-            right++;
-        }
-        res[right-k]=nums[q.peekFirst()];
-
-        while (right<n) {
-            while (!q.isEmpty() && right-q.peekFirst()>=k)
+        for (int i=0;i<n;i++) {
+            while (!q.isEmpty() && i-q.peekFirst()>=k)
                 q.removeFirst();
 
-            while (!q.isEmpty() && nums[q.peekLast()]<=nums[right])
+            while (!q.isEmpty() && nums[q.peekLast()]<=nums[i])
                 q.removeLast();
 
-            q.add(right);
-            right++;
-
-            res[right-k]=nums[q.peekFirst()];
+            q.add(i);
+            
+            if (i>=(k-1))
+                res[i-k+1]=nums[q.peekFirst()];
         }
 
         return res;
