@@ -14,10 +14,9 @@ class Solution {
             q.addLast(right);
             right++;
         }
+        res[right-k]=nums[q.peekFirst()];
 
         while (right<n) {
-            // System.out.println(right-k+" "+q);
-            res[right-k]=nums[q.peekFirst()];
             while (!q.isEmpty() && right-q.peekFirst()>=k)
                 q.removeFirst();
 
@@ -26,9 +25,9 @@ class Solution {
 
             q.add(right);
             right++;
-        }
 
-        res[right-k]=nums[q.peekFirst()];
+            res[right-k]=nums[q.peekFirst()];
+        }
 
         return res;
     }
