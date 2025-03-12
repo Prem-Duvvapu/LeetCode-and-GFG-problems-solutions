@@ -15,6 +15,9 @@ class Solution {
                 k--;
             }
 
+            if (stack.isEmpty() && ch=='0')
+                continue;
+
             stack.push(ch);
         }
 
@@ -30,15 +33,15 @@ class Solution {
             res.append(stack.pop());
 
         res.reverse();
-        int i=0;
-        while (res.length()>i && res.charAt(i)=='0')
-            i++;
+        // int i=0;
+        // while (res.length()>i && res.charAt(i)=='0')
+        //     i++;
 
-        res.delete(0,i);
-        // if (res)
-        if (res.length()==0)
-            return "0";
-            
+        // res.delete(0,i);
+        
+        // if (res.length()==0)
+        //     return "0";
+
         return res.toString();
     }
 }
