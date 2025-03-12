@@ -1,54 +1,31 @@
 class Solution {
     public int largestRectangleArea(int[] heights) {
         int n=heights.length;
-        int[] pse=new int[n];
-        int[] nse=new int[n];
         int maxArea=0;
-
-        prevSmallerElement(heights,n,pse);
-        nextSmallerElement(heights,n,nse);
+        Stack<Integer> stack=new Stack<>();
 
         for (int i=0;i<n;i++) {
-            int height=heights[i];
-            int width=nse[i]-pse[i]-1;
+            while (!stack.isEmpty() && heights[stack.peek()]>=heights[i]) {
+                int height=heights[stack.pop()];
+                int prevSmallerValIndex=stack.isEmpty() ? -1 : stack.peek();
+                int width=i-prevSmallerValIndex-1;
+                int currArea=height*width;
 
-            int currArea=width*height;
+                maxArea=Math.max(maxArea,currArea);
+            }
+
+            stack.push(i);
+        }
+
+        while (!stack.isEmpty()) {
+            int height=heights[stack.pop()];
+            int prevSmallerValIndex=stack.isEmpty() ? -1 : stack.peek();
+            int width=n-prevSmallerValIndex-1;
+            int currArea=height*width;
+
             maxArea=Math.max(maxArea,currArea);
         }
 
         return maxArea;
     }
-
-    public void prevSmallerElement(int[] arr,int n,int[] res) {
-        Stack<Integer> stack=new Stack<>();
-
-        for (int i=0;i<n;i++) {
-            while (!stack.isEmpty() && arr[stack.peek()]>=arr[i])
-                stack.pop();
-
-            if (stack.isEmpty())
-                res[i]=-1;
-            else
-                res[i]=stack.peek();
-
-            stack.push(i);
-        }
-    }
-
-    public void nextSmallerElement(int[] arr,int n,int[] res) {
-        Stack<Integer> stack=new Stack<>();
-
-        for (int i=n-1;i>=0;i--) {
-            while (!stack.isEmpty() && arr[stack.peek()]>arr[i])
-                stack.pop();
-
-            if (stack.isEmpty())
-                res[i]=n;
-            else
-                res[i]=stack.peek();
-
-            stack.push(i);
-        }
-    }
-
 }
