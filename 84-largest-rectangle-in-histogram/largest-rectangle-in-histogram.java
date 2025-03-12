@@ -10,7 +10,7 @@ class Solution {
 
         for (int i=0;i<n;i++) {
             int height=heights[i];
-            int width=(i-pse[i])+(nse[i]-i-1);
+            int width=nse[i]-pse[i]-1;
 
             int currArea=width*height;
             maxArea=Math.max(maxArea,currArea);
@@ -39,7 +39,7 @@ class Solution {
         Stack<Integer> stack=new Stack<>();
 
         for (int i=n-1;i>=0;i--) {
-            while (!stack.isEmpty() && arr[stack.peek()]>=arr[i])
+            while (!stack.isEmpty() && arr[stack.peek()]>arr[i])
                 stack.pop();
 
             if (stack.isEmpty())
