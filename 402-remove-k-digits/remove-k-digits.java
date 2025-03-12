@@ -1,34 +1,44 @@
-//Monotonic Stack
 class Solution {
     public String removeKdigits(String num, int k) {
+        if (num.equals("0"))
+            return num;
+
         int n=num.length();
         Stack<Character> stack=new Stack<>();
         StringBuilder res=new StringBuilder();
 
-        for (int i=0;i<n;i++)
-        {
-            while (!stack.isEmpty() && stack.peek()>num.charAt(i) && k>0)
-            {
+        for (int i=0;i<n;i++) {
+            char ch=num.charAt(i);
+
+            while (!stack.isEmpty() && (k>0 && stack.peek()>ch)) {
                 stack.pop();
                 k--;
             }
 
-            stack.push(num.charAt(i));
+            stack.push(ch);
         }
 
-        while (k-- > 0)
-            stack.pop();
-
+        while (!stack.isEmpty() && k>0) {
+                stack.pop();
+                k--;
+        }
+        
         if (stack.isEmpty())
             return "0";
 
         while (!stack.isEmpty())
             res.append(stack.pop());
 
-        while (res.length()>1 && res.charAt(res.length()-1)=='0')
-            res.deleteCharAt(res.length()-1);
-
         res.reverse();
+        int i=0;
+        while (res.length()>i && res.charAt(i)=='0')
+            i++;
+
+        res.delete(0,i);
+        // if (res)
+        if (res.length()==0)
+            return "0";
+            
         return res.toString();
     }
 }
