@@ -7,8 +7,9 @@ class Solution {
         for (int i=0;i<n;i++) {
             while (!stack.isEmpty() && heights[stack.peek()]>heights[i]) {
                 int height=heights[stack.pop()];
-                int prevSmallerValIndex=stack.isEmpty() ? -1 : stack.peek();
-                int width=i-prevSmallerValIndex-1;
+                int pse=stack.isEmpty() ? -1 : stack.peek();
+                int nse=i;
+                int width=nse-pse-1;
                 int currArea=height*width;
 
                 maxArea=Math.max(maxArea,currArea);
@@ -19,8 +20,9 @@ class Solution {
 
         while (!stack.isEmpty()) {
             int height=heights[stack.pop()];
-            int prevSmallerValIndex=stack.isEmpty() ? -1 : stack.peek();
-            int width=n-prevSmallerValIndex-1;
+            int pse=stack.isEmpty() ? -1 : stack.peek();
+            int nse=n;
+            int width=nse-pse-1;
             int currArea=height*width;
 
             maxArea=Math.max(maxArea,currArea);
