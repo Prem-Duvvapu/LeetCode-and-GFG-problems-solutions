@@ -8,8 +8,6 @@ class Solution {
         prevSmallerElement(heights,n,pse);
         nextSmallerElement(heights,n,nse);
 
-        // System.out.println(Arrays.toString(pse)+" "+Arrays.toString(nse));
-
         for (int i=0;i<n;i++) {
             int height=heights[i];
             int width=(i-pse[i])+(nse[i]-i-1);
