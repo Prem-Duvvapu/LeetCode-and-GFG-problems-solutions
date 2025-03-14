@@ -10,7 +10,6 @@ class Solution {
         int currIndex=0;
 
         Arrays.sort(hand);
-        System.out.println(Arrays.toString(hand));
 
         for (int j=0;j<numOfGroups;j++)
             groups[j]=new Stack<Integer>();
@@ -35,7 +34,6 @@ class Solution {
 
                 j++;
             }
-            // System.out.println(i+" "+j);
 
             if (j==numOfGroups)
                 return false;
