@@ -4,7 +4,7 @@ class Solution {
 
         if (n==1)
             return (long)ranks[0]*cars*cars;
-            
+
         long res=0L;
         long low=1;
         long high=1;
@@ -45,8 +45,10 @@ class Solution {
     }
 
     public long squareRoot(long num) {
+        if (num==1L)
+            return 1L;
         long low=1L;
-        long high=num;
+        long high=num/2;
         long res=1L;
 
         while (low<=high) {
