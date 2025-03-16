@@ -1,6 +1,10 @@
 class Solution {
     public long repairCars(int[] ranks, int cars) {
         int n=ranks.length;
+
+        if (n==1)
+            return (long)ranks[0]*cars*cars;
+            
         long res=0L;
         long low=1;
         long high=1;
@@ -33,7 +37,7 @@ class Solution {
             if (maxTime<ranks[i])
                 continue;
             long curr=maxTime/ranks[i];
-            curr=(long)Math.sqrt(curr);
+            curr=squareRoot(curr);
             cnt+=curr;
         }
 
@@ -41,10 +45,20 @@ class Solution {
     }
 
     public long squareRoot(long num) {
+        long low=1L;
+        long high=num;
         long res=1L;
-        for (long i=1;i*i<=num;i++) {
-            res=i;
+
+        while (low<=high) {
+            long mid=low+(high-low)/2;
+            if (mid*mid<=num) {
+                res=mid;
+                low=mid+1;
+            } else {
+                high=mid-1;
+            }
         }
+
         return res;
     }
 }
