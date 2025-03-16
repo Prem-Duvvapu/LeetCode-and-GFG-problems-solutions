@@ -3,10 +3,10 @@ class Solution {
         int n=ranks.length;
         long res=0L;
         long low=1;
-        long high=1;
+        long high=Integer.MAX_VALUE;
 
         for (int i=0;i<n;i++)
-            high=Math.max(high,ranks[i]);
+            high=Math.min(high,ranks[i]);
 
         high=high*cars*cars;
         res=high;
