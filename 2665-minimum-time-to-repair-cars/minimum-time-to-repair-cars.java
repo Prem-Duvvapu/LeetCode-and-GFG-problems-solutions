@@ -5,9 +5,8 @@ class Solution {
         long low=1;
         long high=1;
 
-        Arrays.sort(ranks);
-
-        high=ranks[n-1];
+        for (int i=0;i<n;i++)
+            high=Math.max(high,ranks[i]);
 
         high=high*cars*cars;
         res=high;
