@@ -10,8 +10,6 @@ class Solution {
                 nums[i+2]=1-nums[i+2];
                 cnt++;
             }
-
-            // System.out.println(i+" "+Arrays.toString(nums));
         }
 
         if (nums[n-1]==0 || nums[n-2]==0)
