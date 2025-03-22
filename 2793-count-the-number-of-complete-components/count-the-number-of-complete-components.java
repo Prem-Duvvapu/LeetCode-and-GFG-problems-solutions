@@ -65,16 +65,6 @@ class Solution {
     }
 
     public boolean check(int totalVertices,int totalEdges) {
-        if (totalVertices==1)
-            return true;
-
-        int requiredEdges=0;
-        int d=1;
-
-        for (int i=2;i<=totalVertices;i++) {
-            requiredEdges+=(i-1);
-        }
-
-        return (totalEdges==requiredEdges);
+        return (totalEdges==(totalVertices*(totalVertices-1))/2);
     }
 }
