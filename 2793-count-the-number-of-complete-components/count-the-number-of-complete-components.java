@@ -75,8 +75,6 @@ class Solution {
             requiredEdges+=(i-1);
         }
 
-        // System.out.println(totalVertices+" "+totalEdges+" "+requiredEdges);
-
         return (totalEdges==requiredEdges);
     }
 }
