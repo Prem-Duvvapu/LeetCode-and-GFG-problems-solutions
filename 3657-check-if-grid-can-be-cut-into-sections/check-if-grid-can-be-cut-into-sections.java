@@ -17,7 +17,7 @@ class Solution {
     }
 
     public boolean mergeIntervals(int[][] intervals) {
-        int n=intervals.length;
+        int m=intervals.length;
         int cnt=0;
 
         Comparator<int[]> com=new Comparator<>() {
@@ -36,7 +36,7 @@ class Solution {
         int start=intervals[0][0];
         int end=intervals[0][1];
         
-        for (int i=1;i<n;i++) {
+        for (int i=1;i<m;i++) {
             int currStart=intervals[i][0];
             int currEnd=intervals[i][1];
 
