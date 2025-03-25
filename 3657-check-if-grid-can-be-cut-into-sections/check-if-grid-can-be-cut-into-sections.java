@@ -18,7 +18,7 @@ class Solution {
 
     public boolean mergeIntervals(int[][] intervals) {
         int n=intervals.length;
-        List<int[]> arr=new ArrayList<>();
+        int cnt=0;
 
         Comparator<int[]> com=new Comparator<>() {
             public int compare(int[] a,int[] b) {
@@ -43,16 +43,13 @@ class Solution {
             if (currStart<end) {
                 end=Math.max(end,currEnd);
             } else {
-                arr.add(new int[]{start,end});
+                cnt++;
                 start=currStart;
                 end=currEnd;
             }
         }
+        cnt++;
 
-        arr.add(new int[]{start,end});
-
-        System.out.println();
-
-        return arr.size()>=3;
+        return cnt>=3;
     }
 }
