@@ -1,35 +1,39 @@
 class Solution {
     public int minimumIndex(List<Integer> nums) {
-        int res=0;
         int n=nums.size();
-        int dominant=nums.get(0);
+        int dominantElement=nums.get(0);
         int cnt=1;
-        
-        //find the dominant element
-        for (int i=1;i<n;i++)
-        {
-            if (nums.get(i)==dominant)
-                    cnt++;
+
+        for (int i=1;i<n;i++) {
+            if (nums.get(i)==dominantElement)
+                cnt++;
             else if (cnt==0)
-                dominant=nums.get(i);
+                dominantElement=nums.get(i);
             else
-                    cnt--;
+                cnt--;
         }
-        
-        //calculate frequency of the dominant element
-        int dCnt=0;
-        for (int val: nums)
-            if (val==dominant)
-                    dCnt++;
-        
-        //check if split is possible at current index
-        int preCnt=0;
+
+        int totalFreq=0;
+        int leftFreq=0;
+        int rightFreq=0;
+
         for (int i=0;i<n;i++)
-        {
-            if (nums.get(i)==dominant)
-                preCnt++;
-            if (preCnt*2>(i+1) && (dCnt-preCnt)*2>(n-1-i))
+            if (nums.get(i)==dominantElement)
+                totalFreq++;
+
+        for (int i=0;i<n;i++) {
+            if (nums.get(i)==dominantElement)
+                leftFreq++;
+
+            rightFreq=(totalFreq-leftFreq);
+
+            if (leftFreq>0 && rightFreq>0) {
+                boolean isValidLeft=((int)Math.ceil((i+1)/leftFreq)==1);
+                boolean isValidRight=((int)Math.ceil((n-i-1)/rightFreq)==1);
+
+                if (isValidLeft && isValidRight)
                     return i;
+            }
         }
 
         return -1;
