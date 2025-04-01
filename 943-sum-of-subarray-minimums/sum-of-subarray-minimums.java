@@ -58,6 +58,7 @@ class Solution {
 /*
 Time: O(n)+O(2*n)+O(2*n)
 Space: O(2*n)+O(n)(stack)
+
 arr = [3,1,2,4]
        0 1 2 3
 
