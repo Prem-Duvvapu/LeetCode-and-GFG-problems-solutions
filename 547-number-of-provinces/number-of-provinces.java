@@ -5,7 +5,7 @@ class Solution {
         boolean[] visited=new boolean[n];
         int numOfProvinces=0;
 
-        for (int i=0;i<n;i++) {//O(n)
+        for (int i=0;i<n;i++) {
             if (!visited[i]) {
                 dfs(i,visited,isConnected,n);
                 numOfProvinces++;
@@ -18,15 +18,20 @@ class Solution {
     public void dfs(int currNode,boolean[] visited,int[][] isConnected,int n) {
         visited[currNode]=true;
 
-        for (int j=0;j<n;j++) {
+        for (int j=0;j<n;j++)
             if (isConnected[currNode][j]==1 && !visited[j])
                 dfs(j,visited,isConnected,n);
-        }
     }
 }
 
-
 /*
-Time: O(V)+O(2*E)
-Space: O(V)+O(V)
+5 cities
+
+a,b,c,d,e
+
+a-b-c
+
+d-e
+
+res=2
 */
