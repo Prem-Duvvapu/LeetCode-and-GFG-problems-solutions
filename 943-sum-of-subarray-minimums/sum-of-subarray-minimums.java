@@ -1,89 +1,131 @@
 class Solution {
     public int sumSubarrayMins(int[] arr) {
         int n=arr.length;
-        long cnt=0;
+        long res=0;
         long mod=(long)1e9+7;
+        int[] pse=new int[n];
+        int[] nse=new int[n];
+
+        Arrays.fill(pse,-1);
+        Arrays.fill(nse,n);
+
+        calcPreviousSmaller(arr,pse);
+        calcNextSmaller(arr,nse);
 
         for (int i=0;i<n;i++) {
-            int leftCnt=0;
-            int rightCnt=1;
+            long numOfStarts=i-pse[i];
+            long numOfEnds=nse[i]-i;
+            long numOfSubArrays=numOfStarts*numOfEnds;
+            long currTotalMin=arr[i]*numOfSubArrays;
+            // System.out.println(i+" "+arr[i]+" "+numOfSubArrays+" "+currTotalMin);
 
-            for (int j=i;j>=0;j--) {
-                if (arr[j]>=arr[i])
-                    leftCnt++;
-                else
-                    break;
-            }
-
-            for (int k=i+1;k<n;k++) {
-                if (arr[k]>arr[i])
-                    rightCnt++;
-                else
-                    break;
-            }
-
-            long val=arr[i]*((long)leftCnt*rightCnt);
-            val%=mod;
-            cnt=(cnt+val)%mod;
+            res=(res+currTotalMin)%mod;
         }
 
-        return (int)cnt;
+        return (int)res;
+    }
+
+    public void calcPreviousSmaller(int[] arr,int[] pse) {
+        int n=arr.length;
+        Stack<Integer> stack=new Stack<>();
+
+        for (int i=n-1;i>=0;i--) {
+            while (!stack.isEmpty() && arr[stack.peek()]>=arr[i]) {
+                int index=stack.pop();
+                pse[index]=i;
+            }
+
+            stack.push(i);
+        }
+    }
+
+    public void calcNextSmaller(int[] arr,int[] nse) {
+        int n=arr.length;
+        Stack<Integer> stack=new Stack<>();
+
+        for (int i=0;i<n;i++) {
+            while (!stack.isEmpty() && arr[stack.peek()]>arr[i]) {
+                int index=stack.pop();
+                nse[index]=i;
+            }
+
+            stack.push(i);
+        }
     }
 }
 
 
 /*
-arr  = [2, 6, 4, 3, 5, 1]
+arr = [3,1,2,4]
+       0 1 2 3
 
-arr = [3 ,1, 2, 4]
-       0  1  2  3
+pse[] = [-1,-1,1,2]
+nse[] = [1,4,4,4]
 
-ele=1
+no. of starting points = currIndex - pse[currIndex]  = 1 - pse[1] = 1 - (-1) = 2
+no. of ending points = nse[currIndex] - currIndex = nse[1]-1 = 4-1 = 3 
 
-//left=2
+2*3 = 6
+
+stop if you encounter a value which is less than currVal(near smaller element to left)
+stop if you encounter a value which is les than currVal(near smallest element to right)
+
+currVal has some index
+I went to left till my currVal is minimum -> I got my starting point of subarray to index
+I went to right till my currVal is minimum -> index to I got my ending point of subarray
+
+//3
+3
+
+//1
+possible starting points of subarrays = 2
+[3]
 [1]
-[3,1]
 
-//right=3
+possible ending points of subarrays = 3
 [1]
-[1,2]
-[1,2,4]
+[2]
+[4]
 
-//total
-[3,1]
-[3,1,2]
-[3,1,2,4]
-[1]
-[1,2]
-[1,2,4]
+total subarray = no. of starting points * no. of ending points = 2*3 = 6
+[3][1] -> [3,1]
+[3][2] -> [3,1,2]
+[3][4] -> [3,1,2,4]
 
+[1][1] -> [1]
+[1][2] -> [1,2]
+[1][4] -> [1,2,4]
 
+//2
+2
+2,4
 
-left=1
-right=2
+//4
+4
 
-cnt=ele*(left*right)
+3        -  3
+3,1      -  1
+3,1,2    -  1
+3,1,2,4  -  1
 
+1       -   1
+1,2    -    1
+1,2,4    -  1
 
-3 - 3
-3,1 - 1
-3,1,2 - 1
-3,1,2,4 - 1
+2      -    2
+2,4     -   2
 
-1 - 1
-1,2 - 1
-1,2,3 - 1
+4      -    4
 
-2 - 2
-2,4 - 2
-
-4 - 4
-
-
+3 -> 1
 1 -> 6
 2 -> 2
-3 -> 1
 4 -> 1
 
-6*1 + 2*2 + 3*1 + 4*1
+3*1 + 1*6 + 2*2 + 4*1 = 17
+
+straight forward -> subarray to minimum
+optimal approach -> minimum val. for how many subarrays
+
+
 */
