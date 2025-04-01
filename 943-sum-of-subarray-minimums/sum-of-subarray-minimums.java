@@ -3,8 +3,8 @@ class Solution {
         int n=arr.length;
         long res=0;
         long mod=(long)1e9+7;
-        int[] pse=new int[n];
-        int[] nse=new int[n];
+        int[] pse=new int[n]; //O(n)
+        int[] nse=new int[n]; //O(n)
 
         Arrays.fill(pse,-1);
         Arrays.fill(nse,n);
@@ -12,7 +12,7 @@ class Solution {
         calcPreviousSmaller(arr,pse);
         calcNextSmaller(arr,nse);
 
-        for (int i=0;i<n;i++) {
+        for (int i=0;i<n;i++) { //O(n)
             long numOfStarts=i-pse[i];
             long numOfEnds=nse[i]-i;
             long numOfSubArrays=numOfStarts*numOfEnds;
@@ -25,7 +25,7 @@ class Solution {
         return (int)res;
     }
 
-    public void calcPreviousSmaller(int[] arr,int[] pse) {
+    public void calcPreviousSmaller(int[] arr,int[] pse) { //O(2*n)
         int n=arr.length;
         Stack<Integer> stack=new Stack<>();
 
@@ -39,7 +39,7 @@ class Solution {
         }
     }
 
-    public void calcNextSmaller(int[] arr,int[] nse) {
+    public void calcNextSmaller(int[] arr,int[] nse) { //O(2*n)
         int n=arr.length;
         Stack<Integer> stack=new Stack<>();
 
@@ -56,6 +56,8 @@ class Solution {
 
 
 /*
+Time: O(n)+O(2*n)+O(2*n)
+Space: O(2*n)+O(n)(stack)
 arr = [3,1,2,4]
        0 1 2 3
 
