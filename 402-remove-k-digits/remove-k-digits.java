@@ -1,47 +1,47 @@
 class Solution {
     public String removeKdigits(String num, int k) {
-        if (num.equals("0"))
-            return num;
-
         int n=num.length();
+
         Stack<Character> stack=new Stack<>();
+        Stack<Character> stack2=new Stack<>();
         StringBuilder res=new StringBuilder();
 
-        for (int i=0;i<n;i++) {
-            char ch=num.charAt(i);
-
-            while (!stack.isEmpty() && (k>0 && stack.peek()>ch)) {
+        for (char ch: num.toCharArray()) {
+            while (!stack.isEmpty() && stack.peek()>ch && k>0) {
                 stack.pop();
                 k--;
             }
 
-            if (stack.isEmpty() && ch=='0')
-                continue;
-
             stack.push(ch);
         }
 
-        while (!stack.isEmpty() && k>0) {
-                stack.pop();
-                k--;
-        }
-        
-        if (stack.isEmpty())
-            return "0";
+        while (k-- >0)
+            stack.pop();
 
         while (!stack.isEmpty())
-            res.append(stack.pop());
+            stack2.push(stack.pop());
 
-        res.reverse();
-        // int i=0;
-        // while (res.length()>i && res.charAt(i)=='0')
-        //     i++;
-
-        // res.delete(0,i);
+        while (!stack2.isEmpty() && stack2.peek()=='0')
+            stack2.pop();
         
-        // if (res.length()==0)
-        //     return "0";
+        if (stack2.isEmpty())
+            return "0";
+
+        while (!stack2.isEmpty())
+            res.append(stack2.pop());
 
         return res.toString();
     }
 }
+
+/*
+1432219 k=3
+
+1000 k=1
+1000 k=3
+
+000 k=2
+
+1020 k=2
+10030 k=1
+*/
