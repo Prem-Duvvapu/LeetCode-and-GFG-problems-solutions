@@ -9,7 +9,7 @@ join
 on
     e1.departmentId=d.id
 where
-    3 > (
+    (
         select
             count(distinct(e2.salary))
         from
@@ -17,4 +17,4 @@ where
         where
             e2.salary>e1.salary and
             e2.departmentId=e1.departmentId
-    );
+    ) <= 2;
