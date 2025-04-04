@@ -4,7 +4,7 @@ class Solution {
         Stack<Character> stack=new Stack<>();
         Stack<Character> stack2=new Stack<>();
 
-        for (char ch: num.toCharArray()) {
+        for (char ch: num.toCharArray()) { //O(2*n)
             while (!stack.isEmpty() && stack.peek()>ch && k>0) {
                 stack.pop();
                 k--;
@@ -13,13 +13,15 @@ class Solution {
             stack.push(ch);
         }
 
+        //O(n)
         while (k-- > 0)
             stack.pop();
         
-
+        //O(n)
         while (!stack.isEmpty())
             stack2.push(stack.pop());
 
+        //O(n)
         while (!stack2.isEmpty() && stack2.peek()=='0')
             stack2.pop();
 
@@ -27,14 +29,13 @@ class Solution {
             return "0";
 
         StringBuilder res=new StringBuilder();
+        //O(n)
         while (!stack2.isEmpty())
             res.append(stack2.pop());
-        
 
         return res.toString();
     }
 }
-
 
 
 /*
@@ -52,8 +53,6 @@ ans = oneDigit
 a*1000+b*100+c*10+d
 
 4*1000
-
-
 
 5           1
 stack      val
