@@ -58,7 +58,7 @@ class Solution {
             for (TreeNode child: set)
                 temp.add(childToParent.get(child.val));
             
-            set=new HashSet<>(temp);
+            set=temp;
         }
 
         for (TreeNode res: set)
