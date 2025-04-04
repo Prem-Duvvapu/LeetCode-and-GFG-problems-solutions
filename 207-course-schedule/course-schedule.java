@@ -1,38 +1,87 @@
-//toposort(dfs)
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
-        boolean[] visited=new boolean[numCourses];
-        boolean[] path=new boolean[numCourses];
+        int n=numCourses;
         List<List<Integer>> adjList=new ArrayList<>();
 
-        for (int i=0;i<numCourses;i++)
+        for (int i=0;i<n;i++)
             adjList.add(new ArrayList<>());
 
-        for (int[] e: prerequisites)
-            adjList.get(e[1]).add(e[0]);
+        for (int[] e: prerequisites) {
+            int u=e[0];
+            int v=e[1];
+            //v->u
+            adjList.get(v).add(u);
+        }
 
-        for (int i=0;i<numCourses;i++)
-            if (!visited[i])
-                if (!dfs(i,visited,path,numCourses,adjList))
-                    return false;
+        if (isCycle(adjList,n))
+            return false;
 
         return true;
     }
 
-    public boolean dfs(int curr,boolean[] visited,boolean[] path,int numCourses,List<List<Integer>> adjList) {
-        visited[curr]=true;
-        path[curr]=true;
+    public boolean isCycle(List<List<Integer>> adjList,int n) {
+        boolean[] visited=new boolean[n];
+        boolean[] path=new boolean[n];
 
-        for (int neighbour: adjList.get(curr)) {
-            if (!visited[neighbour]) {
-                if (!dfs(neighbour,visited,path,numCourses,adjList))
-                    return false;
-            } else if (path[neighbour]){
-                return false;
+        for (int i=0;i<n;i++)
+            if (!visited[i])
+                if (dfs(i,visited,path,adjList,n))
+                    return true;
+
+        return false;
+    }
+
+    public boolean dfs(int node,boolean[] visited,boolean[] path,List<List<Integer>> adjList,int n) {
+        visited[node]=true;
+        path[node]=true;
+
+        for (int ngbr: adjList.get(node)) {
+            if (!visited[ngbr]) {
+                if (dfs(ngbr,visited,path,adjList,n))
+                    return true;
+            } else if (path[ngbr]) {
+                return true;
             }
         }
 
-        path[curr]=false;
-        return true;
+        path[node]=false;
+        return false;
     }
 }
+
+/*
+numCourses
+
+0 to numCourses-1
+
+[a,b]
+b->a
+
+2
+0,1
+
+[1,0]
+0->1 true
+
+2
+0,1
+[1,0],[0,1]
+0->1
+1->0
+
+false
+
+0->1
+^   |
+|   >2
+3<----
+
+visited[] = [1, 1, 1, 1]
+             0  1  2  3
+
+path[] = [1, 1, 1, 1]
+          0  1  2  3
+return true
+
+
+*/
