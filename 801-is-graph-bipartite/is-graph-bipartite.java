@@ -6,28 +6,21 @@ class Solution {
 
         for (int i=0;i<n;i++)
             if (color[i]==-1)
-                if (!bfs(i,color,graph,n))
+                if (!dfs(i,0,color,graph,n))
                     return false;
 
         return true;
     }
 
-    public boolean bfs(int node,int[] color,int[][] graph,int n) {
-        color[node]=0;
-        Queue<Integer> q=new LinkedList<>();
-        q.add(node);
+    public boolean dfs(int node,int currNodeColor,int[] color,int[][] graph,int n) {
+        color[node]=currNodeColor;
 
-        while (!q.isEmpty()) {
-            int currNode=q.poll();
-            int currColor=color[currNode];
-
-            for (int ngbr: graph[currNode]) {
-                if (color[ngbr]==-1) {
-                    color[ngbr]=1-currColor;
-                    q.add(ngbr);
-                } else if (color[ngbr]==currColor) {
+        for (int ngbr: graph[node]) {
+            if (color[ngbr]==-1) {
+                if (!dfs(ngbr,1-currNodeColor,color,graph,n))
                     return false;
-                }
+            } else if (color[node]==color[ngbr]) {
+                return false;
             }
         }
 
