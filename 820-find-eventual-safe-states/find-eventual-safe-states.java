@@ -1,37 +1,51 @@
-//DFS
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
         int n=graph.length;
+        List<Integer> res=new ArrayList<>();
         boolean[] visited=new boolean[n];
         boolean[] path=new boolean[n];
         boolean[] safe=new boolean[n];
-        List<Integer> res=new ArrayList<>();
 
         for (int i=0;i<n;i++)
             if (!visited[i])
-                dfs(i,visited,path,safe,graph);
+                dfs(i,visited,path,safe,graph,n);
 
         for (int i=0;i<n;i++)
             if (safe[i])
                 res.add(i);
+
         return res;
     }
 
-    private boolean dfs(int i,boolean[] visited,boolean[] path,boolean[] safe,int[][] graph) {
-        visited[i]=true;
-        path[i]=true;
+    public boolean dfs(int node,boolean[] visited,boolean[] path,boolean[] safe,int[][] graph,int n) {
+        visited[node]=true;
+        path[node]=true;
 
-        for (int neighbour: graph[i]) {
-            if (!visited[neighbour]) {
-                if (dfs(neighbour,visited,path,safe,graph))
+        for (int ngbr: graph[node]) {
+            if (!visited[ngbr]) {
+                if (dfs(ngbr,visited,path,safe,graph,n))
                     return true;
-            }
-            else if (path[neighbour])
+            } else if (path[ngbr]) {
                 return true;
+            }
         }
 
-        safe[i]=true;
-        path[i]=false;
+        safe[node]=true;
+        path[node]=false;
         return false;
     }
 }
+
+/*
+
+directed graph
+n nodes
+0 to n-1
+
+adjList
+
+terminal node - node which has no outgoing edges
+safe node - node whose every path leads to safe termial node or another safe node
+
+
+*/
