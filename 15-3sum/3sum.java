@@ -1,40 +1,56 @@
-//optimal
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
         int n=nums.length;
-        int k=0;
-        List<List<Integer>> resList=new ArrayList<>();
+        List<List<Integer>> res=new ArrayList<>();
+
         Arrays.sort(nums);
+        solve(0,new ArrayList<>(),res,0,nums,n);
 
-        for (int i=0;i<n;i++) {
-            if (i>0 && nums[i]==nums[i-1])
-                continue;
+        return res;
+    }
 
-            int left=i+1;
-            int right=n-1;
+    public void solve(int pos,List<Integer> currList,List<List<Integer>> res,int target,int[] nums,int n) {
+        if (currList.size()==0) {
+            for (int i=0;i<n;i++) {
+                if (i>0 && nums[i]==nums[i-1])
+                    continue;
 
-            while (left<right) {
-                int sum=nums[i]+nums[left]+nums[right];
-                if (sum<0)
-                    left++;
-                else if (sum>0)
-                    right--;
-                else {
-                    List<Integer> currList=new ArrayList<>(Arrays.asList(nums[i],nums[left],nums[right]));
-                    resList.add(currList);
-
-                    left++;
-                    right--;
-
-                    while (left<right && nums[left]==nums[left-1])
-                        left++;
-                    
-                    while (right>left && nums[right]==nums[right+1])
-                        right--;
-                }
+                currList.add(nums[i]);
+                solve(i+1,currList,res,target-nums[i],nums,n);
+                currList.remove(currList.size()-1);
             }
+
+            return;
         }
 
-        return resList;
+        int left=pos;
+        int right=n-1;
+
+        while (left<right) {
+            int leftVal=nums[left];
+            int rightVal=nums[right];
+
+            if (leftVal+rightVal<target)
+                left++;
+            else if (leftVal+rightVal>target)
+                right--;
+            else {
+                currList.add(nums[left]);
+                currList.add(nums[right]);
+                res.add(new ArrayList<>(currList));
+
+                currList.remove(currList.size()-1);
+                currList.remove(currList.size()-1);
+
+                left++;
+                right--;
+
+                while (left<right && nums[left]==nums[left-1])
+                    left++;
+
+                while (right>left && nums[right]==nums[right+1])
+                    right--;
+            }
+        }
     }
 }
