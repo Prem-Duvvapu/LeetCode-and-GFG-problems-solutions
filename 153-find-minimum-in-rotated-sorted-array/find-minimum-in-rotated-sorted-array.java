@@ -3,22 +3,17 @@ class Solution {
         int n=nums.length;
         int low=0;
         int high=n-1;
-        int res=Integer.MAX_VALUE;
+        int res=5001;
 
         while (low<=high) {
             int mid=low+(high-low)/2;
+            res=Math.min(res,nums[mid]);
 
-            if (nums[low]<=nums[mid] && nums[mid]<=nums[high]) {
-                res=Math.min(res,nums[low]);
-                return res;
-            }
-
-            //if left half is sorted
-            if (nums[low]<=nums[mid] && nums[mid]>=nums[high]) {
+            if (nums[low]<=nums[mid]) {
                 res=Math.min(res,nums[low]);
                 low=mid+1;
             } else {
-                res=Math.min(res,nums[mid]);
+                res=Math.min(res,nums[mid+1]);
                 high=mid-1;
             }
         }
