@@ -1,38 +1,37 @@
-//tabulation
 class Solution {
     public boolean canPartition(int[] nums) {
         int n=nums.length;
-        int sum=0;
-        
-        for (int i=0;i<n;i++)
-            sum+=nums[i];
+        int totalSum=0;
 
-        if (sum%2==1)
+        Boolean[][] dp=new Boolean[n][20001];
+
+        for (int i=0;i<n;i++)
+            totalSum+=nums[i];
+
+        if (totalSum%2==1)
             return false;
 
-        int target=sum/2;
-        boolean[][] dp=new boolean[n][target+1];
+        int halfSum=totalSum/2;
 
-        //base cases
-        for (int i=0;i<n;i++)
-            dp[i][0]=true;
+        return solve(0,halfSum,dp,nums,n);
+    }
 
-        if (nums[0]<=target)
-                dp[0][nums[0]]=true;
+    public boolean solve(int pos,int target,Boolean[][] dp,int[] nums,int n) {
+        if (target==0)
+            return true;
 
-        for (int pos=1;pos<n;pos++) {
-            for (int t=1;t<=target;t++) {
-                boolean notPick=dp[pos-1][t];
-                boolean pick=false;
-                if (t-nums[pos]>=0)
-                    pick=dp[pos-1][t-nums[pos]];
+        if (target<0 || pos==n)
+            return false;
 
-                boolean res=(pick || notPick);
+        if (dp[pos][target]!=null)
+            return dp[pos][target];
 
-                dp[pos][t]=res;
-            }
-        }
+       boolean pick=solve(pos+1,target-nums[pos],dp,nums,n);
+        if (pick)
+            return dp[pos][target]=pick;
 
-        return dp[n-1][target];
+        boolean notPick=solve(pos+1,target,dp,nums,n);
+
+        return dp[pos][target]=notPick;
     }
 }
