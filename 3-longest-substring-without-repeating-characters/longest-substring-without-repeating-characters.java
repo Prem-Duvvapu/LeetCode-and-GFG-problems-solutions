@@ -7,9 +7,6 @@ class Solution {
         int left=0;
         int right=0;
 
-        int firstIndex=-1;
-        int lastIndex=-1;
-
         Arrays.fill(lastOccurence,-1);
 
         while (right<n) {
