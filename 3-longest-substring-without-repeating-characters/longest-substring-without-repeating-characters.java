@@ -7,6 +7,9 @@ class Solution {
         int left=0;
         int right=0;
 
+        int firstIndex=-1;
+        int lastIndex=-1;
+
         Arrays.fill(lastOccurence,-1);
 
         while (right<n) {
@@ -27,6 +30,12 @@ class Solution {
 }
 
 /*
+time: O(n)
+space: O(1)
+
+3. return all substrings 
+
+
 s = "a b c a b c b b"
      0 1 2 3 4 5 6 7
 
