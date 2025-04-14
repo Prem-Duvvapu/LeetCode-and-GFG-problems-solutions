@@ -1,29 +1,38 @@
 class Solution {
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        int n=candidates.length;
         List<List<Integer>> res=new ArrayList<>();
-        getCombination(0,candidates,target,res,0,new ArrayList<>());
+
+        solve(0,new ArrayList<>(),target,res,candidates,n);
+
         return res;
     }
 
-    private void getCombination(int pos,int[] candidates,int target,List<List<Integer>> res,int currSum, List<Integer> currList) {
-
-        if (currSum > target || pos==candidates.length) {
-            return;
-        }
-
-        if (currSum==target) {
+    public void solve(int pos,List<Integer> currList,int req,List<List<Integer>> res,int[] candidates,int n) {
+        if (req==0) {
             res.add(new ArrayList<>(currList));
             return;
         }
 
-        //pick and stay
-        currSum+=candidates[pos];
+        if (req<0)
+            return;
+
+        if (pos==n)
+            return;
+
+        //pick
         currList.add(candidates[pos]);
-        getCombination(pos,candidates,target,res,currSum,currList);
-        currSum-=candidates[pos];
+        solve(pos,currList,req-candidates[pos],res,candidates,n);
         currList.remove(currList.size()-1);
 
         //not pick
-        getCombination(pos+1,candidates,target,res,currSum,currList);
+        solve(pos+1,currList,req,res,candidates,n);
     }
 }
+
+/*
+0 -0
+   1
+   2
+   3
+*/
