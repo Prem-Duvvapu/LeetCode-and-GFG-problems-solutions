@@ -32,6 +32,30 @@ class Solution {
 
 /*
 
+time: 2^n
+space: O(n)
+
+
+at each index -> pick/not pick = 2 options 2^n
+
+0 1 2 3 ... n-1
+0 to n, 1 to n, 2 to n
+
+0 0,1,2,....n-1
+1 1,2,...,n-1
+2 2,3,....n-1
+
+
+0 1 2 ... n-1
+2 2 2  ... 2
+
+n-1 n-1
+
+2^n * k , k=avg. length of each combination
+
+
+
+
 0 th index  1
 1 st index  2, 2, 2, 5 
 2 nd index  2, 2 5
