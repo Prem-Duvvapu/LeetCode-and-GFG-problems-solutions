@@ -31,9 +31,30 @@ class Solution {
 
 /* 
 
+Better:
+
+time: O(n!)
+
+space: O(n)(visited) + O(n)
+
+
+Optimal: 
+
+time: O(n!)
+
+space: O(n)
+
 for n, we will have n! permuations
 [1,2,3]
 
 
-[3,2,1
+[_,_,_]
+ 3 2 1
+
+ 3*2*1..
+
+ n*(n-1)*(n-2)*.....*1
+
+ n!
+
 */
