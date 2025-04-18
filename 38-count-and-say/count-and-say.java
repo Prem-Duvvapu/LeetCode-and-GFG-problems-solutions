@@ -9,13 +9,12 @@ class Solution {
 
         while (i<prev.length()) {
             char ch=prev.charAt(i);
-            int cnt=1;
             int j=i+1;
 
             while (j<prev.length() && prev.charAt(j)==ch)
                 j++;
             
-            cnt=j-i;
+            int cnt=j-i;
             curr.append(cnt).append(ch);
             i=j;
         }
