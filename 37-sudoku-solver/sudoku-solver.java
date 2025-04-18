@@ -52,6 +52,13 @@ class Solution {
 }
 
 /*
+time:  O(9^81) 1 to 9 at every empty cell
+space: O(n*n) recursive stack space
+_ _ _    _
+9 9 9 
+
+9^81
+
 (0,3) (0,4) (0,5)
 (1,3) (1,4) (1,5)
 (2,3) (2,4) (2,5)
