@@ -3,7 +3,6 @@ class Solution {
         int n=nums.length;
         long res=0;
         Arrays.sort(nums);
-        // System.out.println(Arrays.toString(nums));
 
         for (int i=0;i<n-1;i++) {
             int minPossibleJ=-1;
@@ -44,7 +43,6 @@ class Solution {
             }
 
             res+=(maxPossibleJ-minPossibleJ+1);
-            // System.out.println("i="+i+" minPossibleJ="+minPossibleJ+" maxPossibleJ="+maxPossibleJ+" res="+res);
         }
 
         return res;
