@@ -4,13 +4,13 @@ class Solution {
         Arrays.sort(answers);
 
         int res=answers[0]+1;
-        int value=answers[0];
+        int range=answers[0];
         int startPos=0;
 
         for (int i=1;i<n;i++) {
-            if ((answers[i]>answers[i-1]) || (i-startPos>value)) {
+            if ((answers[i]>answers[i-1]) || (i-startPos>range)) {
                 res+=(answers[i]+1);
-                value=answers[i];
+                range=answers[i];
                 startPos=i;
             }
         }
