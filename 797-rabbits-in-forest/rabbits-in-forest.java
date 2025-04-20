@@ -8,16 +8,10 @@ class Solution {
         int startPos=0;
 
         for (int i=1;i<n;i++) {
-            if (answers[i]>answers[i-1]) {
+            if ((answers[i]>answers[i-1]) || (i-startPos>value)) {
                 res+=(answers[i]+1);
                 value=answers[i];
                 startPos=i;
-            } else {
-                if (i-startPos>value) {
-                    res+=(answers[i]+1);
-                    value=answers[i];
-                    startPos=i;
-                }
             }
         }
 
