@@ -6,13 +6,11 @@ class Solution {
         int res=0;
 
         for (int i=0;i<n;i++) {
-            currInterval[0]=currInterval[0]-differences[i];
-            currInterval[1]=currInterval[1]-differences[i];
+            currInterval[0]-=differences[i];
+            currInterval[1]-=differences[i];
 
             currInterval[0]=Math.max(currInterval[0],lower);
             currInterval[1]=Math.min(currInterval[1],upper);
-
-            // System.out.println(i+" "+Arrays.toString(currInterval));
 
             if (currInterval[0]>currInterval[1])
                 return 0;
