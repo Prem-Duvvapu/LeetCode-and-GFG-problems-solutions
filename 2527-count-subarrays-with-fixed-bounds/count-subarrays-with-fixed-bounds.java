@@ -13,8 +13,10 @@ class Solution {
             if (nums[right]<minK || nums[right]>maxK) {
                 right++;
                 left=right;
+
                 minVal=Integer.MAX_VALUE;
                 maxVal=Integer.MIN_VALUE;
+                
                 minKmaxIndex=-1;
                 maxKmaxIndex=-1;
 
@@ -29,8 +31,6 @@ class Solution {
 
             if (minKmaxIndex!=-1 && maxKmaxIndex!=-1)
                 res=res+Math.min(minKmaxIndex,maxKmaxIndex)-left+1;
-
-            // System.out.println(right+" "+res);
 
             right++;
         }
