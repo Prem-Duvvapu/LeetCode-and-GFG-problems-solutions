@@ -18,22 +18,13 @@ class Solution {
             freqList[freq].add(element);
         }
 
-        int pos=0;
-        for (int freq=n;freq>=1;freq--) {
-            if (pos==k)
-                break;
-
-            if (freqList[freq]==null)
-                continue;
-
-            for (int ele: freqList[freq]) {
-                if (pos==k)
-                    break;
-
-                res[pos]=ele;
-                pos++;
-            }
-        }
+        List<Integer> resList=new ArrayList<>();
+        for (int freq=n;freq>=1;freq--)
+            if (freqList[freq]!=null)
+                resList.addAll(freqList[freq]);
+        
+        for (int i=0;i<k;i++)
+            res[i]=resList.get(i);
 
         return res;
     }
