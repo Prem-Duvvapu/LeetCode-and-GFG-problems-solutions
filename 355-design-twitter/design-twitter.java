@@ -51,23 +51,17 @@ class Twitter {
         User currUser=users.get(userId);
 
         pq.addAll(currUser.q);
-        // for (Tweet t: pq)
-        //     System.out.print(t.tweetId+" ");
+
         for (int uid: currUser.following) {
+            pq.addAll(users.get(uid).q);
+
             while (pq.size()>10)
                 pq.poll();
-            pq.addAll(users.get(uid).q);
         }
 
-        while (pq.size()>10)
-            pq.poll();
-
-        int cnt=0;
-
-        while (!pq.isEmpty() && cnt<10) {
+        while (!pq.isEmpty())
             res.add(pq.poll().tweetId);
-            cnt++;
-        }
+
         Collections.reverse(res);
             
         return res;
