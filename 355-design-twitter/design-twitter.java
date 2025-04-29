@@ -20,7 +20,6 @@ class Tweet {
         this.tweetId=tweetId;
         this.userId=userId;
         tweetNum=tweetCnt;
-        System.out.println(tweetId+" "+tweetCnt);
     }
 }
 
@@ -68,7 +67,6 @@ class Twitter {
             cnt++;
         }
             
-
         return res;
     }
     
