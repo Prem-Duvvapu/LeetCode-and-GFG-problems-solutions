@@ -47,13 +47,20 @@ class Twitter {
         if (!users.containsKey(userId))
             return res;
 
-        PriorityQueue<Tweet> pq = new PriorityQueue<>((x, y) -> Integer.compare(y.tweetNum, x.tweetNum));
+        PriorityQueue<Tweet> pq = new PriorityQueue<>((x, y) -> Integer.compare(x.tweetNum, y.tweetNum));
         User currUser=users.get(userId);
 
         pq.addAll(currUser.q);
-
-        for (int uid: currUser.following)          
+        // for (Tweet t: pq)
+        //     System.out.print(t.tweetId+" ");
+        for (int uid: currUser.following) {
+            while (pq.size()>10)
+                pq.poll();
             pq.addAll(users.get(uid).q);
+        }
+
+        while (pq.size()>10)
+            pq.poll();
 
         int cnt=0;
 
@@ -61,6 +68,7 @@ class Twitter {
             res.add(pq.poll().tweetId);
             cnt++;
         }
+        Collections.reverse(res);
             
         return res;
     }
