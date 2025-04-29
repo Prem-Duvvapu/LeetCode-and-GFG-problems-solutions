@@ -1,6 +1,5 @@
 class User {
     int userId;
-    // Set<Integer> followers=new HashSet<>();
     Set<Integer> following=new HashSet<>();
     Queue<Tweet> q=new LinkedList<>();
 
@@ -53,6 +52,9 @@ class Twitter {
         pq.addAll(currUser.q);
 
         for (int uid: currUser.following) {
+            if (!users.containsKey(uid))
+                continue;
+
             pq.addAll(users.get(uid).q);
 
             while (pq.size()>10)
@@ -71,22 +73,13 @@ class Twitter {
         if (!users.containsKey(followerId))
             users.put(followerId,new User(followerId));
 
-        if (!users.containsKey(followeeId))
-            users.put(followeeId,new User(followeeId));
-
         User follower=users.get(followerId);
-        User followee=users.get(followeeId);
-
         follower.following.add(followeeId);
-        // followee.followers.add(followerId);
     }
     
     public void unfollow(int followerId, int followeeId) {
         User follower=users.get(followerId);
-        User followee=users.get(followeeId);
-
         follower.following.remove(followeeId);
-        // followee.followers.remove(followerId);
     }
 }
 
