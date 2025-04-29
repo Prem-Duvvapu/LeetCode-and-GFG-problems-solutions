@@ -1,6 +1,6 @@
 class User {
     int userId;
-    Set<Integer> followers=new HashSet<>();
+    // Set<Integer> followers=new HashSet<>();
     Set<Integer> following=new HashSet<>();
     Queue<Tweet> q=new LinkedList<>();
 
@@ -78,7 +78,7 @@ class Twitter {
         User followee=users.get(followeeId);
 
         follower.following.add(followeeId);
-        followee.followers.add(followerId);
+        // followee.followers.add(followerId);
     }
     
     public void unfollow(int followerId, int followeeId) {
@@ -86,7 +86,7 @@ class Twitter {
         User followee=users.get(followeeId);
 
         follower.following.remove(followeeId);
-        followee.followers.remove(followerId);
+        // followee.followers.remove(followerId);
     }
 }
 
