@@ -2,7 +2,7 @@ class User {
     int userId;
     Set<Integer> followers=new HashSet<>();
     Set<Integer> following=new HashSet<>();
-    Deque<Tweet> q=new ArrayDeque<>();
+    Queue<Tweet> q=new LinkedList<>();
 
     public User(int userId) {
         this.userId=userId;
