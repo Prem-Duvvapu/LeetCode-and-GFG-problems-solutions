@@ -44,21 +44,3 @@ class Solution {
         return dp[pos][canBuy][k]=maxRes;
     }
 }
-
-/*
-
-pos  -> 0 to n-1
-k -> k to 0
-canBuy -> 0/1
-
-dp[pos][k][canBuy]
-    n   k+1  2
-
-1. do at max k transactions  -> give me max profit
-2. do at max k transactions with cooldown period -> give me max profit
-3. do at max k transactions with trasaction fee -> give me max profit
-
-buy and sell -> 1 transaction
-at max transactionsl
-
-*/
