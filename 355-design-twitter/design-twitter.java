@@ -70,27 +70,6 @@ class Twitter {
             
 
         return res;
-
-
-         // Add own tweets
-        // pq.addAll(currUser.q);
-
-        // // Add followee tweets
-        // for (int followeeId : currUser.following) {
-        //     User followee = users.get(followeeId);
-        //     if (followee != null) {
-        //         pq.addAll(followee.q);
-        //     }
-        // }
-
-        // // Get up to 10 most recent tweets
-        // int count = 0;
-        // while (!pq.isEmpty() && count < 10) {
-        //     res.add(pq.poll().tweetId);
-        //     count++;
-        // }
-
-        // return res;
     }
     
     public void follow(int followerId, int followeeId) {
