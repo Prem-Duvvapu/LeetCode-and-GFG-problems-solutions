@@ -1,0 +1,129 @@
+class User {
+    int userId;
+    Set<Integer> followers=new HashSet<>();
+    Set<Integer> following=new HashSet<>();
+    Deque<Tweet> q=new ArrayDeque<>();
+
+    public User(int userId) {
+        this.userId=userId;
+    }
+}
+
+class Tweet {
+    static int tweetCnt=0;
+    int tweetId;
+    int userId;
+    int tweetNum;
+
+    public Tweet(int tweetId,int userId) {
+        tweetCnt++;
+        this.tweetId=tweetId;
+        this.userId=userId;
+        tweetNum=tweetCnt;
+        System.out.println(tweetId+" "+tweetCnt);
+    }
+}
+
+class Twitter {
+    Map<Integer,User> users;
+
+    public Twitter() {
+        users=new HashMap<>();
+    }
+    
+    public void postTweet(int userId, int tweetId) {
+        Tweet newTweet=new Tweet(tweetId,userId);
+        if (!users.containsKey(userId))
+            users.put(userId,new User(userId));
+
+        User currUser=users.get(userId);
+        currUser.q.add(newTweet);
+
+        if (currUser.q.size()>10)
+            currUser.q.poll();
+    }
+    
+    public List<Integer> getNewsFeed(int userId) {
+        if (!users.containsKey(userId))
+            return new ArrayList<>();
+
+        PriorityQueue<Tweet> pq = new PriorityQueue<>((x, y) -> {
+            return Integer.compare(y.tweetNum, x.tweetNum);
+        });
+
+
+        List<Integer> res=new ArrayList<>();
+        User currUser=users.get(userId);
+
+        pq.addAll(currUser.q);
+
+        for (int uid: currUser.following) {            
+            pq.addAll(users.get(uid).q);
+        }
+
+        int cnt=0;
+
+        while (!pq.isEmpty() && cnt<10) {
+            res.add(pq.poll().tweetId);
+            cnt++;
+        }
+            
+
+        return res;
+
+
+         // Add own tweets
+        // pq.addAll(currUser.q);
+
+        // // Add followee tweets
+        // for (int followeeId : currUser.following) {
+        //     User followee = users.get(followeeId);
+        //     if (followee != null) {
+        //         pq.addAll(followee.q);
+        //     }
+        // }
+
+        // // Get up to 10 most recent tweets
+        // int count = 0;
+        // while (!pq.isEmpty() && count < 10) {
+        //     res.add(pq.poll().tweetId);
+        //     count++;
+        // }
+
+        // return res;
+    }
+    
+    public void follow(int followerId, int followeeId) {
+        User follower=users.get(followerId);
+        User followee=users.get(followeeId);
+
+        if (follower==null)
+            users.put(followerId,new User(followerId));
+
+        if (followee==null)
+            users.put(followeeId,new User(followeeId));
+
+        follower=users.get(followerId);
+        followee=users.get(followeeId);
+
+        follower.following.add(followeeId);
+        followee.followers.add(followerId);
+    }
+    
+    public void unfollow(int followerId, int followeeId) {
+        User follower=users.get(followerId);
+        User followee=users.get(followeeId);
+
+        follower.following.remove(followeeId);
+        followee.followers.remove(followerId);
+    }
+}
+
+/**
+ * Your Twitter object will be instantiated and called as such:
+ * Twitter obj = new Twitter();
+ * obj.postTweet(userId,tweetId);
+ * List<Integer> param_2 = obj.getNewsFeed(userId);
+ * obj.follow(followerId,followeeId);
+ * obj.unfollow(followerId,followeeId);
+ */
