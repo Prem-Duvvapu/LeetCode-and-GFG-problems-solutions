@@ -43,22 +43,17 @@ class Twitter {
     }
     
     public List<Integer> getNewsFeed(int userId) {
-        if (!users.containsKey(userId))
-            return new ArrayList<>();
-
-        PriorityQueue<Tweet> pq = new PriorityQueue<>((x, y) -> {
-            return Integer.compare(y.tweetNum, x.tweetNum);
-        });
-
-
         List<Integer> res=new ArrayList<>();
+        if (!users.containsKey(userId))
+            return res;
+
+        PriorityQueue<Tweet> pq = new PriorityQueue<>((x, y) -> Integer.compare(y.tweetNum, x.tweetNum));
         User currUser=users.get(userId);
 
         pq.addAll(currUser.q);
 
-        for (int uid: currUser.following) {            
+        for (int uid: currUser.following)          
             pq.addAll(users.get(uid).q);
-        }
 
         int cnt=0;
 
@@ -71,17 +66,14 @@ class Twitter {
     }
     
     public void follow(int followerId, int followeeId) {
-        User follower=users.get(followerId);
-        User followee=users.get(followeeId);
-
-        if (follower==null)
+        if (!users.containsKey(followerId))
             users.put(followerId,new User(followerId));
 
-        if (followee==null)
+        if (!users.containsKey(followeeId))
             users.put(followeeId,new User(followeeId));
 
-        follower=users.get(followerId);
-        followee=users.get(followeeId);
+        User follower=users.get(followerId);
+        User followee=users.get(followeeId);
 
         follower.following.add(followeeId);
         followee.followers.add(followerId);
