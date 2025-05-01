@@ -13,7 +13,6 @@ class Solution {
         int k=lists.length;
         ListNode head=new ListNode(-1);
         ListNode temp=head;
-        ListNode[] currNodes=new ListNode[k];
         PriorityQueue<ListNode> pq=new PriorityQueue<>((x,y)->Integer.compare(x.val,y.val));
 
         for (int i=0;i<k;i++)
