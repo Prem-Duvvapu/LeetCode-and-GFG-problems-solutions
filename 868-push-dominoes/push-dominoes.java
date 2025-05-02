@@ -13,6 +13,7 @@ class Solution {
         int Rpos=Integer.MAX_VALUE;
 
         for (int i=n-1;i>=0;i--) {
+            // System.out.println(i+" "+Lpos+" "+Rpos);
             if (dominoes.charAt(i) == 'L')
                 Lpos = i;
             else if (dominoes.charAt(i) == 'R')
@@ -44,6 +45,9 @@ class Solution {
                     res[i]='R';
             }
         }
+
+        // System.out.println(Arrays.toString(Ldist));
+        // System.out.println(Arrays.toString(Rdist));
 
         return new String(res);
     }
