@@ -24,7 +24,6 @@ class Solution {
                 }
 
                 totalSum+=(maxFreq-minFreq);
-                // System.out.println(i+" "+j+" "+totalSum);
             }
         }
 
