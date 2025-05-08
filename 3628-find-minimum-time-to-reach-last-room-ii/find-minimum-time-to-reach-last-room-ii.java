@@ -40,9 +40,11 @@ class Solution {
                 int newCol=currCol+DCOL[i];
 
                 if (newRow>=0 && newRow<n && newCol>=0 && newCol<m && !visited[newRow][newCol]) {
-                    int newTime=Math.max(currTime,moveTime[newRow][newCol]);
                     visited[newRow][newCol]=true;
-                    int newMove=(currMove==1) ? 2: 1;
+
+                    int newTime=Math.max(currTime,moveTime[newRow][newCol]);
+                    int newMove=1+(currMove&1);
+                    
                     pq.add(new Pair(newRow,newCol,newTime+newMove,newMove));
                 }
             }
