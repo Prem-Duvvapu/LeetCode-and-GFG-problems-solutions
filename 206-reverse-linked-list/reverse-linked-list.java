@@ -9,16 +9,24 @@
  * }
  */
 
-//recursive
+//iterative
 class Solution {
     public ListNode reverseList(ListNode head) {
         if (head==null || head.next==null)
             return head;
 
-        ListNode revHead=reverseList(head.next);
-        head.next.next=head;
-        head.next=null;
+        ListNode prevNode=null;
+        ListNode currNode=head;
+        ListNode nextNode=null;
+        
+        while (currNode!=null) {
+            nextNode=currNode.next;
+            currNode.next=prevNode;
 
-        return revHead;
+            prevNode=currNode;
+            currNode=nextNode;
+        }
+
+        return prevNode;
     }
 }
