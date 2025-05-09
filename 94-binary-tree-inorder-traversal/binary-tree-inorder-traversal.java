@@ -24,7 +24,7 @@ class Solution {
 
         while (true) {
             if (curr!=null) {
-                stack.add(curr);
+                stack.push(curr);
                 curr=curr.left;
             } else {
                 if (stack.isEmpty())
@@ -39,3 +39,11 @@ class Solution {
         return res;
     }
 }
+
+// curr=null
+
+// stack =[]
+
+// res=[1,3,2]
+
+
