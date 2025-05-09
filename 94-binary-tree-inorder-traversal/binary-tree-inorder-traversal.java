@@ -22,14 +22,11 @@ class Solution {
         Stack<TreeNode> stack=new Stack<>();
         TreeNode curr=root;
 
-        while (true) {
+        while (curr!=null || !stack.isEmpty()) {
             if (curr!=null) {
                 stack.push(curr);
                 curr=curr.left;
             } else {
-                if (stack.isEmpty())
-                    break;
-
                 curr=stack.pop();
                 res.add(curr.val);
                 curr=curr.right;
