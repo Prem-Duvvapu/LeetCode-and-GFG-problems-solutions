@@ -40,10 +40,4 @@ class Solution {
     }
 }
 
-// curr=null
-
-// stack =[]
-
-// res=[1,3,2]
-
 
