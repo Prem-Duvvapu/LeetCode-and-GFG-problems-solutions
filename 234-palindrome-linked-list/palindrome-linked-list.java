@@ -30,7 +30,7 @@ class Solution {
         ListNode temp2=revHead;
         System.out.println(temp1.val+" "+temp2.val);
 
-        while (temp1!=null && temp2!=null) {
+        while (temp2!=null) {
             if (temp1.val!=temp2.val)
                 return false;
 
