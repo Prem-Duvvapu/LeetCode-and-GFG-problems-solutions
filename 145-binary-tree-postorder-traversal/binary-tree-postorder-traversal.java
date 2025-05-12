@@ -23,14 +23,13 @@ class Solution {
         stack.add(root);
         while (!stack.isEmpty()) {
             TreeNode curr=stack.pop();
+            res.add(curr.val);
 
             if (curr.left!=null)
                 stack.push(curr.left);
 
             if (curr.right!=null)
                 stack.push(curr.right);
-
-            res.add(curr.val);
         }
 
         Collections.reverse(res);
