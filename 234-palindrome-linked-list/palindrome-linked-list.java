@@ -13,49 +13,33 @@ class Solution {
         if (head==null || head.next==null)
             return true;
 
+        ListNode prev=null;
         ListNode slow=head;
         ListNode fast=head;
 
         while (fast!=null && fast.next!=null) {
-            slow=slow.next;
             fast=fast.next.next;
+            ListNode nextNode=slow.next;
+            slow.next=prev;
+
+            prev=slow;
+            slow=nextNode;
         }
 
         if (fast!=null)
             slow=slow.next;
 
-        ListNode revHead=reverseLL(slow);
+        ListNode revFirstHalf=prev;
+        ListNode secondHalf=slow;
 
-        ListNode temp1=head;
-        ListNode temp2=revHead;
-        System.out.println(temp1.val+" "+temp2.val);
-
-        while (temp2!=null) {
-            if (temp1.val!=temp2.val)
+        while (secondHalf!=null) {
+            if (revFirstHalf.val!=secondHalf.val)
                 return false;
 
-            temp1=temp1.next;
-            temp2=temp2.next;
-        }            
-
-        return true;
-    }
-
-    public ListNode reverseLL(ListNode head) {
-        if (head==null || head.next==null)
-            return head;
-
-        ListNode prev=null;
-        ListNode curr=head;
-
-        while (curr!=null) {
-            ListNode next=curr.next;
-            curr.next=prev;
-
-            prev=curr;
-            curr=next;
+            revFirstHalf=revFirstHalf.next;
+            secondHalf=secondHalf.next;
         }
 
-        return prev;
+        return true;
     }
 }
