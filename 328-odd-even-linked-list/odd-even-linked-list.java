@@ -22,11 +22,8 @@ class Solution {
         ListNode evenNext=head.next;
 
         while (evenCurr!=null && evenCurr.next!=null) {
-            if (oddCurr.next!=null)
-                oddNext=oddCurr.next.next;
-
-            if (evenCurr.next!=null)
-                evenNext=evenCurr.next.next;
+            oddNext=oddCurr.next.next;
+            evenNext=evenCurr.next.next;
 
             oddCurr.next=oddNext;
             evenCurr.next=evenNext;
@@ -35,7 +32,7 @@ class Solution {
             evenCurr=evenNext;
         }
 
-        oddNext.next=evenHead;
+        oddCurr.next=evenHead;
         return head;
     }
 }
