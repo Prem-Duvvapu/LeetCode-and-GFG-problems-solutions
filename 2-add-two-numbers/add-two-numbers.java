@@ -10,6 +10,13 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        //edge cases
+        if (l1==null)
+            return l2;
+        
+        if (l2==null)
+            return l1;
+            
         ListNode sumHead=new ListNode(-1);
         int carry=0;
 
