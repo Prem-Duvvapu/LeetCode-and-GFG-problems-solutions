@@ -3,15 +3,15 @@ class Solution {
         int m=matrix.length;
         int n=matrix[0].length;
 
-        int row=1;
-        int col=1;
+        boolean firstRowCheck=false;
+        boolean firstColCheck=false;
 
         //check first row
         for (int i=0;i<n;i++)
         {
             if (matrix[0][i]==0)
             {
-                row=0;
+                firstRowCheck=true;
                 break;
             }
         }
@@ -21,7 +21,7 @@ class Solution {
         {
             if (matrix[i][0]==0)
             {
-                col=0;
+                firstColCheck=true;
                 break;
             }
         }
@@ -47,12 +47,12 @@ class Solution {
             }
         }
 
-        if (row==0)
+        if (firstRowCheck)
             for (int i=0;i<n;i++)
                 matrix[0][i]=0;
 
 
-        if (col==0)
+        if (firstColCheck)
             for (int i=0;i<m;i++)
                 matrix[i][0]=0;
 
