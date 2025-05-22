@@ -54,13 +54,14 @@ class Solution {
                 }
             }
 
-            time++;
+            if (!q.isEmpty())
+                time++;
         }
 
         if (freshCnt>0)
             return -1;
 
-        return time-1;
+        return time;
     }
 }
 
