@@ -17,12 +17,13 @@ class Solution {
         if (head==null || head.next==null)
             return head;
 
+        ListNode leftHead=head;
         ListNode middleNode=findMiddleNode(head);
-        ListNode temp=middleNode.next;
+        ListNode rightHead=middleNode.next;
         middleNode.next=null;
 
-        ListNode leftHead=mergeSort(head);
-        ListNode rightHead=mergeSort(temp);
+        leftHead=mergeSort(leftHead);
+        rightHead=mergeSort(rightHead);
 
         return merge(leftHead,rightHead);
     }
