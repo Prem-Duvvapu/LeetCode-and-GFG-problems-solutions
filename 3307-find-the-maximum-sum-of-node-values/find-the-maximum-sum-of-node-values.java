@@ -17,9 +17,9 @@ class Solution {
         int minProfit=Integer.MAX_VALUE;
 
         for (int val: nums) {
-            if ((val^k)-val>0)
+            if ((val^k)>val)
                 minProfit=Math.min(minProfit,(val^k)-val);
-            else if (val-(val^k)>0)
+            else if (val>(val^k))
                 minLoss=Math.min(minLoss,val-(val^k));
         }
         
