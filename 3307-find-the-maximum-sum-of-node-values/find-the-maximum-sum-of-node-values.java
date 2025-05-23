@@ -14,15 +14,14 @@ class Solution {
             return res;
 
         int minLoss=Integer.MAX_VALUE;
-
-        for (int val: nums)
-            if (val-(val^k)>0)
-                minLoss=Math.min(minLoss,val-(val^k));
-
         int minProfit=Integer.MAX_VALUE;
-        for (int val: nums)
+
+        for (int val: nums) {
             if ((val^k)-val>0)
                 minProfit=Math.min(minProfit,(val^k)-val);
+            else if (val-(val^k)>0)
+                minLoss=Math.min(minLoss,val-(val^k));
+        }
         
         res=Math.max(res-minLoss,res-minProfit);
         return res;
