@@ -35,7 +35,6 @@ class Solution {
             last.next=null;
             newFirst=reverseLL(first);
             newLast=first;
-            newLast.next=null;
 
             prev.next=newFirst;
             prev=newLast;
