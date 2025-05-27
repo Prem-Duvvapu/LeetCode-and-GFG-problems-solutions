@@ -16,15 +16,13 @@ class Solution {
         ListNode curr=head;
         ListNode temp=new ListNode(-1);
         ListNode prev=temp;
-        ListNode first=null;
+        ListNode first=head;
         ListNode last=null;
         ListNode newFirst=null;
         ListNode newLast=null;
         int cnt=0;
         
-        while (curr!=null) {
-            first=curr;
-
+        while (first!=null) {
             while (cnt<k && curr!=null) {
                 last=curr;
                 cnt++;
@@ -36,12 +34,13 @@ class Solution {
 
             last.next=null;
             newFirst=reverseLL(first);
-            // System.out.println("NewFirst : "+newFirst.val);
             newLast=first;
             newLast.next=null;
 
             prev.next=newFirst;
             prev=newLast;
+
+            first=curr;
             cnt=0;
         }
 
