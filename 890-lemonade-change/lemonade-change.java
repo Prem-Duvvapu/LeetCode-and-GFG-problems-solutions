@@ -8,9 +8,9 @@ class Solution {
             if (bill==5) {
                 fiveCnt++;
             } else if (bill==10) {
-                tenCnt++;
                 if (fiveCnt==0)
                     return false;
+                tenCnt++;
                 fiveCnt--;
             } else if (bill==20) {
                 if (tenCnt>=1 && fiveCnt>=1) {
