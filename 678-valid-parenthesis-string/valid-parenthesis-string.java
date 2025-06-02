@@ -1,28 +1,38 @@
 class Solution {
     public boolean checkValidString(String s) {
         int n=s.length();
-        int minVal=0;
-        int maxVal=0;
 
-        for (int i=0;i<n;i++) {
-            char ch=s.charAt(i);
-            if (ch=='(') {
-                minVal++;
-                maxVal++;
-            } else if (ch==')') {
-                minVal--;
-                maxVal--;
-            } else {
-                minVal--;
-                maxVal++;
-            }
+        //left to right
+        int openCnt=0;
+        int closeCnt=0;
+        int symbolCnt=0;
 
-            minVal=Math.max(0,minVal);
-
-            if (maxVal<0)
-                return false;
+        for (char ch: s.toCharArray()) {
+            if (ch=='(')
+                openCnt++;
+            else if (ch==')') {
+                closeCnt++;
+                if (closeCnt>openCnt+symbolCnt)
+                    return false;
+            } else
+                symbolCnt++;
         }
 
-        return (minVal==0);
+        //right to left
+        openCnt=0;
+        closeCnt=0;
+        symbolCnt=0;
+        for (char ch: new StringBuilder(s).reverse().toString().toCharArray()) {
+            if (ch=='(') {
+                openCnt++;
+                if (openCnt>closeCnt+symbolCnt)
+                    return false;
+            } else if (ch==')')
+                closeCnt++;
+            else
+                symbolCnt++;  
+        }
+
+        return true;
     }
 }
