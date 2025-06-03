@@ -15,6 +15,7 @@ class Trie {
         root=new TrieNode();
     }
     
+    //Time: O(word)
     public void insert(String word) {
         TrieNode curr=root;
 
@@ -28,6 +29,7 @@ class Trie {
         curr.endOfWord=true;
     }
     
+    //Time: O(word)
     public boolean search(String word) {
         TrieNode curr=root;
 
@@ -41,6 +43,7 @@ class Trie {
         return curr.endOfWord;
     }
     
+    //Time: O(prefix)
     public boolean startsWith(String prefix) {
         TrieNode curr=root;
 
