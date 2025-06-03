@@ -1,13 +1,12 @@
 class TrieNode {
-    TrieNode[] charExist;
+    TrieNode[] arr;
     boolean endOfWord;
 
     TrieNode() {
-        charExist=new TrieNode[26];
+        arr=new TrieNode[26];
         endOfWord=false;
     }
 }
-
 
 class Trie {
     TrieNode root;
@@ -20,13 +19,10 @@ class Trie {
         TrieNode curr=root;
 
         for (char ch: word.toCharArray()) {
-            if (curr.charExist[ch-'a']!=null) {
-                curr=curr.charExist[ch-'a'];
-            } else {
-                TrieNode newNode=new TrieNode();
-                curr.charExist[ch-'a']=newNode;
-                curr=curr.charExist[ch-'a'];
-            }
+            if (curr.arr[ch-'a']==null)
+                curr.arr[ch-'a']=new TrieNode();
+            
+            curr=curr.arr[ch-'a'];
         }
 
         curr.endOfWord=true;
@@ -36,10 +32,10 @@ class Trie {
         TrieNode curr=root;
 
         for (char ch: word.toCharArray()) {
-            if (curr.charExist[ch-'a']==null)
+            if (curr.arr[ch-'a']==null)
                 return false;
-
-            curr=curr.charExist[ch-'a'];
+            
+            curr=curr.arr[ch-'a'];
         }
 
         return curr.endOfWord;
@@ -49,10 +45,10 @@ class Trie {
         TrieNode curr=root;
 
         for (char ch: prefix.toCharArray()) {
-            if (curr.charExist[ch-'a']==null)
+            if (curr.arr[ch-'a']==null)
                 return false;
-
-            curr=curr.charExist[ch-'a'];
+            
+            curr=curr.arr[ch-'a'];
         }
 
         return true;
