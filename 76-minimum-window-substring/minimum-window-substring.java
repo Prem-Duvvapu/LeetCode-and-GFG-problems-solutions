@@ -11,13 +11,13 @@ class Solution {
         int startIndex=-1;
 
         for (char ch: t.toCharArray())
-            freq[ch]++;
+            freq[ch]--;
 
         while (right<n) {
             char ch=s.charAt(right);
-            freq[ch]--;
+            freq[ch]++;
 
-            if (freq[ch]>=0)
+            if (freq[ch]<=0)
                 cnt++;
 
             while (cnt==m) {
@@ -28,9 +28,9 @@ class Solution {
                 }
 
                 char leftChar=s.charAt(left);
-                freq[leftChar]++;
+                freq[leftChar]--;
 
-                if (freq[leftChar]>0)
+                if (freq[leftChar]<0)
                     cnt--;
 
                 left++;
@@ -48,6 +48,8 @@ class Solution {
 
 
 /*
+time: O(m) + O(n) + O(n)
+space: o(1)
 
 find substring which satifies the constraints
 
