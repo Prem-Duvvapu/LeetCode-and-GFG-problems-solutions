@@ -1,75 +1,62 @@
-class Node {
-    Node[] bits;
+class TrieNode {
+    TrieNode[] arr;
 
-    Node() {
-        bits=new Node[2];
-    }
-
-    public boolean containsBit(int bit) {
-        return (bits[bit]!=null);
-    }
-
-    public void insertBit(int bit) {
-        bits[bit]=new Node();
-    }
-
-    public Node getNode(int bit) {
-        return bits[bit];
+    TrieNode() {
+        arr=new TrieNode[2];
     }
 }
 
 class Trie {
-    Node root;
+    TrieNode root;
 
     Trie() {
-        root=new Node();
+        root=new TrieNode();
     }
 
-    public void insertNum(int num) {
-        Node curr=root;
+    public void insert(int num) {
+        TrieNode curr=root;
 
         for (int i=31;i>=0;i--) {
-            int bit = (num>>i)&1;
-            if (!curr.containsBit(bit))
-                curr.insertBit(bit);
-            
-            curr = curr.getNode(bit);
+            int currBit=((num>>i)&1);
+
+            if (curr.arr[currBit]==null)
+                curr.arr[currBit]=new TrieNode();
+
+            curr=curr.arr[currBit];
         }
     }
 
-    public int getMax(int num) {
-        Node curr=root;
-        int maxNum=0;
+    public int check(int num) {
+        TrieNode curr=root;
+        int xorVal=0;
 
         for (int i=31;i>=0;i--) {
-            int bit=(num >> i)&1;
+            int currBit=((num>>i)&1);
 
-            if (curr.containsBit(1-bit)) {
-                maxNum = (maxNum | (1<<i));
-                curr = curr.getNode(1-bit);
+            if (curr.arr[1-currBit]!=null) {
+                xorVal=(xorVal|(1<<i));
+                curr=curr.arr[1-currBit];
             } else {
-                curr = curr.getNode(bit);
+                curr=curr.arr[currBit];
             }
-        }
+        } 
 
-        System.out.println(maxNum);
-
-        return maxNum;
+        return xorVal;       
     }
 }
 
 class Solution {
     public int findMaximumXOR(int[] nums) {
         int n=nums.length;
-        Trie t=new Trie();
-        int maxVal=0;
+        Trie trie=new Trie();
+        int maxXor=0;
 
-        for (int i=0;i<n;i++)
-            t.insertNum(nums[i]);
+        for (int val: nums)
+            trie.insert(val);
 
-        for (int i=0;i<n;i++)
-            maxVal=Math.max(maxVal, t.getMax(nums[i]));
+        for (int val: nums)
+            maxXor=Math.max(maxXor,trie.check(val));
 
-        return maxVal;
+        return maxXor;
     }
 }
