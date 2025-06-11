@@ -11,10 +11,9 @@ class Solution {
             for (int i=start;i<=end;i++)
                 newEnd=Math.max(newEnd,i+nums[i]);
 
+            minJumps++;
             start=end+1;
             end=newEnd;
-
-            minJumps++;
         }
 
         return minJumps;
