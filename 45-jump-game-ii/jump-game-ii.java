@@ -2,20 +2,20 @@ class Solution {
     public int jump(int[] nums) {
         int n=nums.length;
         int minJumps=0;
-        int minIndex=0;
-        int maxIndex=0;
+        int start=0;
+        int end=0;
 
-        while (maxIndex<n-1) {
-            int newMaxIndex=maxIndex;
+        while (end<n-1) {
+            int newEnd=end;
 
-            for (int i=minIndex;i<=maxIndex;i++)
-                newMaxIndex=Math.max(newMaxIndex,i+nums[i]);
+            for (int i=start;i<=end;i++)
+                newEnd=Math.max(newEnd,i+nums[i]);
+
+            start=end+1;
+            end=newEnd;
 
             minJumps++;
-            minIndex=maxIndex+1;
-            maxIndex=newMaxIndex;
         }
-
 
         return minJumps;
     }
