@@ -1,40 +1,31 @@
-//Optimal
-//Time: O(n)
-//Space: O(1)
-
 class Solution {
     public int candy(int[] ratings) {
         int n=ratings.length;
-        int res=1;
-        int peak=0;
-        int down=0;
-        int i=1;
+        int[] prefix=new int[n];
+        int[] suffix=new int[n];
+        int minCandies=0;
 
-        while (i<n) {
-            while (i<n && ratings[i]==ratings[i-1]) {
-                res+=1;
-                i++;
-                continue;
-            }
+        prefix[0]=suffix[n-1]=1;
 
-            peak=1;
-            while (i<n && ratings[i]>ratings[i-1]) {
-                peak+=1;
-                res+=peak;
-                i++;
-            }
-
-            down=1;
-            while (i<n && ratings[i]<ratings[i-1]) {
-                res+=down;
-                i++;
-                down++;
-            }
-
-            if (down>peak)
-                res=res+(down-peak);
+        //left to right
+        for (int i=1;i<n;i++) {
+            if (ratings[i]>ratings[i-1])
+                prefix[i]=1+prefix[i-1];
+            else
+                prefix[i]=1;
         }
 
-        return res;
+        //right to left
+        for (int i=n-2;i>=0;i--) {
+            if (ratings[i]>ratings[i+1])
+                suffix[i]=1+suffix[i+1];
+            else
+                suffix[i]=1;
+        }
+
+        for (int i=0;i<n;i++)
+            minCandies+=Math.max(prefix[i],suffix[i]);
+
+        return minCandies;
     }
 }
