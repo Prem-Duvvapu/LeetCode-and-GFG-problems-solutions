@@ -1,34 +1,30 @@
-class IntervalsComparator implements Comparator<int[]> {
-    public int compare(int[] a,int[] b) {
-        if (a[1]<b[1])
-            return -1;
-        else if (a[1]>b[1])
-            return 1;
-        else if (a[0]<b[0])
-            return -1;
-        else if (a[0]>b[0])
-            return 1;
-        return 0;
-    }
-}
-
 class Solution {
     public int eraseOverlapIntervals(int[][] intervals) {
         int n=intervals.length;
-        int overlappedIntervals=1;
-        IntervalsComparator ic=new IntervalsComparator();
         int res=0;
-        Arrays.sort(intervals,ic);
-        int prevEndTime=intervals[0][1];
+
+        Comparator<int[]> com=new Comparator<>() {
+            public int compare(int[] x,int[] y) {
+                if (x[1]!=y[1])
+                    return Integer.compare(x[1],y[1]);
+
+                return Integer.compare(x[0],y[0]);
+            }
+        };
+        Arrays.sort(intervals, com);
+
+        int start=intervals[0][0];
+        int end=intervals[0][1];
 
         for (int i=1;i<n;i++) {
-            if (intervals[i][0]>=prevEndTime) {
-                overlappedIntervals++;
-                prevEndTime=intervals[i][1];
+            if (intervals[i][0]<end) {
+                res++;
+            } else {
+                start=intervals[i][0];
+                end=intervals[i][1];
             }
         }
-        
-        res=n-overlappedIntervals;
+
         return res;
     }
 }
