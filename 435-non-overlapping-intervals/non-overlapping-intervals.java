@@ -13,16 +13,13 @@ class Solution {
         };
         Arrays.sort(intervals, com);
 
-        int start=intervals[0][0];
-        int end=intervals[0][1];
+        int prevEndTime=intervals[0][1];
 
         for (int i=1;i<n;i++) {
-            if (intervals[i][0]<end) {
+            if (intervals[i][0]<prevEndTime)
                 res++;
-            } else {
-                start=intervals[i][0];
-                end=intervals[i][1];
-            }
+            else
+                prevEndTime=intervals[i][1];
         }
 
         return res;
