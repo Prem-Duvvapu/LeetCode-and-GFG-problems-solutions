@@ -8,8 +8,8 @@ class Solution {
             if (!isPrime[i])
                 continue;
 
-            for (int j=i+i;j<n;j+=i)
-                isPrime[j]=false;
+            for (long j=(long)i*i;j<(long)n;j+=i)
+                isPrime[(int)j]=false;
         }
 
         for (int i=2;i<n;i++)
