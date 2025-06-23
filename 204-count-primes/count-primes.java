@@ -4,7 +4,7 @@ class Solution {
         boolean[] isPrime=new boolean[n];
         Arrays.fill(isPrime,true);
 
-        for (int i=2;i<n;i++) {
+        for (int i=2;(long)i*i<=(long)n;i++) {
             if (!isPrime[i])
                 continue;
 
