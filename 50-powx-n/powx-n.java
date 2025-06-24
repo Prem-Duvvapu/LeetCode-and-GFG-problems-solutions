@@ -1,22 +1,20 @@
 class Solution {
     public double myPow(double x, int n) {
         if (x==1.0 || n==0)
-            return 1;
+            return 1.0;
 
-        if (n<0)
-        {
-            n=-n;
+        if (n<0) {
+            n=Math.abs(n);
             x=1/x;
         }
 
         double res=1.0;
-        while (n!=0)
-        {
-            if (n%2==1)
-                res=res*x;
+        while (n!=00) {
+            if ((n&1)==1)
+                res*=x;
 
-            x=x*x;
-            n=n>>>1;
+            n/=2;
+            x*=x;
         }
 
         return res;
