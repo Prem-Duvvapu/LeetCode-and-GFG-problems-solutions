@@ -9,7 +9,7 @@ class Solution {
         }
 
         double res=1.0;
-        while (n!=00) {
+        while (n!=0) {
             if ((n&1)==1)
                 res*=x;
 
