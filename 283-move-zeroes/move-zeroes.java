@@ -1,20 +1,22 @@
-//brute forece
-//T.C. : O(2*n)
-//S.C. : O(n)
 class Solution {
     public void moveZeroes(int[] nums) {
         int n=nums.length;
-        List<Integer> temp=new ArrayList<>();
+        int i=0;
+        int j=0;
 
-        for (int i=0;i<n;i++)
-            if (nums[i]!=0)
-                temp.add(nums[i]);
+        while (j<n) {
+            if (nums[j]!=0) {
+                swap(nums,i,j);
+                i++;
+            }
 
-        for (int i=0;i<temp.size();i++)
-            nums[i]=temp.get(i);
+            j++;
+        }
+    }
 
-        int j=temp.size();
-        while (j<n)
-            nums[j++]=0;
+    public void swap(int[] arr,int i,int j) {
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
     }
 }
