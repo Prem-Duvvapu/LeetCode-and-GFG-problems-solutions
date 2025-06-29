@@ -1,7 +1,3 @@
-//Optimal -> (Dutch National Flag Algorithm)
-//T.C.: O(n)
-//S.C.: O(1)
-
 class Solution {
     public void sortColors(int[] nums) {
         int n=nums.length;
@@ -23,9 +19,9 @@ class Solution {
         }
     }
 
-    public void swap(int[] nums,int i,int j) {
-        int temp=nums[i];
-        nums[i]=nums[j];
-        nums[j]=temp;
+    public void swap(int[] arr,int i,int j) {
+        int temp=arr[i];
+        arr[i]=arr[j];
+        arr[j]=temp;
     }
 }
