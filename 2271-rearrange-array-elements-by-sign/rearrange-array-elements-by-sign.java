@@ -1,18 +1,17 @@
-//Optimal
 class Solution {
     public int[] rearrangeArray(int[] nums) {
-        int n=nums.length;
-        int[] res=new int[n];
-        int positiveIndex=0;
-        int negativeIndex=1;
+        int n = nums.length;
+        int[] res = new int[n];
+        int positiveIndex = 0;
+        int negativeIndex = 1;
 
-        for (int i=0;i<n;i++) {
-            if (nums[i]>0) {
-                res[positiveIndex]=nums[i];
-                positiveIndex+=2;
+        for (int val: nums) {
+            if (val > 0) {
+                res[positiveIndex] = val;
+                positiveIndex += 2;
             } else {
-                res[negativeIndex]=nums[i];
-                negativeIndex+=2;
+                res[negativeIndex] = val;
+                negativeIndex += 2;
             }
         }
 
