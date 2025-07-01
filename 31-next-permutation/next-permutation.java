@@ -4,14 +4,14 @@ class Solution {
         int i = n-2;
         int j = n-1;
 
-        while (i >= 0) {
+        while (i>=0) {
             if (nums[i] < nums[i+1])
                 break;
 
             i--;
         }
 
-        while (i>=0 && j > i) {
+        while (i>=0 && j>i) {
             if (nums[j] > nums[i])
                 break;
 
@@ -20,7 +20,7 @@ class Solution {
 
         if (i>=0)
             swap(nums,i,j);
-            
+
         reverse(nums,i+1,n-1);
     }
 
@@ -31,7 +31,7 @@ class Solution {
     }
 
     public void reverse(int[] a,int low,int high) {
-        while (low < high) {
+        while (low<high) {
             swap(a,low,high);
             low++;
             high--;
