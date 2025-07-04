@@ -9,16 +9,12 @@ class Pair {
 }
 
 class Solution {
-    int[] dRow={-1,0,1,0};
-    int[] dCol={0,1,0,-1};
-
     public int orangesRotting(int[][] grid) {
         int m=grid.length;
         int n=grid[0].length;
-        boolean[][] visited=new boolean[m][n];
-        Queue<Pair> q=new LinkedList<>();
         int freshCnt=0;
-        int time=0;
+        Queue<Pair> q=new LinkedList<>();
+        boolean[][] visited=new boolean[m][n];
 
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
@@ -34,22 +30,26 @@ class Solution {
         if (freshCnt==0)
             return 0;
 
+        int[] dRow={-1,0,1,0};
+        int[] dCol={0,1,0,-1};
+        int time=0;
+
         while (!q.isEmpty()) {
             int qlen=q.size();
 
             while (qlen-- > 0) {
-                Pair curr=q.poll();
-                int currRow=curr.row;
-                int currCol=curr.col;
+                Pair top=q.poll();
+                int currRow=top.row;
+                int currCol=top.col;
 
                 for (int i=0;i<4;i++) {
                     int newRow=currRow+dRow[i];
                     int newCol=currCol+dCol[i];
 
-                    if (newRow>=0 & newRow<m && newCol>=0 && newCol<n && grid[newRow][newCol]==1 && !visited[newRow][newCol]) {
-                        freshCnt--;
-                        q.add(new Pair(newRow,newCol));
+                    if (newRow>=0 && newRow<m && newCol>=0 && newCol<n && !visited[newRow][newCol] && grid[newRow][newCol]==1) {
                         visited[newRow][newCol]=true;
+                        q.add(new Pair(newRow, newCol));
+                        freshCnt--;
                     }
                 }
             }
