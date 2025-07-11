@@ -1,37 +1,33 @@
 class Solution {
     public boolean canPartition(int[] nums) {
-        int n=nums.length;
-        int totalSum=0;
+        int n = nums.length;
+        int totalSum = 0;
 
-        Boolean[][] dp=new Boolean[n][20001];
+        for (int val: nums)
+            totalSum += val;
 
-        for (int i=0;i<n;i++)
-            totalSum+=nums[i];
-
-        if (totalSum%2==1)
+        if ((totalSum&1)==1)
             return false;
 
-        int halfSum=totalSum/2;
+        int target = totalSum>>1;
+        Boolean[][] dp = new Boolean[n][target+1];
 
-        return solve(0,halfSum,dp,nums,n);
+        return solve(0,target,nums,dp);
     }
 
-    public boolean solve(int pos,int target,Boolean[][] dp,int[] nums,int n) {
+    private boolean solve(int pos,int target,int[] nums,Boolean[][] dp) {
         if (target==0)
             return true;
 
-        if (target<0 || pos==n)
+        if (pos>=nums.length || target<0)
             return false;
 
         if (dp[pos][target]!=null)
             return dp[pos][target];
 
-       boolean pick=solve(pos+1,target-nums[pos],dp,nums,n);
-        if (pick)
-            return dp[pos][target]=pick;
+        boolean notPick = solve(pos+1,target,nums,dp);
+        boolean pick = solve(pos+1,target-nums[pos],nums,dp);
 
-        boolean notPick=solve(pos+1,target,dp,nums,n);
-
-        return dp[pos][target]=notPick;
+        return dp[pos][target] = (notPick || pick);
     }
 }
