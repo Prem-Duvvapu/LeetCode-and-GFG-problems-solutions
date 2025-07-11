@@ -4,35 +4,25 @@ class Solution {
         List<List<Integer>> res = new ArrayList<>();
 
         Arrays.sort(nums);
-        solve(res,target,nums,n);
+        kSum(4,0,(long)target,new ArrayList<>(),res,nums,n);
 
         return res;
     }
 
-    private void solve(List<List<Integer>> res,int target,int[] nums,int n) {
-        List<Integer> currList = new ArrayList<>();
+    public void kSum(int k,int pos,long target,List<Integer> currList,List<List<Integer>> res,int[] nums,int n) {
+        if (k>2) {
+            for (int i=pos;i<n-(k-1);i++) {
+                if (i>pos && nums[i]==nums[i-1])
+                    continue;
 
-        for (int i=0;i<n;i++) {
-            if (i>0 && nums[i]==nums[i-1])
-                continue;
-            
-            currList.add(nums[i]);
-
-            for (int j=i+1;j<n;j++) {
-                if (j>i+1 && nums[j]==nums[j-1])
-                continue;
-            
-                currList.add(nums[j]);
-                helper(j+1,currList,res,(long)target-(nums[i]+nums[j]),nums,n);
+                currList.add(nums[i]);
+                kSum(k-1,i+1,target-nums[i],currList,res,nums,n);
                 currList.remove(currList.size()-1);
             }
-
-            currList.remove(currList.size()-1);
+            return;
         }
-    }
 
-    private void helper(int pos,List<Integer> currList,List<List<Integer>> res,long target,int[] nums,int n) {
-        int low= pos;
+        int low = pos;
         int high = n-1;
 
         while (low<high) {
@@ -43,11 +33,9 @@ class Solution {
             } else if (currSum>target) {
                 high--;
             } else {
-                currList.add(nums[low]);
-                currList.add(nums[high]);
-                res.add(new ArrayList<>(currList));
-                currList.remove(currList.size()-1);
-                currList.remove(currList.size()-1);
+                List<Integer> temp = new ArrayList<>(currList);
+                temp.addAll(Arrays.asList(nums[low],nums[high]));
+                res.add(temp);
 
                 low++;
                 high--;
