@@ -9,10 +9,26 @@ class Solution {
         if ((totalSum&1)==1)
             return false;
 
-        int target = totalSum>>1;
-        Boolean[][] dp = new Boolean[n][target+1];
+        int reqTarget = totalSum>>1;
+        boolean[][] dp = new boolean[n+1][reqTarget+1];
 
-        return solve(0,target,nums,dp);
+        for (int i=0;i<=n;i++)
+            dp[i][0] = true;
+
+        for (int pos=n-1;pos>=0;pos--) {
+            for (int target=1;target<=reqTarget;target++) {
+                boolean notPick = dp[pos+1][target];
+
+                boolean pick = false;
+                if (target>=nums[pos])
+                    pick=dp[pos+1][target-nums[pos]];
+
+                dp[pos][target]=(pick || notPick);
+            }
+        }
+
+        // return solve(0,target,nums,dp);
+        return dp[0][reqTarget];
     }
 
     private boolean solve(int pos,int target,int[] nums,Boolean[][] dp) {
