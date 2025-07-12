@@ -1,3 +1,6 @@
+// min Possible sum = 20 * -1000 = 2 * 1_000_0
+// max Possible sum = 20 * 1000 - 2 * 1_000
+
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         int n = nums.length;
