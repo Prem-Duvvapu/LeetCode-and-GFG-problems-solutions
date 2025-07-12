@@ -1,34 +1,37 @@
 class Solution {
-    int cnt=0;
-
     public int reversePairs(int[] nums) {
         int n=nums.length;
-        mergeSort(0,n-1,nums);
+        return mergeSort(0,n-1,nums);
+    }
+
+    public int mergeSort(int low,int high,int[] arr) {
+        int cnt = 0;
+        if (low<high) {
+            int mid = low+(high-low)/2;
+            cnt += mergeSort(low,mid,arr);
+            cnt += mergeSort(mid+1,high,arr);
+            cnt += countReversePairs(low,mid,high,arr);
+            merge(low,mid,high,arr);
+        }
+
         return cnt;
     }
 
-    public void mergeSort(int low,int high,int[] arr) {
-        if (low<high) {
-            int mid = low+(high-low)/2;
-            mergeSort(low,mid,arr);
-            mergeSort(mid+1,high,arr);
-            countReversePairs(low,mid,high,arr);
-            merge(low,mid,high,arr);
-        }
-    }
-
-    public void countReversePairs(int low,int mid,int high,int[] arr) {
+    public int countReversePairs(int low,int mid,int high,int[] arr) {
         int i = low;
         int j = mid+1;
+        int currCnt = 0;
 
         while (i<=mid && j<=high) {
             if ((long)arr[i] > 2*(long)arr[j]) {
-                cnt += (mid-i+1);
+                currCnt += (mid-i+1);
                 j++;
             } else {
                 i++;
             }
         }
+
+        return currCnt;
     }
     
     public void merge(int low,int mid,int high,int[] arr) {
