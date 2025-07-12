@@ -1,60 +1,57 @@
 class Solution {
     int cnt=0;
+
     public int reversePairs(int[] nums) {
         int n=nums.length;
-        mergeSort(nums,0,n-1);
+        mergeSort(0,n-1,nums);
         return cnt;
     }
 
-    void mergeSort(int arr[], int l, int r) {
-        if (l<r) {
-            int mid=l+(r-l)/2;
-            mergeSort(arr,l,mid);
-            mergeSort(arr,mid+1,r);
-            countPairs(arr,l,mid,r);
-            merge(arr,l,mid,r);
+    public void mergeSort(int low,int high,int[] arr) {
+        if (low<high) {
+            int mid = low+(high-low)/2;
+            mergeSort(low,mid,arr);
+            mergeSort(mid+1,high,arr);
+            countReversePairs(low,mid,high,arr);
+            merge(low,mid,high,arr);
         }
     }
 
-    void countPairs(int[] arr,int low,int mid,int high) {
-        int right=mid+1;
-        for (int left=low;left<=mid;left++) {
-            while (right<=high && (long)arr[left] > 2*(long)arr[right])
-                right++;
-            cnt+=(right-(mid+1));
+    public void countReversePairs(int low,int mid,int high,int[] arr) {
+        int i = low;
+        int j = mid+1;
+
+        while (i<=mid && j<=high) {
+            if ((long)arr[i] > 2*(long)arr[j]) {
+                cnt += (mid-i+1);
+                j++;
+            } else {
+                i++;
+            }
         }
     }
     
-    void merge(int[] arr,int l,int mid,int r) {
-        int n=mid-l+1;
-        int m=r-mid;
+    public void merge(int low,int mid,int high,int[] arr) {
+        int[] a = new int[high-low+1];
         
-        int[] a=new int[n];
-        int[] b=new int[m];
+        int i = low;
+        int j = mid+1;
+        int pos = 0;
         
-        for (int i=0;i<n;i++)
-            a[i]=arr[l+i];
-            
-        for (int i=0;i<m;i++)
-            b[i]=arr[mid+1+i];
-            
-        int i=0,j=0,k=l;
-        
-        while (i<n && j<m) {
-            if (a[i]<=b[j]) {
-                arr[k]=a[i];
-                i++;
-            } else {
-                arr[k]=b[j];
-                j++;
-            }
-            k++;
+        while (i<=mid && j<=high) {
+            if (arr[i]<=arr[j])
+                a[pos++] = arr[i++];
+            else
+                a[pos++] = arr[j++];
         }
         
-        while (i<n)
-            arr[k++]=a[i++];
+        while (i<=mid)
+            a[pos++] = arr[i++];
             
-        while (j<m)
-            arr[k++]=b[j++];
+        while (j<=high)
+            a[pos++] = arr[j++];
+            
+        for (pos=0;pos<a.length;pos++)
+            arr[low+pos]=a[pos];
     }
 }
