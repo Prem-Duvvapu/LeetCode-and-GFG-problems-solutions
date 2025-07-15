@@ -19,16 +19,22 @@ class Solution {
             return new ArrayList<>();
 
         List<Integer> res = new ArrayList<>();
-        inorder(root,res);
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode curr = root;
+
+        while (curr!=null || !stack.isEmpty()) {
+            if (curr!=null) {
+                stack.push(curr);
+                curr = curr.left;
+            } else {
+                curr = stack.pop();
+                res.add(curr.val);
+                curr = curr.right;
+            }
+        }
+
         return res;
     }
 
-    private void inorder(TreeNode root,List<Integer> res) {
-        if (root==null)
-            return;
-
-        inorder(root.left,res);
-        res.add(root.val);
-        inorder(root.right,res);
-    }
+    
 }
