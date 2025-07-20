@@ -14,24 +14,32 @@
  * }
  */
 
- //Recursive(revere preorder)
- //Root Right Left
 class Solution {
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res=new ArrayList<>();
-        reverseInorder(root,0,res);
+        List<Integer> res = new ArrayList<>();
+        if (root == null)
+            return res;
+
+        Deque<TreeNode> q = new ArrayDeque<>();
+        q.add(root);
+
+        while (!q.isEmpty()) {
+            TreeNode lastNode = q.peekLast();
+            res.add(lastNode.val);
+
+            int qlen = q.size();
+
+            while (qlen-- > 0) {
+                TreeNode currNode = q.poll();
+
+                if (currNode.left!=null)
+                    q.add(currNode.left);
+
+                if (currNode.right!=null)
+                    q.add(currNode.right);
+            }
+        }
+
         return res;
-    }
-
-    private void reverseInorder(TreeNode root,int level,List<Integer> res)
-    {
-        if (root==null)
-            return;
-
-        if (level==res.size())
-            res.add(root.val);
-
-        reverseInorder(root.right,level+1,res);
-        reverseInorder(root.left,level+1,res);
     }
 }
