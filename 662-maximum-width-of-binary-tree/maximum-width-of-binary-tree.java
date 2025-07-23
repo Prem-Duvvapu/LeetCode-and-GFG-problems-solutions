@@ -13,40 +13,46 @@
  *     }
  * }
  */
-class Tuple
-{
+class Pair {
+    int index;
     TreeNode node;
-    int n;
-    Tuple(TreeNode _node,int _n)
-    {
-        node=_node;
-        n=_n;
+
+    Pair(int index,TreeNode node) {
+        this.index = index;
+        this.node = node;
     }
 }
 
 class Solution {
     public int widthOfBinaryTree(TreeNode root) {
-        int res=1;
-        LinkedList<Tuple> ll=new LinkedList<>();
-        ll.add(new Tuple(root,1));
+        if (root == null)
+            return 0;
 
-        while (ll.size()>0)
-        {
-            int len=ll.size();
-            while (len-- > 0)
-            {
-                Tuple t=ll.pollFirst();
-                TreeNode curr=t.node;
-                int num=t.n;
-                if (curr.left!=null)
-                    ll.add(new Tuple(curr.left,2*num));
-                if (curr.right!=null)
-                    ll.add(new Tuple(curr.right,2*num+1));
+        int maxWidth = 0;
+        Deque<Pair> q = new ArrayDeque<>();
+        q.add(new Pair(0,root));
+
+        while (!q.isEmpty()) {
+            Pair firstPair = q.peekFirst();
+            Pair lastPair = q.peekLast();
+
+            int currWidth = lastPair.index - firstPair.index + 1;
+            maxWidth = Math.max(currWidth, maxWidth);
+
+            int qlen = q.size();
+            while (qlen-- > 0) {
+                Pair currPair = q.poll();
+                int currIndex = currPair.index;
+                TreeNode currNode = currPair.node;
+
+                if (currNode.left!=null)
+                    q.add(new Pair(2*currIndex+1,currNode.left));
+
+                if (currNode.right!=null)
+                    q.add(new Pair(2*currIndex+2,currNode.right));
             }
-            if (ll.size()>0)
-                res=Math.max(res,ll.getLast().n-ll.getFirst().n+1);
         }
 
-        return res;
+        return maxWidth;
     }
 }
