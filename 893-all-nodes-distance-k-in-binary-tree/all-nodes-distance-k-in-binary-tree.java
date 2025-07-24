@@ -8,71 +8,57 @@
  * }
  */
 class Solution {
-    private void childToParent(TreeNode root,Map<TreeNode,TreeNode> map)
-    {
-        Queue<TreeNode> q=new ArrayDeque<>();
-        q.add(root);
-        map.put(root,null);
-        while (!q.isEmpty())
-        {
-            TreeNode curr=q.poll();
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        List<Integer> res = new ArrayList<>();
+        Map<TreeNode, TreeNode> parentMap = new HashMap<>();
+        Set<TreeNode> set = new HashSet<>();
+        Queue<TreeNode> q = new LinkedList<>();
 
-            if(curr.left!=null)
-            {
-                map.put(curr.left,curr);
-                q.offer(curr.left);
-            }
-
-            if (curr.right!=null)
-            {
-                map.put(curr.right,curr);
-                q.offer(curr.right);
-            }
-        }
-    }
-
-    public List<Integer> distanceK(TreeNode root, TreeNode target, int k)
-    {
-        List<Integer> res=new ArrayList<>();
-        Map<TreeNode,TreeNode> map=new HashMap<>();
-        childToParent(root,map);
-        Set<TreeNode> set=new HashSet<>();
-        Queue<TreeNode> q=new ArrayDeque<>();
+        nodeToParent(parentMap,root);
+        
         q.add(target);
         set.add(target);
-        int distance=0;
 
-        while (!q.isEmpty())
-        {
-            if (distance==k)
-                break;
+        while (k-- > 0) {
+            int qlen = q.size();
 
-            distance++;
-            int qlen=q.size();
-            while (qlen-- > 0)
-            {
-                TreeNode curr=q.poll();
-                if (curr.left!=null && !set.contains(curr.left))
-                {
+            while (qlen-- > 0) {
+                TreeNode curr = q.poll();
+
+                if (curr.left!=null && !set.contains(curr.left)) {
                     q.add(curr.left);
                     set.add(curr.left);
                 }
-                if (curr.right!=null && !set.contains(curr.right))
-                {
+
+                if (curr.right!=null && !set.contains(curr.right)) {
                     q.add(curr.right);
                     set.add(curr.right);
                 }
-                if (map.get(curr)!=null && !set.contains(map.get(curr)))
-                {
-                    q.add(map.get(curr));
-                    set.add(map.get(curr));
+
+                if (parentMap.get(curr)!=null && !set.contains(parentMap.get(curr))) {
+                    q.add(parentMap.get(curr));
+                    set.add(parentMap.get(curr));
                 }
             }
         }
-
+        
         while (!q.isEmpty())
             res.add(q.poll().val);
 
         return res;
+    }
+
+    private void nodeToParent(Map<TreeNode, TreeNode> map, TreeNode root) {
+        if (root == null)
+            return;
+
+        if (root.left!=null)
+            map.put(root.left,root);
+
+        if (root.right!=null)
+            map.put(root.right,root);
+
+        nodeToParent(map,root.left);
+        nodeToParent(map,root.right);
     }
 }
