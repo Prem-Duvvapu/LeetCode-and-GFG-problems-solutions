@@ -15,23 +15,24 @@
  */
 class Solution {
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        int n=inorder.length;
-        Map<Integer,Integer> map=new HashMap<>();
+        int n = inorder.length;
+        Map<Integer,Integer> map = new HashMap<>();
+
         for (int i=0;i<n;i++)
             map.put(inorder[i],i);
 
-        return solve(inorder,0,n-1,preorder,0,n-1,map);
+        return solve(preorder,0,n-1,inorder,0,n-1,map);
     }
 
-    private TreeNode solve(int[] inorder,int inStart,int inEnd,int[] preOrder,int preStart,int preEnd,Map<Integer,Integer> map)
-    {
-        if (inStart>inEnd || preStart>preEnd)
+    private TreeNode solve(int[] preOrder,int preStart,int preEnd,int[] inOrder,int inStart,int inEnd,Map<Integer,Integer> map) {
+        if (inStart > inEnd || preStart > preEnd)
             return null;
 
-        TreeNode root=new TreeNode(preOrder[preStart]);
-        int pos=map.get(root.val);
-        root.left=solve(inorder,inStart,pos-1,preOrder,preStart+1,preStart+pos-inStart,map);
-        root.right=solve(inorder,pos+1,inEnd,preOrder,preStart+pos-inStart+1,preEnd,map);
+        int rootPos = map.get(preOrder[preStart]);
+        TreeNode root = new TreeNode(inOrder[rootPos]);
+        root.left = solve(preOrder,preStart+1,preStart+(rootPos-inStart),inOrder,inStart,rootPos-1,map);
+        root.right = solve(preOrder,preStart+(rootPos-inStart)+1,preEnd,inOrder,rootPos+1,inEnd,map);
+
         return root;
     }
 }
