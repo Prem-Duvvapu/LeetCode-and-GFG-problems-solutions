@@ -14,10 +14,10 @@
  * }
  */
 class Solution {
-    int pos;
+    int cnt;
     int res;
     public int kthSmallest(TreeNode root, int k) {
-        pos = k;
+        cnt = k;
         inOrder(root);
         return res;
     }
@@ -27,8 +27,8 @@ class Solution {
             return;
 
         inOrder(root.left);
-        pos--;
-        if (pos == 0) {
+        cnt--;
+        if (cnt == 0) {
             res = root.val;
             return;
         }
