@@ -25,11 +25,12 @@ class Solution {
         if (root == null)
             return true;
 
-        if (root.val < minVal || root.val > maxVal)
+        long currVal = (long)root.val;
+        if (currVal < minVal || currVal > maxVal)
             return false;
 
-        boolean leftCheck = helper(root.left, minVal, (long)root.val-1);
-        boolean rightCheck = helper(root.right, (long)root.val+1, maxVal);
+        boolean leftCheck = helper(root.left, minVal, currVal-1);
+        boolean rightCheck = helper(root.right, currVal+1, maxVal);
 
         return (leftCheck && rightCheck);
     }
