@@ -65,13 +65,12 @@ class Solution {
         int j = iterator2.before();
         
         while (i<j) {
-            if (i+j < k) {
+            if (i+j < k)
                 i = iterator.next();
-            } else if (i+j > k) {
+            else if (i+j > k)
                 j = iterator2.before();
-            } else {
+            else
                 return true;
-            }
         }
 
         return false;
