@@ -13,55 +13,65 @@
  *     }
  * }
  */
-class BSTIterator
-{
-    Stack<TreeNode> stack=new Stack<>();
-    boolean isReverse;
+class BSTIterator {
+    private Stack<TreeNode> stack;
+    private boolean reverse;
 
-    BSTIterator(TreeNode root,boolean _isReverse)
-    {
-        isReverse=_isReverse;
-        pushAll(root);
+    public BSTIterator(TreeNode root,boolean reverse) {
+        stack = new Stack<>();
+        this.reverse = reverse;
+
+        if (reverse)
+            pushAllRightNodes(root);
+        else
+            pushAllLeftNodes(root);
     }
 
-    public int nextOrBefore()
-    {
-        TreeNode temp=stack.pop();
-        if (isReverse)
-            pushAll(temp.left);
-        else
-            pushAll(temp.right);
+    public int next() {
+        TreeNode temp = stack.pop();
+        pushAllLeftNodes(temp.right);
         return temp.val;
     }
 
-    public void pushAll(TreeNode root)
-    {
-        while (root!=null)
-        {
-            stack.push(root);
-            if (isReverse)
-                root=root.right;
-            else
-                root=root.left;
+    public int before() {
+        TreeNode temp = stack.pop();
+        pushAllRightNodes(temp.left);
+        return temp.val;
+    }
+
+    private void pushAllLeftNodes(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.left;
+        }
+    }
+
+    private void pushAllRightNodes(TreeNode root) {
+        TreeNode curr = root;
+        while (curr != null) {
+            stack.push(curr);
+            curr = curr.right;
         }
     }
 }
+
 class Solution {
     public boolean findTarget(TreeNode root, int k) {
-        BSTIterator l=new BSTIterator(root,false);
-        BSTIterator r=new BSTIterator(root,true);
+        BSTIterator iterator = new BSTIterator(root, false);
+        BSTIterator iterator2 = new BSTIterator(root, true);
 
-        int i=l.nextOrBefore();
-        int j=r.nextOrBefore();
-
-        while (i<j)
-        {
-            if (i+j<k)
-                i=l.nextOrBefore();
-            else if (i+j>k)
-                j=r.nextOrBefore();
-            else //(i+j==k)
+        int i = iterator.next();
+        int j = iterator2.before();
+        
+        while (i<j) {
+            if (i+j < k) {
+                i = iterator.next();
+            } else if (i+j > k) {
+                j = iterator2.before();
+            } else {
                 return true;
+            }
         }
 
         return false;
