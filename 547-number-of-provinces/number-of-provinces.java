@@ -1,37 +1,58 @@
-//dfs
-class Solution {
-    public int findCircleNum(int[][] isConnected) {
-        int n=isConnected.length;
-        boolean[] visited=new boolean[n];
-        int numOfProvinces=0;
+class DisjointSet {
+    int[] parent;
+    int[] size;
+
+    public DisjointSet(int n) {
+        parent = new int[n];
+        size = new int[n];
 
         for (int i=0;i<n;i++) {
-            if (!visited[i]) {
-                dfs(i,visited,isConnected,n);
-                numOfProvinces++;
-            }
+            parent[i] = i;
+            size[i] = 1;
         }
-
-        return numOfProvinces;
     }
 
-    public void dfs(int currNode,boolean[] visited,int[][] isConnected,int n) {
-        visited[currNode]=true;
+    public int getParent(int node) {
+        if (parent[node] == node)
+            return node;
 
-        for (int j=0;j<n;j++)
-            if (isConnected[currNode][j]==1 && !visited[j])
-                dfs(j,visited,isConnected,n);
+        return parent[node] = getParent(parent[node]);
+    }
+
+    public void unionBySize(int u, int v) {
+        int uParent = getParent(u);
+        int vParent = getParent(v);
+
+        if (uParent == vParent)
+            return;
+
+        if (size[uParent] >= size[vParent]) {
+            size[uParent] += size[vParent];
+            parent[vParent] = uParent;
+        } else {
+            size[vParent] += size[uParent];
+            parent[uParent] = vParent;
+        }
     }
 }
 
-/*
-5 cities
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int res = 0;
+        int n = isConnected.length;
+        DisjointSet ds = new DisjointSet(n);
 
-a,b,c,d,e
+        for (int i=0;i<n;i++) {
+            for (int j=0;j<n;j++) {
+                if (isConnected[i][j] == 1)
+                    ds.unionBySize(i,j);
+            }
+        }
 
-a-b-c
+        for (int i=0;i<n;i++)
+            if (ds.parent[i] == i)
+                res++;
 
-d-e
-
-res=2
-*/
+        return res;
+    }
+}
