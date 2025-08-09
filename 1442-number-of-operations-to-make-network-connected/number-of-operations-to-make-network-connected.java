@@ -2,36 +2,36 @@ class DisjointSet {
     int[] parent;
     int[] size;
 
-    DisjointSet(int n) {
+    public DisjointSet(int n) {
         parent = new int[n];
         size = new int[n];
 
         for (int i=0;i<n;i++) {
-            parent[i]=i;
-            size[i]=1;
+            parent[i] = i;
+            size[i] =1;
         }
     }
 
-    public int ultimateParent(int node) {
+    public int getParent(int node) {
         if (parent[node] == node)
             return node;
 
-        return parent[node] = ultimateParent(parent[node]);
+        return parent[node] = getParent(parent[node]);
     }
 
-    public void unionBySize(int u, int v) {
-        int uPu = ultimateParent(u);
-        int uPv = ultimateParent(v);
+    public void unionBySize(int u,int v) {
+        int uParent = getParent(u);
+        int vParent = getParent(v);
 
-        if (uPu == uPv)
+        if (uParent == vParent)
             return;
-        
-        if (size[uPu] > size[uPv]) {
-            parent[uPv] = uPu;
-            size[uPu] += size[uPv];
+
+        if (size[uParent] >= size[vParent]) {
+            size[uParent] += size[vParent];
+            parent[vParent] = uParent;
         } else {
-            parent[uPu] = uPv;
-            size[uPv] += size[uPu];
+            size[vParent] += size[uParent];
+            parent[uParent] = vParent;
         }
     }
 }
@@ -39,25 +39,25 @@ class DisjointSet {
 class Solution {
     public int makeConnected(int n, int[][] connections) {
         DisjointSet ds = new DisjointSet(n);
-        int components = 0;
-        int extraEdges = 0;
-        int requiredEdges = 0;
+        int extraCables = 0;
+        int numOfComponents = 0;
 
-        for (int[] connection: connections) {
-            int u = connection[0];
-            int v = connection[1];
-            if (ds.ultimateParent(u) == ds.ultimateParent(v))
-                extraEdges++;
+        for (int[] connection : connections) {
+            int src = connection[0];
+            int dest = connection[1];
+
+            if (ds.getParent(src) == ds.getParent(dest))
+                extraCables++;
             else
-                ds.unionBySize(u,v);
+                ds.unionBySize(src, dest);
         }
 
         for (int i=0;i<n;i++)
-            if (ds.ultimateParent(i) == i)
-                components++;
+            if (ds.parent[i] == i)
+                numOfComponents++;
 
-        requiredEdges = components - 1;
+        int requiredCables = numOfComponents-1;
 
-        return (extraEdges >= requiredEdges) ? requiredEdges : -1;
+        return (extraCables >= requiredCables) ? requiredCables : -1;
     }
 }
