@@ -29,11 +29,13 @@ class Solution {
         time[0]++;
 
         for (int ngbr: adjList.get(curr)) {
+            if (ngbr == parent)
+                continue;
+            
             if (!visited[ngbr])
                 dfs(ngbr,curr,time,visited,firstVisitedTime,lowestTime,res,adjList);
 
-            if (ngbr != parent)
-                lowestTime[curr] = Math.min(lowestTime[curr], lowestTime[ngbr]);
+            lowestTime[curr] = Math.min(lowestTime[curr], lowestTime[ngbr]);
 
             if (lowestTime[ngbr] > firstVisitedTime[curr])
                 res.add(new ArrayList<>(Arrays.asList(curr,ngbr)));
