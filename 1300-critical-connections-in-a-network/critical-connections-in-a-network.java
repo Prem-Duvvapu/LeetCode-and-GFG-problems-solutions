@@ -1,9 +1,12 @@
 class Solution {
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
         List<List<Integer>> res = new ArrayList<>();
-        int m = connections.size();
-
         List<List<Integer>> adjList = new ArrayList<>();
+        int[] firstVisitedTime = new int[n];
+        int[] lowestTime = new int[n];
+        boolean[] visited = new boolean[n];
+        int[] time = {1};
+
         for (int i=0;i<n;i++)
             adjList.add(new ArrayList<>());
 
@@ -15,29 +18,24 @@ class Solution {
             adjList.get(v).add(u);
         }
 
-        int[] in = new int[n];
-        int[] low = new int[n];
-        boolean[] visited = new boolean[n];
-        int[] time = {1};
-
-        dfs(0,-1,time,visited,in,low,res,adjList);
+        dfs(0,-1,time,visited,firstVisitedTime,lowestTime,res,adjList);
         return res;
     }
 
-    public void dfs(int curr,int parent,int[] time,boolean[] visited,int[] in,int[] low,List<List<Integer>> res,List<List<Integer>> adjList) {
+    public void dfs(int curr,int parent,int[] time,boolean[] visited,int[] firstVisitedTime,int[] lowestTime,List<List<Integer>> res,List<List<Integer>> adjList) {
         visited[curr] = true;
-        in[curr] = time[0];
-        low[curr] = time[0];
+        firstVisitedTime[curr] = time[0];
+        lowestTime[curr] = time[0];
         time[0]++;
 
         for (int ngbr: adjList.get(curr)) {
             if (!visited[ngbr])
-                dfs(ngbr,curr,time,visited,in,low,res,adjList);
+                dfs(ngbr,curr,time,visited,firstVisitedTime,lowestTime,res,adjList);
 
             if (ngbr != parent)
-                low[curr] = Math.min(low[curr], low[ngbr]);
+                lowestTime[curr] = Math.min(lowestTime[curr], lowestTime[ngbr]);
 
-            if (in[curr] < low[ngbr])
+            if (lowestTime[ngbr] > firstVisitedTime[curr])
                 res.add(new ArrayList<>(Arrays.asList(curr,ngbr)));
         }
     }
