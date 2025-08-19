@@ -3,51 +3,53 @@ class Pair {
     int col;
 
     Pair(int row,int col) {
-        this.row=row;
-        this.col=col;
+        this.row = row;
+        this.col = col;
     }
 }
 
 class Solution {
+    public static int[] dRow = {-1,0,1,0};
+    public static int[] dCol = {0,1,0,-1};
+
     public int orangesRotting(int[][] grid) {
-        int m=grid.length;
-        int n=grid[0].length;
-        int freshCnt=0;
-        Queue<Pair> q=new LinkedList<>();
-        boolean[][] visited=new boolean[m][n];
+        int m = grid.length;
+        int n = grid[0].length;
+        int freshCnt = 0;
+        boolean[][] visited = new boolean[m][n];
+        Queue<Pair> q = new LinkedList<>();
 
         for (int i=0;i<m;i++) {
             for (int j=0;j<n;j++) {
-                if (grid[i][j]==1) {
+                if (grid[i][j] == 1) {
                     freshCnt++;
-                } else if (grid[i][j]==2) {
+                } else if (grid[i][j] == 2) {
+                    visited[i][j] = true;
                     q.add(new Pair(i,j));
-                    visited[i][j]=true;
                 }
             }
         }
 
-        if (freshCnt==0)
-            return 0;
+        return bfs(freshCnt,visited,q,grid,m,n);
+    }
 
-        int[] dRow={-1,0,1,0};
-        int[] dCol={0,1,0,-1};
-        int time=0;
+    private int bfs(int freshCnt,boolean[][] visited,Queue<Pair> q,int[][] grid,int m,int n) {
+        int minutes = 0;
 
         while (!q.isEmpty()) {
-            int qlen=q.size();
+            int qlen = q.size();
 
             while (qlen-- > 0) {
-                Pair top=q.poll();
-                int currRow=top.row;
-                int currCol=top.col;
+                Pair curr = q.poll();
+                int currRow = curr.row;
+                int currCol = curr.col;
 
                 for (int i=0;i<4;i++) {
-                    int newRow=currRow+dRow[i];
-                    int newCol=currCol+dCol[i];
+                    int newRow = currRow + dRow[i];
+                    int newCol = currCol + dCol[i];
 
-                    if (newRow>=0 && newRow<m && newCol>=0 && newCol<n && !visited[newRow][newCol] && grid[newRow][newCol]==1) {
-                        visited[newRow][newCol]=true;
+                    if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n && grid[newRow][newCol]==1 && !visited[newRow][newCol]) {
+                        visited[newRow][newCol] = true;
                         q.add(new Pair(newRow, newCol));
                         freshCnt--;
                     }
@@ -55,12 +57,9 @@ class Solution {
             }
 
             if (!q.isEmpty())
-                time++;
+                minutes++;
         }
 
-        if (freshCnt>0)
-            return -1;
-
-        return time;
+        return (freshCnt == 0) ? minutes : -1;
     }
 }
