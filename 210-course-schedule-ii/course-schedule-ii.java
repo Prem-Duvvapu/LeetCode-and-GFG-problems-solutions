@@ -1,42 +1,44 @@
 class Solution {
     public int[] findOrder(int numCourses, int[][] prerequisites) {
-        int[] indegree=new int[numCourses];
-        List<List<Integer>> adjList=new ArrayList<>();
-        List<Integer> res=new ArrayList<>();
-        Queue<Integer> q=new LinkedList<>();
-
-        for (int i=0;i<numCourses;i++)
+        int V = numCourses;
+        int[] res = new int[V];
+        List<List<Integer>> adjList = new ArrayList<>();
+        int[] indegree = new int[V];
+        Queue<Integer> q = new LinkedList<>();
+        
+        for (int i=0;i<V;i++)
             adjList.add(new ArrayList<>());
-
-        for (int[] e: prerequisites) {
-            adjList.get(e[1]).add(e[0]);
-            indegree[e[0]]++;
+        
+        for (int[] edge: prerequisites) {
+            int a = edge[0];
+            int b = edge[1];
+            
+            adjList.get(b).add(a);
+            indegree[a]++;
         }
         
-        for (int i=0;i<numCourses;i++)
-            if (indegree[i]==0)
+        
+        for (int i=0;i<V;i++)
+            if (indegree[i] == 0)
                 q.add(i);
-
+                
+        int pos = 0;
         while (!q.isEmpty()) {
-            int curr=q.poll();
+            int curr = q.poll();
+            res[pos++] = curr;
 
-            for (int neighbour: adjList.get(curr)) {
-                indegree[neighbour]--;
-
-                if (indegree[neighbour]==0)
-                    q.add(neighbour);
+            for (int ngbr: adjList.get(curr)) {
+                indegree[ngbr]--;
+                
+                if (indegree[ngbr] == 0)
+                    q.add(ngbr);
             }
-
-            res.add(curr);
         }
-
-        if (res.size()!=numCourses)
-            return new int[]{};
-
-        int[] arr=new int[numCourses];
-        for (int i=0;i<numCourses;i++)
-            arr[i]=res.get(i);
-
-        return arr;
+        
+        for (int i=0;i<V;i++)
+            if (indegree[i] > 0)
+                return new int[]{};
+                
+        return res;
     }
 }
