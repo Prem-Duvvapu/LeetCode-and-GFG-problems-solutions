@@ -1,51 +1,38 @@
 class Solution {
     public List<Integer> eventualSafeNodes(int[][] graph) {
-        int n=graph.length;
-        List<Integer> res=new ArrayList<>();
-        boolean[] visited=new boolean[n];
-        boolean[] path=new boolean[n];
-        boolean[] safe=new boolean[n];
+        int n = graph.length;
+        List<Integer> res = new ArrayList<>();
+        List<List<Integer>> revAdjList = new ArrayList<>();
+        int[] indegree = new int[n];
+        Queue<Integer> q = new LinkedList<>();
 
         for (int i=0;i<n;i++)
-            if (!visited[i])
-                dfs(i,visited,path,safe,graph,n);
+            revAdjList.add(new ArrayList<>());
 
-        for (int i=0;i<n;i++)
-            if (safe[i])
-                res.add(i);
-
-        return res;
-    }
-
-    public boolean dfs(int node,boolean[] visited,boolean[] path,boolean[] safe,int[][] graph,int n) {
-        visited[node]=true;
-        path[node]=true;
-
-        for (int ngbr: graph[node]) {
-            if (!visited[ngbr]) {
-                if (dfs(ngbr,visited,path,safe,graph,n))
-                    return true;
-            } else if (path[ngbr]) {
-                return true;
+        for (int i=0;i<n;i++) {
+            for (int ngbr: graph[i]) {
+                revAdjList.get(ngbr).add(i);
+                indegree[i]++;
             }
         }
 
-        safe[node]=true;
-        path[node]=false;
-        return false;
+        for (int i=0;i<n;i++)
+            if (indegree[i] == 0)
+                q.add(i);
+
+        while (!q.isEmpty()) {
+            int curr = q.poll();
+            res.add(curr);
+
+            for (int ngbr: revAdjList.get(curr))  {
+                indegree[ngbr]--;
+
+                if (indegree[ngbr] == 0)
+                    q.add(ngbr);
+            }
+        }
+
+        Collections.sort(res);
+        return res;
     }
 }
-
-/*
-
-directed graph
-n nodes
-0 to n-1
-
-adjList
-
-terminal node - node which has no outgoing edges
-safe node - node whose every path leads to safe termial node or another safe node
-
-
-*/
