@@ -3,6 +3,7 @@ class Solution {
         Set<String> set = new HashSet<>();
         Queue<String> q = new LinkedList<>();
         Set<String> wordSet = new HashSet<>(wordList);
+        int n = beginWord.length();
         int res = 1;
 
         set.add(beginWord);
@@ -17,9 +18,9 @@ class Solution {
                 if (curr.equals(endWord))
                     return res;
 
-                for (int i=0;i<curr.length();i++) {
+                for (int i=0;i<n;i++) {
                     for (char ch='a';ch<='z';ch++) {
-                        String newWord = curr.substring(0,i)+ch+curr.substring(i+1,curr.length());
+                        String newWord = curr.substring(0,i)+ch+curr.substring(i+1,n);
 
                         if (wordSet.contains(newWord) && !set.contains(newWord)) {
                             set.add(newWord);
