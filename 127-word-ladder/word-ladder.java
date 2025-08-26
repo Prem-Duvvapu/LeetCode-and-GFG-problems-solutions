@@ -18,15 +18,20 @@ class Solution {
                 if (curr.equals(endWord))
                     return res;
 
+                StringBuilder newWord = new StringBuilder(curr);
                 for (int i=0;i<n;i++) {
-                    for (char ch='a';ch<='z';ch++) {
-                        String newWord = curr.substring(0,i)+ch+curr.substring(i+1,n);
+                    char originalChar = newWord.charAt(i);
 
-                        if (wordSet.contains(newWord) && !set.contains(newWord)) {
-                            set.add(newWord);
-                            q.add(newWord);
+                    for (char ch='a';ch<='z';ch++) {
+                        newWord.setCharAt(i,ch);
+
+                        if (wordSet.contains(newWord.toString()) && !set.contains(newWord.toString())) {
+                            set.add(newWord.toString());
+                            q.add(newWord.toString());
                         }
                     }
+
+                    newWord.setCharAt(i,originalChar);
                 }
             }
 
