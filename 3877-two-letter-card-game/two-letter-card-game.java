@@ -41,15 +41,6 @@ class Solution {
         int pairsCnt3 = Math.min(sameCnt, rem1 + rem2);
         int res = pairsCnt1 + pairsCnt2 + pairsCnt3;
 
-        // System.out.println("first="+first);
-        // System.out.println("second="+second);
-        // System.out.println("total1="+total1);
-        // System.out.println("maxFreq1="+maxFreq1);
-        // System.out.println("rem1="+rem1);
-        // System.out.println("total2="+total2);
-        // System.out.println("maxFreq2="+maxFreq2);
-        // System.out.println("rem2="+rem2);
-
         // edge case
         res += Math.min((sameCnt - pairsCnt3)/2, pairsCnt1 + pairsCnt2);
 
