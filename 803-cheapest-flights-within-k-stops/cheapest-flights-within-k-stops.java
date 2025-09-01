@@ -1,59 +1,64 @@
-class Node {
-    int stops;
-    int dist;
-    int dest;
+class Pair {
+    int price;
+    int node;
 
-    Node(int stops,int dist,int dest) {
-        this.stops=stops;
-        this.dist=dist;
-        this.dest=dest;
+    Pair(int price,int node) {
+        this.price = price;
+        this.node = node;
+    }
+}
+
+class Tuple {
+    int stops;
+    int price;
+    int node;
+
+    Tuple(int stops,int price,int node) {
+        this.stops = stops;
+        this.price = price;
+        this.node = node;
     }
 }
 
 class Solution {
     public int findCheapestPrice(int n, int[][] flights, int src, int dst, int k) {
-        List<List<int[]>> adjList=new ArrayList<>();
+        List<List<Pair>>  adjList = new ArrayList<>();
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((x,y) -> Integer.compare(x.stops,y.stops));
+        int[] priceArr = new int[n];
+
+        Arrays.fill(priceArr, Integer.MAX_VALUE);
 
         for (int i=0;i<n;i++)
             adjList.add(new ArrayList<>());
 
         for (int[] e: flights) {
-            int u=e[0];
-            int v=e[1];
-            int d=e[2];
+            int u = e[0];
+            int v = e[1];
+            int p = e[2];
 
-            adjList.get(u).add(new int[]{v,d});
+            adjList.get(u).add(new Pair(p,v));
         }
 
-        int[] dist=new int[n];
-        for (int i=0;i<n;i++)
-            dist[i]=(int)1e7;
-
-        dist[src]=0;
-        PriorityQueue<Node> pq=new PriorityQueue<>((x,y)->(x.stops-y.stops));
-        pq.add(new Node(0,0,src));
+        pq.add(new Tuple(0,0,src));
+        priceArr[src] = 0;
 
         while (!pq.isEmpty()) {
-            Node curr=pq.poll();
+            Tuple curr = pq.poll();
+            int currStops = curr.stops;
+            int currPrice = curr.price;
+            int currNode = curr.node;
 
-            int currStops=curr.stops;
-            int currDist=curr.dist;
-            int newSrc=curr.dest;
-            
-            for (int[] ngbr: adjList.get(newSrc)) {
-                int oldDist=dist[ngbr[0]];
-                int newDist=currDist+ngbr[1];
+            if (currStops > k)
+                continue;
 
-                if (newDist<oldDist && currStops<=k) {
-                    dist[ngbr[0]]=newDist;
-                    pq.add(new Node(currStops+1,dist[ngbr[0]],ngbr[0]));
+            for (Pair ngbr: adjList.get(currNode)) {
+                if (currPrice + ngbr.price < priceArr[ngbr.node]) {
+                    priceArr[ngbr.node] = currPrice + ngbr.price;
+                    pq.add(new Tuple(currStops+1,priceArr[ngbr.node],ngbr.node));
                 }
             }
         }
 
-        if (dist[dst]==(int)1e7)
-            return -1;
-
-        return dist[dst];
+        return (priceArr[dst] != Integer.MAX_VALUE) ? priceArr[dst] : -1;
     }
 }
