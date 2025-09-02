@@ -33,8 +33,11 @@ class Solution {
             int currRow = curr.row;
             int currColumn = curr.column;
 
-            if (currRow == noOfRows-1 && currColumn == noOfColumns-1)
+            if (currRow == noOfRows-1 && currColumn == noOfColumns-1) {
+                // for (int[] arr: minEffort)
+                //     System.out.println(Arrays.toString(arr));
                 return minEffort[currRow][currColumn];
+            }
 
             for (int i=0;i<4;i++) {
                 int newRow = currRow + deltaRow[i];
@@ -47,7 +50,7 @@ class Solution {
 
                     if (minEffort[newRow][newColumn] > currMinEffort) {
                         minEffort[newRow][newColumn]=currMinEffort;
-                        pq.add(new Node(currDiff,newRow,newColumn));
+                        pq.add(new Node(currMinEffort,newRow,newColumn));
                     }
                 }
             }
