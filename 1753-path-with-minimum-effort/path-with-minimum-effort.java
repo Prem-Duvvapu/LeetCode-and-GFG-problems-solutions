@@ -1,61 +1,53 @@
-class Node {
+class Tuple {
     int effort;
     int row;
-    int column;
+    int col;
 
-    Node(int effort,int row,int column) {
+    Tuple(int effort,int row,int col) {
         this.effort = effort;
         this.row = row;
-        this.column = column;
+        this.col = col;
     }
 }
 
 class Solution {
+    public static int[] dRow = {-1,0,1,0};
+    public static int[] dCol = {0,1,0,-1};
+
     public int minimumEffortPath(int[][] heights) {
-        int noOfRows=heights.length;
-        int noOfColumns=heights[0].length;
-        int[][] minEffort=new int[noOfRows][noOfColumns];
+        int m = heights.length;
+        int n = heights[0].length;
+        int[][] minEffort = new int[m][n];
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((x,y) -> Integer.compare(x.effort,y.effort));
 
-        for (int i=0;i<noOfRows;i++)
-            for (int j=0;j<noOfColumns;j++)
-                minEffort[i][j]=(int)1e7;
+        for (int[] arr: minEffort)
+            Arrays.fill(arr, Integer.MAX_VALUE);
 
-        PriorityQueue<Node> pq = new PriorityQueue<>((a,b) -> Integer.compare(a.effort, b.effort));
-        pq.add(new Node(0,0,0));
-        minEffort[0][0]=0;
-
-        int[] deltaRow = {0,-1,0,1};
-        int[] deltaColumn = {-1,0,1,0};
+        minEffort[0][0] = 0;
+        pq.add(new Tuple(0,0,0));
 
         while (!pq.isEmpty()) {
-            Node curr=pq.poll();
-
+            Tuple curr = pq.poll();
+            int currEffort = curr.effort;
             int currRow = curr.row;
-            int currColumn = curr.column;
-
-            if (currRow == noOfRows-1 && currColumn == noOfColumns-1) {
-                // for (int[] arr: minEffort)
-                //     System.out.println(Arrays.toString(arr));
-                return minEffort[currRow][currColumn];
-            }
+            int currCol = curr.col;
 
             for (int i=0;i<4;i++) {
-                int newRow = currRow + deltaRow[i];
-                int newColumn = currColumn + deltaColumn[i];
-                
+                int newRow = currRow + dRow[i];
+                int newCol = currCol + dCol[i];
 
-                if (newRow>=0 && newRow<noOfRows && newColumn>=0 && newColumn<noOfColumns) {
-                    int currDiff = Math.abs(heights[currRow][currColumn]-heights[newRow][newColumn]);
-                    int currMinEffort = Math.max(minEffort[currRow][currColumn],currDiff);
+                if (newRow >= 0 && newRow < m && newCol >= 0 && newCol < n) {
+                    int currDiff = Math.abs(heights[currRow][currCol] - heights[newRow][newCol]);
+                    int currRouteMaxDiff= Math.max(minEffort[currRow][currCol], currDiff);
 
-                    if (minEffort[newRow][newColumn] > currMinEffort) {
-                        minEffort[newRow][newColumn]=currMinEffort;
-                        pq.add(new Node(currMinEffort,newRow,newColumn));
+                    if (minEffort[newRow][newCol] > currRouteMaxDiff) {
+                        minEffort[newRow][newCol] = currRouteMaxDiff;
+                        pq.add(new Tuple(currRouteMaxDiff,newRow,newCol));
                     }
                 }
             }
         }
 
-        return 0;
+        return minEffort[m-1][n-1];
     }
 }
