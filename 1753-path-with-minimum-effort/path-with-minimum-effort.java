@@ -18,7 +18,7 @@ class Solution {
         int m = heights.length;
         int n = heights[0].length;
         int[][] minEffort = new int[m][n];
-        Queue<Tuple> pq = new LinkedList<>();
+        PriorityQueue<Tuple> pq = new PriorityQueue<>((x,y) -> Integer.compare(x.effort,y.effort));
 
         for (int[] arr: minEffort)
             Arrays.fill(arr, Integer.MAX_VALUE);
@@ -31,6 +31,9 @@ class Solution {
             int currEffort = curr.effort;
             int currRow = curr.row;
             int currCol = curr.col;
+
+            if (currRow == m-1 && currCol == n-1)
+                return minEffort[currRow][currCol];
 
             for (int i=0;i<4;i++) {
                 int newRow = currRow + dRow[i];
