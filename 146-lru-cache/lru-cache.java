@@ -1,14 +1,12 @@
 class Node {
     int key;
-    int value;
+    int val;
     Node prev;
     Node next;
 
-    Node(int key,int value) {
-        this.key=key;
-        this.value=value;
-        prev=null;
-        next=null;
+    Node(int key,int val) {
+        this.key = key;
+        this.val = val;
     }
 }
 
@@ -17,77 +15,88 @@ class DLL {
     Node tail;
 
     DLL() {
-        head=new Node(-1,-1);
-        tail=new Node(-1,-1);
-        head.next=tail;
-        tail.prev=head;
+        head = new Node(-1,-1);
+        tail = new Node(-1,-1);
+        head.next = tail;
+        tail.prev = head;
     }
 
-    void insertAfterHead(Node node) {
-        Node afterHeadNode=head.next;
-
-        head.next=node;
-        node.prev=head;
-
-        node.next=afterHeadNode;
-        afterHeadNode.prev=node;
+    void addToLast(Node node) {
+        node.prev = tail.prev;
+        node.next = tail;
+        
+        node.prev.next = node;
+        node.next.prev = node;
     }
 
     void removeNode(Node node) {
-        Node beforeNode=node.prev;
-        Node afterNode=node.next;
+        node.next.prev = node.prev;
+        node.prev.next = node.next;
 
-        beforeNode.next=afterNode;
-        afterNode.prev=beforeNode;
+        node.next = null;
+        node.prev = null;
+    }
+
+    void addToFront(Node node) {
+        node.prev = head;
+        node.next = head.next;
+
+        node.next.prev = node;
+        node.prev.next = node;
+    }
+
+    Node removeLastNode() {
+        Node removedNode = tail.prev;
+
+        removedNode.prev.next = tail;
+        tail.prev = removedNode.prev;
+        
+        removedNode.next = null;
+        removedNode.prev = null;
+
+        return removedNode;
     }
 }
 
 class LRUCache {
-    Map<Integer,Node> cache;
+    Map<Integer,Node> map;
     int capacity;
     DLL dll;
-    int currSize;
 
     public LRUCache(int capacity) {
-        this.capacity=capacity;
-        cache=new HashMap<>();
-        dll=new DLL();
-        currSize=0;
+        map = new HashMap<>();
+        this.capacity = capacity;
+        dll = new DLL();
     }
     
     public int get(int key) {
-        if (cache.containsKey(key)) {
-            Node node=cache.get(key);
-            dll.removeNode(node);
-            dll.insertAfterHead(node);
+        if (!map.containsKey(key))
+            return -1;
 
-            return node.value;
-        }
+        Node resNode = map.get(key);
 
-        return -1;
+        dll.removeNode(resNode);
+        dll.addToFront(resNode);
+
+        return resNode.val;
     }
     
     public void put(int key, int value) {
-        //updating existing key with new value
-        if (cache.containsKey(key)) {
-            Node node=cache.get(key);
-            node.value=value;
+        if (map.containsKey(key)) {
+            Node node = map.get(key);
+            node.val = value;
             dll.removeNode(node);
-            dll.insertAfterHead(node);
-            return;
-        }
+            dll.addToFront(node);
+        } else {
+            if (map.size() >= capacity) {
+                Node removedNode = dll.removeLastNode();
+                map.remove(removedNode.key);
+            }
 
-        if (currSize==capacity) {
-            Node node=dll.tail.prev;
-            cache.remove(node.key);
-            dll.removeNode(node);
-            currSize--;
+            Node node = new Node(key,value);
+            dll.addToFront(node);
+            map.put(key,node);
         }
-
-        Node newNode=new Node(key,value);
-        cache.put(key,newNode);
-        dll.insertAfterHead(newNode);
-        currSize++;
     }
 }
 
