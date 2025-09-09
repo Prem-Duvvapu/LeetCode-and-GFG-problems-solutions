@@ -5,6 +5,7 @@ class Solution {
         int cnt = 0;
         Map<Integer,Integer> map = new HashMap<>();
         int[] powerOf2 = new int[22];
+        // 0 to 21
 
         int val = 1;
         for (int i=0;i<powerOf2.length;i++) {
