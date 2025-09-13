@@ -2,7 +2,7 @@ class TrieNode {
     TrieNode[] arr;
 
     TrieNode() {
-        arr=new TrieNode[2];
+        arr = new TrieNode[2];
     }
 }
 
@@ -10,72 +10,71 @@ class Trie {
     TrieNode root;
 
     Trie() {
-        root=new TrieNode();
+        root = new TrieNode();
     }
 
     public void insert(int num) {
-        TrieNode curr=root;
+        TrieNode curr = root;
 
         for (int i=31;i>=0;i--) {
-            int currBit=((num>>i)&1);
+            int currBit = ((num >> i) & 1);
 
-            if (curr.arr[currBit]==null)
-                curr.arr[currBit]=new TrieNode();
+            if (curr.arr[currBit] == null)
+                curr.arr[currBit] = new TrieNode();
 
-            curr=curr.arr[currBit];
+            curr = curr.arr[currBit];
         }
     }
 
-    public int getMax(int num) {
-        TrieNode curr=root;
-        int maxXor=0;
+    public int getMaxXOR(int num) {
+        int res = 0;
+        TrieNode curr = root;
 
         for (int i=31;i>=0;i--) {
-            int currBit=((num>>i)&1);
+            int currBit = ((num >> i) & 1);
 
-            if (curr.arr[1-currBit]!=null) {
-                maxXor+=(1<<i);
-                curr=curr.arr[1-currBit];
+            if (curr.arr[1 - currBit] != null) {
+                res += (1 << i);
+                curr = curr.arr[1 - currBit];
             } else {
-                curr=curr.arr[currBit];
+                curr = curr.arr[currBit];
             }
         }
 
-        return maxXor;
+        return res;
     }
 }
 
 class Solution {
     public int[] maximizeXor(int[] nums, int[][] queries) {
-        int n=nums.length;
-        int qlen=queries.length;
-        int[] res=new int[qlen];
-        Trie trie=new Trie();
-        Integer[] queryIndex=new Integer[qlen];
+        int n = nums.length;
+        int q = queries.length;
+        int[] res = new int[q];
+        int[][] arr = new int[q][3];
+        Trie trie = new Trie();
 
-        for (int i=0;i<qlen;i++)
-            queryIndex[i]=i;
+        for (int i=0;i<q;i++) {
+            arr[i][0] = queries[i][0];
+            arr[i][1] = queries[i][1];
+            arr[i][2] = i;
+        }
 
+        Arrays.sort(arr, (x,y) -> Integer.compare(x[1],y[1]));
         Arrays.sort(nums);
-        Arrays.sort(queryIndex, (x,y) -> Integer.compare(queries[x][1],queries[y][1]));
 
-        int pos=0;
-        for (int i=0;i<qlen;i++) {
-            int index=queryIndex[i];
-            int num=queries[index][0];
-            int m=queries[index][1];
-
-            if (nums[0]>m) {
-                res[index]=-1;
+        int pos = 0;
+        for (int i=0;i<q;i++) {
+            if (nums[0] > arr[i][1]) {
+                res[arr[i][2]] = -1;
                 continue;
             }
 
-            while (pos<n && nums[pos]<=m) {
+            while (pos < n && nums[pos] <= arr[i][1]) {
                 trie.insert(nums[pos]);
                 pos++;
             }
 
-            res[index]=trie.getMax(num);
+            res[arr[i][2]] = trie.getMaxXOR(arr[i][0]);
         }
 
         return res;
