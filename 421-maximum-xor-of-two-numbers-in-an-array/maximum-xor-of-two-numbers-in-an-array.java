@@ -2,7 +2,7 @@ class TrieNode {
     TrieNode[] arr;
 
     TrieNode() {
-        arr=new TrieNode[2];
+        arr = new TrieNode[2];
     }
 }
 
@@ -10,53 +10,52 @@ class Trie {
     TrieNode root;
 
     Trie() {
-        root=new TrieNode();
+        root = new TrieNode();
     }
 
     public void insert(int num) {
-        TrieNode curr=root;
+        TrieNode curr = root;
 
         for (int i=31;i>=0;i--) {
-            int currBit=((num>>i)&1);
+            int currBit = ((num >> i) & 1);
+            if (curr.arr[currBit] == null)
+                curr.arr[currBit] = new TrieNode();
 
-            if (curr.arr[currBit]==null)
-                curr.arr[currBit]=new TrieNode();
-
-            curr=curr.arr[currBit];
+            curr = curr.arr[currBit];
         }
     }
 
-    public int check(int num) {
-        TrieNode curr=root;
-        int xorVal=0;
+    public int getMaxXoR(int num) {
+        int res = 0;
+        TrieNode curr = root;
 
         for (int i=31;i>=0;i--) {
-            int currBit=((num>>i)&1);
+            int currBit = ((num >> i) & 1);
 
-            if (curr.arr[1-currBit]!=null) {
-                xorVal=(xorVal|(1<<i));
-                curr=curr.arr[1-currBit];
+            if (curr.arr[1 - currBit] != null) {
+                res += (1<<i);
+                curr = curr.arr[1 - currBit];
             } else {
-                curr=curr.arr[currBit];
+                curr = curr.arr[currBit];
             }
-        } 
+        }
 
-        return xorVal;       
+        return res;
     }
 }
 
 class Solution {
     public int findMaximumXOR(int[] nums) {
-        int n=nums.length;
-        Trie trie=new Trie();
-        int maxXor=0;
+        int n = nums.length;
+        int maxRes = 0;
+        Trie trie = new Trie();
 
         for (int val: nums)
             trie.insert(val);
 
         for (int val: nums)
-            maxXor=Math.max(maxXor,trie.check(val));
+            maxRes = Math.max(maxRes, trie.getMaxXoR(val));
 
-        return maxXor;
+        return maxRes;
     }
 }
