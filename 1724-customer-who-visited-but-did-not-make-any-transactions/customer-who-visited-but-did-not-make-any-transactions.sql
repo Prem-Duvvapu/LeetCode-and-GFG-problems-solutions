@@ -1,2 +1,12 @@
-# Write your MySQL query statement below
-SELECT customer_id,count(*) AS count_no_trans FROM Visits WHERE visit_id NOT IN (SELECT DISTINCT visit_id FROM Transactions) GROUP BY customer_id;
+with cte as (
+    select
+        distinct visit_id
+    from Transactions
+)
+
+select
+    customer_id,
+    count(*) as count_no_trans
+from Visits
+where visit_id not in (select visit_id from cte)
+group by customer_id;
