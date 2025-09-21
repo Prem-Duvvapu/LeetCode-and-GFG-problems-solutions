@@ -41,15 +41,6 @@ class Solution {
                             q.add(sb.toString());
                             set.add(sb.toString());
                         }
-
-                        // StringBuilder sb = new StringBuilder(base);
-                        //     sb.append(sub);
-
-                        //     if (set.contains(sb.toString()))
-                        //         continue;
-
-                        //     q.add(sb.toString());
-                        //     set.add(sb.toString());
                     }
                 }
             }
