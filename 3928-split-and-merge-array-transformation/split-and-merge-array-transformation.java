@@ -31,7 +31,7 @@ class Solution {
                         String base = curr.substring(0,i) + curr.substring(j+1);
                         String sub = curr.substring(i,j+1);
 
-                        for (int k=0;k<base.length();k++) {
+                        for (int k=0;k<=base.length();k++) {
                             StringBuilder sb = new StringBuilder(base);
                             sb.insert(k,sub);
 
@@ -42,14 +42,14 @@ class Solution {
                             set.add(sb.toString());
                         }
 
-                        StringBuilder sb = new StringBuilder(base);
-                            sb.append(sub);
+                        // StringBuilder sb = new StringBuilder(base);
+                        //     sb.append(sub);
 
-                            if (set.contains(sb.toString()))
-                                continue;
+                        //     if (set.contains(sb.toString()))
+                        //         continue;
 
-                            q.add(sb.toString());
-                            set.add(sb.toString());
+                        //     q.add(sb.toString());
+                        //     set.add(sb.toString());
                     }
                 }
             }
