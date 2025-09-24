@@ -7,6 +7,8 @@ class Solution {
         for (int i=0;i<n;i++) {
             if (arr[i] <= res)
                 res++;
+            else
+                break;
         }
 
         return res;
