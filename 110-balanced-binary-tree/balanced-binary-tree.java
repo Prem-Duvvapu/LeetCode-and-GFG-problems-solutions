@@ -18,7 +18,7 @@ class Solution {
         return (height(root) != -1);
     }
 
-    public int height(TreeNode root) {
+    private int height(TreeNode root) {
         if (root == null)
             return 0;
 
@@ -30,7 +30,8 @@ class Solution {
         if (rightHeight == -1)
             return -1;
 
-        if (Math.abs(leftHeight - rightHeight) > 1)
+        int diff = Math.abs(leftHeight - rightHeight);
+        if (diff > 1)
             return -1;
 
         return 1 + Math.max(leftHeight, rightHeight);
