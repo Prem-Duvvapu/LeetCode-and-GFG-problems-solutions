@@ -1,27 +1,59 @@
-class Solution {
-    public int findCircleNum(int[][] isConnected) {
-        int cnt = 0;
-        int n = isConnected.length;
-        boolean[] visited = new boolean[n];
+class DisjointSet {
+    int[] parent;
+    int[] size;
+
+    DisjointSet(int n) {
+        parent = new int[n];
+        size = new int[n];
 
         for (int i=0;i<n;i++) {
-            if (!visited[i]) {
-                cnt++;
-                dfs(i,visited,isConnected,n);
-            }     
+            parent[i] = i;
+            size[i] = 1;
         }
-
-        return cnt;
     }
 
-    private void dfs(int curr,boolean[] visited,int[][] adjMatrix,int n) {
-        visited[curr] = true;
+    public int getUltParent(int x) {
+        if (parent[x] == x)
+            return x;
 
-        for (int j=0;j<n;j++) {
-            if (curr == j || adjMatrix[curr][j] == 0 || visited[j])
-                continue;
+        return parent[x] = getUltParent(parent[x]);
+    }
 
-            dfs(j,visited,adjMatrix,n);
+    public void unionBySize(int u,int v) {
+        int ultParU = getUltParent(u);
+        int ultParV = getUltParent(v);
+
+        if (ultParU == ultParV)
+            return;
+
+        if (size[ultParU] >= size[ultParV]) {
+            size[ultParU] += size[ultParV];
+            parent[ultParV] = ultParU;
+        } else {
+            size[ultParV] += size[ultParU];
+            parent[ultParU] = ultParV;
         }
+    }
+}
+
+class Solution {
+    public int findCircleNum(int[][] isConnected) {
+        int n = isConnected.length;
+        DisjointSet ds = new DisjointSet(n);
+        int res = 0;
+
+        for (int i=0;i<n;i++) {
+            for (int j=0;j<n;j++) {
+                if (i!=j && isConnected[i][j] == 1) {
+                    ds.unionBySize(i,j);
+                }
+            }
+        }
+
+        for (int i=0;i<ds.parent.length;i++)
+            if (ds.parent[i] == i)
+                res++;
+
+        return res;
     }
 }
