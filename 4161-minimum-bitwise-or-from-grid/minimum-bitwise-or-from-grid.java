@@ -3,7 +3,7 @@ class Solution {
         int res = 0;
         int avoidedBits = 0;
 
-        for (int i=20;i>=0;i--) {
+        for (int i=17;i>=0;i--) {
             int avoidedBitsWithCurrentBit = avoidedBits | (1 << i);
             boolean canAvoidCurrentBit = true;
 
