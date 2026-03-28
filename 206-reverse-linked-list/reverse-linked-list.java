@@ -8,23 +8,19 @@
  *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
-
-//iterative
 class Solution {
     public ListNode reverseList(ListNode head) {
-        if (head==null || head.next==null)
+        if (head == null || head.next == null)
             return head;
 
-        ListNode prevNode=null;
-        ListNode currNode=head;
-        ListNode nextNode=null;
-        
-        while (currNode!=null) {
-            nextNode=currNode.next;
-            currNode.next=prevNode;
+        ListNode prevNode = null;
+        ListNode currNode = head;
 
-            prevNode=currNode;
-            currNode=nextNode;
+        while (currNode != null) {
+            ListNode nextNode = currNode.next;
+            currNode.next = prevNode;
+            prevNode = currNode;
+            currNode = nextNode;
         }
 
         return prevNode;
