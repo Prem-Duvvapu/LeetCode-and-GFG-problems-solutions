@@ -1,38 +1,39 @@
 class Solution {
     public int cherryPickup(int[][] grid) {
-        int n=grid.length;
-        int m=grid[0].length;
-        int[][][] dp=new int[n][m][m];
+        int m = grid.length;
+        int n = grid[0].length;
+        int[][][] dp = new int[m][n][n];
 
-        for (int i=0;i<n;i++)
-            for (int j=0;j<m;j++)
-                for (int k=0;k<m;k++)
-                    dp[i][j][k]=-1;
+        for (int i=0;i<m;i++)
+            for (int j=0;j<n;j++)
+                Arrays.fill(dp[i][j],-1);
 
-        return solve(0,0,m-1,grid,n,m,dp);
+        return solve(0,0,n-1,grid,m,n,dp);
     }
 
-    private int solve(int r,int c1,int c2,int[][] grid,int n,int m,int[][][] dp) {
-        if (c1<0 || c2<0 || c1==m || c2==m)
+    private int solve(int r1,int c1,int c2,int[][] grid,int m,int n,int[][][] dp) {
+        if (c1<0 || c1>=n || c2<0 || c2>=n)
+            return -(int)1e5;
+
+        if (r1>=m)
             return 0;
 
-        if (r==n)
-            return 0;
+        if (dp[r1][c1][c2]!=-1)
+            return dp[r1][c1][c2];
 
-        if (dp[r][c1][c2]!=-1)
-            return dp[r][c1][c2];
+        int curr = grid[r1][c1];
+        if (c1!=c2)
+            curr += grid[r1][c2];
+        int res = 0;
 
-        int res=0;
         for (int i=-1;i<=1;i++) {
             for (int j=-1;j<=1;j++) {
-                int curr=grid[r][c1]+grid[r][c2];
-                if (c1==c2)
-                    curr=grid[r][c1];
-                int currMax=curr+solve(r+1,c1+i,c2+j,grid,n,m,dp);
-                res=Math.max(res,currMax);
+                res = Math.max(res,solve(r1+1,c1+i,c2+j,grid,m,n,dp));
             }
         }
 
-        return dp[r][c1][c2]=res;
+        res += curr;
+
+        return dp[r1][c1][c2] = res;
     }
 }
