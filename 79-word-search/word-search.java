@@ -23,21 +23,19 @@ class Solution {
             return true;
         }
 
-        if (r<0 || r>=board.length || c<0 || c>=board[0].length || visited[r][c]) {
+        if (r<0 || r>=board.length || c<0 || c>=board[0].length || board[r][c]!=word.charAt(pos) || visited[r][c]) {
             return false;
         }
 
-        if (board[r][c] == word.charAt(pos)) {
-            visited[r][c] = true;
-            for (int i=0;i<4;i++) {
-                boolean val = solve(r+dRow[i],c+dCol[i],pos+1,visited,board,word);
-                if (val) {
-                    return true;
-                }
+        visited[r][c] = true;
+        for (int i=0;i<4;i++) {
+            boolean val = solve(r+dRow[i],c+dCol[i],pos+1,visited,board,word);
+            if (val) {
+                return true;
             }
-
-            visited[r][c] = false;
         }
+
+        visited[r][c] = false;
 
         return false;
     }
