@@ -12,23 +12,13 @@ class Solution {
         }
 
         if (openLeft == closeLeft) {
-            curr += '(';
-            solve(openLeft-1,closeLeft,curr,res);
-            curr = curr.substring(0,curr.length()-1);
+            solve(openLeft-1,closeLeft,curr+'(',res);
         } else {
             if (openLeft > 0) {
-                curr += '(';
-                solve(openLeft-1,closeLeft,curr,res);
-                curr = curr.substring(0,curr.length()-1);
-
-                curr += ')';
-                solve(openLeft,closeLeft-1,curr,res);
-                curr = curr.substring(0,curr.length()-1);
-            } else {
-                curr += ')';
-                solve(openLeft,closeLeft-1,curr,res);
-                curr = curr.substring(0,curr.length()-1);
+                solve(openLeft-1,closeLeft,curr+'(',res);
             }
+
+            solve(openLeft,closeLeft-1,curr+')',res);
         }
     }
 }
