@@ -1,30 +1,34 @@
 class Solution {
-    private void solve(int open,int close,int n,StringBuilder curr,List<String> res)
-    {
-        if (curr.length()==2*n)
-        {
-            res.add(curr.toString());
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<>();
+        solve(n,n,"",res);
+        return res;
+    }
+
+    private void solve(int openLeft,int closeLeft,String curr,List<String> res) {
+        if (openLeft == 0 && closeLeft == 0) {
+            res.add(new String(curr));
             return;
         }
 
-        if (open<n)
-        {
-            curr.append('(');
-            solve(open+1,close,n,curr,res);
-            curr.deleteCharAt(curr.length()-1);
-        }
+        if (openLeft == closeLeft) {
+            curr += '(';
+            solve(openLeft-1,closeLeft,curr,res);
+            curr = curr.substring(0,curr.length()-1);
+        } else {
+            if (openLeft > 0) {
+                curr += '(';
+                solve(openLeft-1,closeLeft,curr,res);
+                curr = curr.substring(0,curr.length()-1);
 
-        if (close<open)
-        {
-            curr.append(')');
-            solve(open,close+1,n,curr,res);
-            curr.deleteCharAt(curr.length()-1);
+                curr += ')';
+                solve(openLeft,closeLeft-1,curr,res);
+                curr = curr.substring(0,curr.length()-1);
+            } else {
+                curr += ')';
+                solve(openLeft,closeLeft-1,curr,res);
+                curr = curr.substring(0,curr.length()-1);
+            }
         }
-    }
-
-    public List<String> generateParenthesis(int n) {
-        List<String> res=new ArrayList<>();
-        solve(0,0,n,new StringBuilder(),res);
-        return res;
     }
 }
