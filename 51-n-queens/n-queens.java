@@ -1,71 +1,53 @@
 class Solution {
+    private int n;
+    private boolean[] isRowFilled, isUpperDiagFilled, isLowerDiagFilled;
+    private char[][] board;
+    private List<List<String>> res;
+
     public List<List<String>> solveNQueens(int n) {
-        List<List<String>> res = new ArrayList<>();
-        boolean[] isRowFilled = new boolean[n];
-        boolean[] isUpperDiagFilled = new boolean[2*n];
-        boolean[] isLowerDiagFilled = new boolean[2*n];
+        this.n = n;
+        this.isRowFilled = new boolean[n];
+        this.isUpperDiagFilled = new boolean[2 * n];
+        this.isLowerDiagFilled = new boolean[2 * n];
+        this.board = new char[n][n];
+        this.res = new ArrayList<>();
 
-        char[][] board = new char[n][n];
-        for (char[] row: board) {
-            Arrays.fill(row, '.');
-        }
+        for (char[] row : board) Arrays.fill(row, '.');
 
-        solve(0,isRowFilled,isUpperDiagFilled,isLowerDiagFilled,board,n,res);
+        solve(0);
         return res;
     }
 
-    private void solve(int col,boolean[] isRowFilled,boolean[] isUpperDiagFilled,boolean[] isLowerDiagFilled, char[][] board,int n,List<List<String>> res) {
+    private void solve(int col) {
         if (col == n) {
             List<String> currBoard = new ArrayList<>();
-            for (char[] row: board) {
-                String currRow = new String(row);
-                currBoard.add(currRow);
-            }
+            for (char[] row : board) currBoard.add(new String(row));
             res.add(currBoard);
             return;
         }
 
-        for (int i=0;i<n;i++) {
-            if (isValid(i,col,isRowFilled,isUpperDiagFilled,isLowerDiagFilled,n)) {
-                board[i][col] = 'Q';
-                fillCells(i,col,isRowFilled,isUpperDiagFilled,isLowerDiagFilled,n);
+        for (int row = 0; row < n; row++) {
+            if (isValid(row, col)) {
+                mark(row, col, true);
+                board[row][col] = 'Q';
 
-                solve(col+1,isRowFilled,isUpperDiagFilled,isLowerDiagFilled,board,n,res);
+                solve(col + 1);
 
-                board[i][col] = '.';
-                unFillCells(i,col,isRowFilled,isUpperDiagFilled,isLowerDiagFilled,n);
+                mark(row, col, false);
+                board[row][col] = '.';
             }
         }
     }
 
-    private boolean isValid(int row,int col,boolean[] isRowFilled,boolean[] isUpperDiagFilled,boolean[] isLowerDiagFilled,int n) {
-        // rowCheck
-        if (isRowFilled[row]) {
-            return false;
-        }
-
-        // upperDiag check
-        if (isUpperDiagFilled[n-1+row-col]) {
-            return false;
-        }
-
-        // lowerDiag check
-        if (isLowerDiagFilled[row+col]) {
-            return false;
-        }
-
-        return true;
+    private boolean isValid(int row, int col) {
+        return !isRowFilled[row]
+            && !isUpperDiagFilled[n - 1 + row - col]
+            && !isLowerDiagFilled[row + col];
     }
 
-    private void fillCells(int row,int col,boolean[] isRowFilled,boolean[] isUpperDiagFilled,boolean[] isLowerDiagFilled,int n) {
-        isRowFilled[row] = true;
-        isUpperDiagFilled[n-1+row-col] = true;
-        isLowerDiagFilled[row+col] = true;
-    }
-
-    private void unFillCells(int row,int col,boolean[] isRowFilled,boolean[] isUpperDiagFilled,boolean[] isLowerDiagFilled,int n) {
-        isRowFilled[row] = false;
-        isUpperDiagFilled[n-1+row-col] = false;
-        isLowerDiagFilled[row+col] = false;
+    private void mark(int row, int col, boolean val) {
+        isRowFilled[row] = val;
+        isUpperDiagFilled[n - 1 + row - col] = val;
+        isLowerDiagFilled[row + col] = val;
     }
 }
