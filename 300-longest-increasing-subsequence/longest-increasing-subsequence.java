@@ -1,37 +1,31 @@
-//using binary search
 class Solution {
     public int lengthOfLIS(int[] nums) {
-        int n=nums.length;
-        List<Integer> l=new ArrayList<>();
-        l.add(nums[0]);
+        int n = nums.length;
+        int[][] dp = new int[n][n];
 
-        for (int i=1;i<n;i++) {
-            if (nums[i]>l.get(l.size()-1)) {
-                l.add(nums[i]);
-            } else {
-                int index=lowerBound(l,nums[i]);
-                l.set(index,nums[i]);
-            }
+        for (int[] arr: dp) {
+            Arrays.fill(arr,-1);
         }
 
-        return l.size();
+        return solve(0,-1,nums,dp);
     }
 
-    private int lowerBound(List<Integer> list,int value) {
-        int left=0;
-        int right=list.size()-1;
-        int ans=0;
-
-        while (left<=right) {
-            int mid=left+(right-left)/2;
-            if (value<=list.get(mid)) {
-                ans=mid;
-                right=mid-1;
-            } else {
-                left=mid+1;
-            }
+    private int solve(int currIndex,int prevIndex,int[] nums,int[][] dp) {
+        if (currIndex >= nums.length) {
+            return 0;
         }
 
-        return ans;
+        if (dp[currIndex][prevIndex+1] != -1) {
+            return dp[currIndex][prevIndex+1];
+        }
+
+        int pick = 0;
+        if (prevIndex == -1 || nums[currIndex] > nums[prevIndex]) {
+            pick = 1 + solve(currIndex+1,currIndex,nums,dp);
+        }
+
+        int notPick = 0 + solve(currIndex+1,prevIndex,nums,dp);
+
+        return dp[currIndex][prevIndex+1] = Math.max(pick,notPick);
     }
 }
