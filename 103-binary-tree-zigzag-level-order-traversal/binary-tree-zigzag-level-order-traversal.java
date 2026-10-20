@@ -14,37 +14,34 @@
  * }
  */
 class Solution {
-    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
-        List<List<Integer>> res = new ArrayList<>();
-        if (root == null)
-            return res;
 
-        boolean isEven = true;
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
+  public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+    List<List<Integer>> res = new ArrayList<>();
+    if (root == null) return res;
 
-        while (!q.isEmpty()) {
-            int qlen = q.size();
-            List<Integer> list = new ArrayList<>();
+    boolean isEven = true;
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(root);
 
-            while (qlen-- > 0) {
-                TreeNode curr = q.poll();
-                list.add(curr.val);
+    while (!q.isEmpty()) {
+      int qlen = q.size();
+      List<Integer> list = new ArrayList<>();
 
-                if (curr.left!=null)
-                    q.add(curr.left);
+      while (qlen-- > 0) {
+        TreeNode curr = q.poll();
+        list.add(curr.val);
 
-                if (curr.right!=null)
-                    q.add(curr.right);
-            }
+        if (curr.left != null) q.add(curr.left);
 
-            if (!isEven)
-                Collections.reverse(list);
+        if (curr.right != null) q.add(curr.right);
+      }
 
-            res.add(list);
-            isEven = !isEven;
-        }
+      if (!isEven) Collections.reverse(list);
 
-        return res;
+      res.add(list);
+      isEven = !isEven;
     }
+
+    return res;
+  }
 }

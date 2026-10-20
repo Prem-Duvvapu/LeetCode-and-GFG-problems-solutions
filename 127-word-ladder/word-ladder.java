@@ -1,43 +1,50 @@
 class Solution {
-    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
-        Set<String> set = new HashSet<>();
-        Queue<String> q = new LinkedList<>();
-        Set<String> wordSet = new HashSet<>(wordList);
-        int n = beginWord.length();
-        int res = 1;
 
-        set.add(beginWord);
-        q.add(beginWord);
+  public int ladderLength(
+    String beginWord,
+    String endWord,
+    List<String> wordList
+  ) {
+    Set<String> set = new HashSet<>();
+    Queue<String> q = new LinkedList<>();
+    Set<String> wordSet = new HashSet<>(wordList);
+    int n = beginWord.length();
+    int res = 1;
 
-        while (!q.isEmpty()) {
-            int qlen = q.size();
+    set.add(beginWord);
+    q.add(beginWord);
 
-            while (qlen-- > 0) {
-                String curr = q.poll();
+    while (!q.isEmpty()) {
+      int qlen = q.size();
 
-                if (curr.equals(endWord))
-                    return res;
+      while (qlen-- > 0) {
+        String curr = q.poll();
 
-                StringBuilder newWord = new StringBuilder(curr);
-                for (int i=0;i<n;i++) {
-                    char originalChar = newWord.charAt(i);
+        if (curr.equals(endWord)) return res;
 
-                    for (char ch='a';ch<='z';ch++) {
-                        newWord.setCharAt(i,ch);
+        StringBuilder newWord = new StringBuilder(curr);
+        for (int i = 0; i < n; i++) {
+          char originalChar = newWord.charAt(i);
 
-                        if (wordSet.contains(newWord.toString()) && !set.contains(newWord.toString())) {
-                            set.add(newWord.toString());
-                            q.add(newWord.toString());
-                        }
-                    }
+          for (char ch = 'a'; ch <= 'z'; ch++) {
+            newWord.setCharAt(i, ch);
 
-                    newWord.setCharAt(i,originalChar);
-                }
+            if (
+              wordSet.contains(newWord.toString()) &&
+              !set.contains(newWord.toString())
+            ) {
+              set.add(newWord.toString());
+              q.add(newWord.toString());
             }
+          }
 
-            res++;
+          newWord.setCharAt(i, originalChar);
         }
+      }
 
-        return 0;
+      res++;
     }
+
+    return 0;
+  }
 }

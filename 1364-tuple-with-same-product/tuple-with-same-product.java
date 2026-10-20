@@ -1,26 +1,25 @@
 class Solution {
-    public int tupleSameProduct(int[] nums) {
-        int n=nums.length;
-        Map<Integer,Integer> productFreq=new HashMap<>();
-        int resCnt=0;
 
-        for (int i=0;i<n;i++) {
-            for (int j=i+1;j<n;j++) {
-                int product=nums[i]*nums[j];
+  public int tupleSameProduct(int[] nums) {
+    int n = nums.length;
+    Map<Integer, Integer> productFreq = new HashMap<>();
+    int resCnt = 0;
 
-                if (!productFreq.containsKey(product))
-                    productFreq.put(product,1);
-                else
-                    productFreq.put(product,productFreq.get(product)+1);
-            }
-        }
+    for (int i = 0; i < n; i++) {
+      for (int j = i + 1; j < n; j++) {
+        int product = nums[i] * nums[j];
 
-        for (Map.Entry<Integer,Integer> m: productFreq.entrySet()) {
-            int val=m.getValue();
-            int sum=(val * (val-1))/2;
-            resCnt+=(8*sum);
-        }
-
-        return resCnt;
+        if (!productFreq.containsKey(product)) productFreq.put(product, 1);
+        else productFreq.put(product, productFreq.get(product) + 1);
+      }
     }
+
+    for (Map.Entry<Integer, Integer> m : productFreq.entrySet()) {
+      int val = m.getValue();
+      int sum = (val * (val - 1)) / 2;
+      resCnt += 8 * sum;
+    }
+
+    return resCnt;
+  }
 }

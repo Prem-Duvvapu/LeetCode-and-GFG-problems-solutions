@@ -1,29 +1,32 @@
 class Solution {
-    public boolean checkValidString(String s) {
-        int maxVal=0;
-        int minVal=0;
 
-        for (char ch: s.toCharArray()) {
-            if (ch=='(')  {
-                maxVal++;
-                minVal++;
-            } else if (ch==')') {
-                maxVal--;
-                minVal--;
-            } else {
-                maxVal++;
-                minVal--;
-            }
+  public boolean checkValidString(String s) {
+    int maxVal = 0;
+    int minVal = 0;
 
-            minVal=Math.max(0,minVal);
+    for (char ch : s.toCharArray()) {
+      if (ch == '(') {
+        maxVal++;
+        minVal++;
+      } else if (ch == ')') {
+        maxVal--;
+        minVal--;
+      } else {
+        maxVal++;
+        minVal--;
+      }
 
-            if (maxVal<0) //no corresponding open brackets possible for closed brackets
-                return false;
-        }
+      minVal = Math.max(0, minVal);
 
-        if (minVal>0) //no corresponding close brackets possible for opened brackets
-            return false;
-
-        return true; 
+      if (
+        maxVal < 0 //no corresponding open brackets possible for closed brackets
+      ) return false;
     }
+
+    if (
+      minVal > 0 //no corresponding close brackets possible for opened brackets
+    ) return false;
+
+    return true;
+  }
 }

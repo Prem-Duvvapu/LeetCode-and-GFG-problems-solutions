@@ -14,37 +14,36 @@
  * }
  */
 class Solution {
-    public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        List<Integer> l1=new ArrayList<>();
-        List<Integer> l2=new ArrayList<>();
 
-        solve(root1,l1);
-        solve(root2,l2);
+  public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+    List<Integer> l1 = new ArrayList<>();
+    List<Integer> l2 = new ArrayList<>();
 
-        if (l1.size()!=l2.size())
-            return false;
+    solve(root1, l1);
+    solve(root2, l2);
 
-        for (int i=0;i<l1.size();i++)
-            if (l1.get(i)!=l2.get(i))
-                return false;
+    if (l1.size() != l2.size()) return false;
 
-        return true;
+    for (int i = 0; i < l1.size(); i++) if (
+      l1.get(i) != l2.get(i)
+    ) return false;
+
+    return true;
+  }
+
+  private boolean isLeaf(TreeNode root) {
+    return root != null && root.left == null && root.right == null;
+  }
+
+  private void solve(TreeNode root, List<Integer> list) {
+    if (root == null) return;
+
+    if (isLeaf(root)) {
+      list.add(root.val);
+      return;
     }
 
-    private boolean isLeaf(TreeNode root) {
-        return (root!=null && root.left==null && root.right==null);
-    }
-
-    private void solve(TreeNode root, List<Integer> list) {
-        if (root==null)
-            return;
-
-        if (isLeaf(root)) {
-            list.add(root.val);
-            return;
-        }
-
-        solve(root.left,list);
-        solve(root.right,list);
-    }
+    solve(root.left, list);
+    solve(root.right, list);
+  }
 }

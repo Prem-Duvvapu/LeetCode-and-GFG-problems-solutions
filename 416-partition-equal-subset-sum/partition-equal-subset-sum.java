@@ -1,49 +1,43 @@
 class Solution {
-    public boolean canPartition(int[] nums) {
-        int n = nums.length;
-        int totalSum = 0;
 
-        for (int val: nums)
-            totalSum += val;
+  public boolean canPartition(int[] nums) {
+    int n = nums.length;
+    int totalSum = 0;
 
-        if ((totalSum&1)==1)
-            return false;
+    for (int val : nums) totalSum += val;
 
-        int reqTarget = totalSum>>1;
-        boolean[][] dp = new boolean[n+1][reqTarget+1];
+    if ((totalSum & 1) == 1) return false;
 
-        for (int i=0;i<=n;i++)
-            dp[i][0] = true;
+    int reqTarget = totalSum >> 1;
+    boolean[][] dp = new boolean[n + 1][reqTarget + 1];
 
-        for (int pos=n-1;pos>=0;pos--) {
-            for (int target=1;target<=reqTarget;target++) {
-                boolean notPick = dp[pos+1][target];
+    for (int i = 0; i <= n; i++) dp[i][0] = true;
 
-                boolean pick = false;
-                if (target>=nums[pos])
-                    pick=dp[pos+1][target-nums[pos]];
+    for (int pos = n - 1; pos >= 0; pos--) {
+      for (int target = 1; target <= reqTarget; target++) {
+        boolean notPick = dp[pos + 1][target];
 
-                dp[pos][target]=(pick || notPick);
-            }
-        }
+        boolean pick = false;
+        if (target >= nums[pos]) pick = dp[pos + 1][target - nums[pos]];
 
-        // return solve(0,target,nums,dp);
-        return dp[0][reqTarget];
+        dp[pos][target] = pick || notPick;
+      }
     }
 
-    private boolean solve(int pos,int target,int[] nums,Boolean[][] dp) {
-        if (target==0)
-            return true;
+    // return solve(0,target,nums,dp);
+    return dp[0][reqTarget];
+  }
 
-        if (pos>=nums.length || target<0)
-            return false;
+  private boolean solve(int pos, int target, int[] nums, Boolean[][] dp) {
+    if (target == 0) return true;
 
-        if (dp[pos][target]!=null)
-            return dp[pos][target];
+    if (pos >= nums.length || target < 0) return false;
 
-        boolean notPick = solve(pos+1,target,nums,dp);
-        boolean pick = solve(pos+1,target-nums[pos],nums,dp);
+    if (dp[pos][target] != null) return dp[pos][target];
 
-        return dp[pos][target] = (notPick || pick);
-    }
+    boolean notPick = solve(pos + 1, target, nums, dp);
+    boolean pick = solve(pos + 1, target - nums[pos], nums, dp);
+
+    return (dp[pos][target] = notPick || pick);
+  }
 }

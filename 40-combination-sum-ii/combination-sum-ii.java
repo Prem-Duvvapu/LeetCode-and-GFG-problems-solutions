@@ -1,33 +1,38 @@
 class Solution {
-    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        int n=candidates.length;
-        List<List<Integer>> res=new ArrayList<>();
-        Arrays.sort(candidates);
-        solve(0,new ArrayList<>(),target,res,candidates,n);
-        return res;
+
+  public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    int n = candidates.length;
+    List<List<Integer>> res = new ArrayList<>();
+    Arrays.sort(candidates);
+    solve(0, new ArrayList<>(), target, res, candidates, n);
+    return res;
+  }
+
+  public void solve(
+    int pos,
+    List<Integer> currList,
+    int req,
+    List<List<Integer>> res,
+    int[] candidates,
+    int n
+  ) {
+    if (req == 0) {
+      res.add(new ArrayList<>(currList));
+      return;
     }
 
-    public void solve(int pos,List<Integer> currList,int req,List<List<Integer>> res,int[] candidates,int n) {
-        if (req==0) {
-            res.add(new ArrayList<>(currList));
-            return;
-        }
+    if (req < 0) return;
 
-        if (req<0)
-            return;
+    if (pos == n) return;
 
-        if (pos==n)
-            return;
+    for (int i = pos; i < n; i++) {
+      if (i > pos && candidates[i] == candidates[i - 1]) continue;
 
-        for (int i=pos;i<n;i++) {
-            if (i>pos && candidates[i]==candidates[i-1])
-                continue;
-
-            currList.add(candidates[i]);
-            solve(i+1,currList,req-candidates[i],res,candidates,n);
-            currList.remove(currList.size()-1);
-        }
+      currList.add(candidates[i]);
+      solve(i + 1, currList, req - candidates[i], res, candidates, n);
+      currList.remove(currList.size() - 1);
     }
+  }
 }
 
 /*

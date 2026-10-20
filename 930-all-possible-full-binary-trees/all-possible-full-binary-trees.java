@@ -14,39 +14,37 @@
  * }
  */
 class Solution {
-    List<TreeNode>[] dp=new ArrayList[21];
 
-    public List<TreeNode> allPossibleFBT(int n) {
-        List<TreeNode> res=new ArrayList<>();
+  List<TreeNode>[] dp = new ArrayList[21];
 
-        if ((n&1)==0) //even
-            return res;
+  public List<TreeNode> allPossibleFBT(int n) {
+    List<TreeNode> res = new ArrayList<>();
 
-        if (n==1)
-        {
-            res.add(new TreeNode(0));
-            return res;
-        }
+    if (
+      (n & 1) ==
+      0 //even
+    ) return res;
 
-        if (dp[n]!=null)
-            return dp[n];
-
-        for (int i=1;i<n;i+=2)
-        {
-            List<TreeNode> lft=allPossibleFBT(i);
-            List<TreeNode> rght=allPossibleFBT(n-i-1);
-            for (int j=0;j<lft.size();j++)
-            {
-                for (int k=0;k<rght.size();k++)
-                {
-                    TreeNode curr=new TreeNode(0);
-                    curr.left=lft.get(j);
-                    curr.right=rght.get(k);
-                    res.add(curr);
-                }
-            }
-        }
-
-        return dp[n]=res;
+    if (n == 1) {
+      res.add(new TreeNode(0));
+      return res;
     }
+
+    if (dp[n] != null) return dp[n];
+
+    for (int i = 1; i < n; i += 2) {
+      List<TreeNode> lft = allPossibleFBT(i);
+      List<TreeNode> rght = allPossibleFBT(n - i - 1);
+      for (int j = 0; j < lft.size(); j++) {
+        for (int k = 0; k < rght.size(); k++) {
+          TreeNode curr = new TreeNode(0);
+          curr.left = lft.get(j);
+          curr.right = rght.get(k);
+          res.add(curr);
+        }
+      }
+    }
+
+    return (dp[n] = res);
+  }
 }

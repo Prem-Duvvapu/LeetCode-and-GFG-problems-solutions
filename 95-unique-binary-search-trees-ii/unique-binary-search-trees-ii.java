@@ -14,48 +14,42 @@
  * }
  */
 class Solution {
-    private  List<TreeNode> solve(int start,int end,List<TreeNode>[][] dp)
-    {
-        List<TreeNode> res=new ArrayList<>();
-        if (start>end)
-        {
-            res.add(null);
-            return res;
-        }
 
-        if (start==end)
-        {
-            TreeNode t=new TreeNode(start);
-            res.add(t);
-            return res;
-        }
-
-        if (dp[start][end]!=null)
-            return dp[start][end];
-
-        for (int i=start;i<=end;i++)
-        {
-            List<TreeNode> leftSubTrees=solve(start,i-1,dp);
-            List<TreeNode> rightSubTrees=solve(i+1,end,dp);
-            for (TreeNode leftBST: leftSubTrees)
-            {
-                for (TreeNode rightBST: rightSubTrees)
-                {
-                    TreeNode root=new TreeNode(i);
-                    root.left=leftBST;
-                    root.right=rightBST;
-                    res.add(root);
-                }
-            }
-        }
-
-        return dp[start][end]=res;
+  private List<TreeNode> solve(int start, int end, List<TreeNode>[][] dp) {
+    List<TreeNode> res = new ArrayList<>();
+    if (start > end) {
+      res.add(null);
+      return res;
     }
 
-    public List<TreeNode> generateTrees(int n) {
-        List<TreeNode>[][] dp=new ArrayList[n+1][n+1];
-        return solve(1,n,dp);
+    if (start == end) {
+      TreeNode t = new TreeNode(start);
+      res.add(t);
+      return res;
     }
+
+    if (dp[start][end] != null) return dp[start][end];
+
+    for (int i = start; i <= end; i++) {
+      List<TreeNode> leftSubTrees = solve(start, i - 1, dp);
+      List<TreeNode> rightSubTrees = solve(i + 1, end, dp);
+      for (TreeNode leftBST : leftSubTrees) {
+        for (TreeNode rightBST : rightSubTrees) {
+          TreeNode root = new TreeNode(i);
+          root.left = leftBST;
+          root.right = rightBST;
+          res.add(root);
+        }
+      }
+    }
+
+    return (dp[start][end] = res);
+  }
+
+  public List<TreeNode> generateTrees(int n) {
+    List<TreeNode>[][] dp = new ArrayList[n + 1][n + 1];
+    return solve(1, n, dp);
+  }
 }
 
 /*

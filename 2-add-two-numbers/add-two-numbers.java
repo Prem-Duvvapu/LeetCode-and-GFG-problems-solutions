@@ -9,67 +9,66 @@
  * }
  */
 class Solution {
-    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        //edge cases
-        if (l1==null)
-            return l2;
-        
-        if (l2==null)
-            return l1;
-            
-        ListNode sumHead=new ListNode(-1);
-        int carry=0;
 
-        ListNode p1=l1;
-        ListNode p2=l2;
-        ListNode temp=sumHead;
+  public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+    //edge cases
+    if (l1 == null) return l2;
 
-        while (p1!=null && p2!=null) {
-            int currVal=p1.val+p2.val+carry;
+    if (l2 == null) return l1;
 
-            carry=currVal/10;
-            currVal=currVal%10;
+    ListNode sumHead = new ListNode(-1);
+    int carry = 0;
 
-            ListNode newNode=new ListNode(currVal);
-            temp.next=newNode;
-            temp=newNode;
+    ListNode p1 = l1;
+    ListNode p2 = l2;
+    ListNode temp = sumHead;
 
-            p1=p1.next;
-            p2=p2.next;
-        }
+    while (p1 != null && p2 != null) {
+      int currVal = p1.val + p2.val + carry;
 
-        while (p1!=null) {
-            int currVal=p1.val+carry;
+      carry = currVal / 10;
+      currVal = currVal % 10;
 
-            carry=currVal/10;
-            currVal=currVal%10;
+      ListNode newNode = new ListNode(currVal);
+      temp.next = newNode;
+      temp = newNode;
 
-            ListNode newNode=new ListNode(currVal);
-            temp.next=newNode;
-            temp=newNode;
-
-            p1=p1.next;
-        }
-
-        while (p2!=null) {
-            int currVal=p2.val+carry;
-
-            carry=currVal/10;
-            currVal=currVal%10;
-
-            ListNode newNode=new ListNode(currVal);
-            temp.next=newNode;
-            temp=newNode;
-
-            p2=p2.next;
-        }
-
-        if (carry>0) {
-            ListNode newNode=new ListNode(carry);
-            temp.next=newNode;
-            temp=newNode;
-        }
-    
-        return sumHead.next;
+      p1 = p1.next;
+      p2 = p2.next;
     }
+
+    while (p1 != null) {
+      int currVal = p1.val + carry;
+
+      carry = currVal / 10;
+      currVal = currVal % 10;
+
+      ListNode newNode = new ListNode(currVal);
+      temp.next = newNode;
+      temp = newNode;
+
+      p1 = p1.next;
+    }
+
+    while (p2 != null) {
+      int currVal = p2.val + carry;
+
+      carry = currVal / 10;
+      currVal = currVal % 10;
+
+      ListNode newNode = new ListNode(currVal);
+      temp.next = newNode;
+      temp = newNode;
+
+      p2 = p2.next;
+    }
+
+    if (carry > 0) {
+      ListNode newNode = new ListNode(carry);
+      temp.next = newNode;
+      temp = newNode;
+    }
+
+    return sumHead.next;
+  }
 }

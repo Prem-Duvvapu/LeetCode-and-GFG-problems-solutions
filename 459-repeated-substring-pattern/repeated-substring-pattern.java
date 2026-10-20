@@ -1,27 +1,32 @@
 //slightly optimized
 
 class Solution {
-    public boolean repeatedSubstringPattern(String s) {
-        int n=s.length();
 
-        for (int l=n/2;l>=1;l--)
-        {
-            if (n%l==0)//O(2*sqrt(n))
-            {
-                int times=n/l;
-                String sub=s.substring(0,l);//O(n)
-                StringBuilder curr=new StringBuilder();
+  public boolean repeatedSubstringPattern(String s) {
+    int n = s.length();
 
-                while (times-- > 0)//O(n)
-                    curr.append(sub);
+    for (int l = n / 2; l >= 1; l--) {
+      if (
+        n % l ==
+        0 //O(2*sqrt(n))
+      ) {
+        int times = n / l;
+        String sub = s.substring(0, l); //O(n)
+        StringBuilder curr = new StringBuilder();
 
-                if (curr.toString().equals(s))//O(n)
-                    return true;
-            }
-        }
+        while (
+            times-- > 0 //O(n)
+          )
+          curr.append(sub);
 
-        return false;
+        if (
+          curr.toString().equals(s) //O(n)
+        ) return true;
+      }
     }
+
+    return false;
+  }
 }
 
 /*

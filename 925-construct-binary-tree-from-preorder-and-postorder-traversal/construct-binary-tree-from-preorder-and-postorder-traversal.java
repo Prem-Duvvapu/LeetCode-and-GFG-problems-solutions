@@ -14,23 +14,55 @@
  * }
  */
 class Solution {
-    public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
-        return solve(preorder,0,preorder.length-1,postorder,0,postorder.length-1);
-    }
 
-    public TreeNode solve(int[] preorder,int preStart,int preEnd,int[] postorder,int postStart,int postEnd) {
-        if (preStart>preEnd || postStart>postEnd)
-            return null;
+  public TreeNode constructFromPrePost(int[] preorder, int[] postorder) {
+    return solve(
+      preorder,
+      0,
+      preorder.length - 1,
+      postorder,
+      0,
+      postorder.length - 1
+    );
+  }
 
-        TreeNode root=new TreeNode(preorder[preStart]);
+  public TreeNode solve(
+    int[] preorder,
+    int preStart,
+    int preEnd,
+    int[] postorder,
+    int postStart,
+    int postEnd
+  ) {
+    if (preStart > preEnd || postStart > postEnd) return null;
 
-        int leftRootIndex=postEnd-1;
-        while (leftRootIndex>postStart && preStart+1<preorder.length-1 && postorder[leftRootIndex]!=preorder[preStart+1])
-            leftRootIndex--;
-        
-        root.left=solve(preorder,preStart+1,preStart+1+(leftRootIndex-postStart),postorder,postStart,leftRootIndex);
-        root.right=solve(preorder,preStart+2+(leftRootIndex-postStart),preEnd,postorder,leftRootIndex+1,postEnd-1);
+    TreeNode root = new TreeNode(preorder[preStart]);
 
-        return root;
-    }
+    int leftRootIndex = postEnd - 1;
+    while (
+        leftRootIndex > postStart &&
+        preStart + 1 < preorder.length - 1 &&
+        postorder[leftRootIndex] != preorder[preStart + 1]
+      )
+      leftRootIndex--;
+
+    root.left = solve(
+      preorder,
+      preStart + 1,
+      preStart + 1 + (leftRootIndex - postStart),
+      postorder,
+      postStart,
+      leftRootIndex
+    );
+    root.right = solve(
+      preorder,
+      preStart + 2 + (leftRootIndex - postStart),
+      preEnd,
+      postorder,
+      leftRootIndex + 1,
+      postEnd - 1
+    );
+
+    return root;
+  }
 }

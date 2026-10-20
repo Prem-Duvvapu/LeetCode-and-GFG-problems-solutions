@@ -1,41 +1,40 @@
 class Solution {
-    public long repairCars(int[] ranks, int cars) {
-        int n=ranks.length;
-        long res=0L;
-        long low=1;
-        long high=Integer.MAX_VALUE;
 
-        for (int i=0;i<n;i++)
-            high=Math.min(high,ranks[i]);
+  public long repairCars(int[] ranks, int cars) {
+    int n = ranks.length;
+    long res = 0L;
+    long low = 1;
+    long high = Integer.MAX_VALUE;
 
-        high=high*cars*cars;
-        res=high;
+    for (int i = 0; i < n; i++) high = Math.min(high, ranks[i]);
 
-        while (low<=high) {
-            long mid=low+(high-low)/2;
+    high = high * cars * cars;
+    res = high;
 
-            if (isPossible(ranks,cars,mid)) {
-                res=mid;
-                high=mid-1;
-            } else {
-                low=mid+1;
-            }
-        }
+    while (low <= high) {
+      long mid = low + (high - low) / 2;
 
-        return res;
+      if (isPossible(ranks, cars, mid)) {
+        res = mid;
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
     }
 
-    public boolean isPossible(int[] ranks,int cars,long maxTime) {
-        long cnt=0;
+    return res;
+  }
 
-        for (int i=0;i<ranks.length;i++) {
-            if (maxTime<ranks[i])
-                continue;
-            long curr=maxTime/ranks[i];
-            curr=(long)Math.sqrt(curr);
-            cnt+=curr;
-        }
+  public boolean isPossible(int[] ranks, int cars, long maxTime) {
+    long cnt = 0;
 
-        return (cnt>=cars);
+    for (int i = 0; i < ranks.length; i++) {
+      if (maxTime < ranks[i]) continue;
+      long curr = maxTime / ranks[i];
+      curr = (long) Math.sqrt(curr);
+      cnt += curr;
     }
+
+    return cnt >= cars;
+  }
 }

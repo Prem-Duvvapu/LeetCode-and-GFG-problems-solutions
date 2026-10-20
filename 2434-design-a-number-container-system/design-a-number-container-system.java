@@ -1,27 +1,30 @@
 class NumberContainers {
-    Map<Integer,SortedSet<Integer>> numMap;
-    Map<Integer,Integer> indexMap;
 
-    public NumberContainers() {
-        numMap=new HashMap<>();
-        indexMap=new HashMap<>();
-    }
-    
-    public void change(int index, int number) {
-        if (numMap.containsKey(indexMap.get(index)))
-            numMap.get(indexMap.get(index)).remove(index);
+  Map<Integer, SortedSet<Integer>> numMap;
+  Map<Integer, Integer> indexMap;
 
-        numMap.putIfAbsent(number,new TreeSet<>());
-        numMap.get(number).add(index);
-        indexMap.put(index,number);
-    }
-    
-    public int find(int number) {
-        if (!numMap.containsKey(number) || numMap.get(number).size()==0)
-            return -1;
+  public NumberContainers() {
+    numMap = new HashMap<>();
+    indexMap = new HashMap<>();
+  }
 
-        return numMap.get(number).first();
-    }
+  public void change(int index, int number) {
+    if (numMap.containsKey(indexMap.get(index))) numMap
+      .get(indexMap.get(index))
+      .remove(index);
+
+    numMap.putIfAbsent(number, new TreeSet<>());
+    numMap.get(number).add(index);
+    indexMap.put(index, number);
+  }
+
+  public int find(int number) {
+    if (
+      !numMap.containsKey(number) || numMap.get(number).size() == 0
+    ) return -1;
+
+    return numMap.get(number).first();
+  }
 }
 
 /**

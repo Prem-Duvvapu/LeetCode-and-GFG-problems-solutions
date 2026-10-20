@@ -9,45 +9,43 @@
  * }
  */
 class Solution {
-    public ListNode rotateRight(ListNode head, int k) {
-        if (head==null || head.next==null)
-            return head;
-        
-        int len=0;
-        ListNode temp=head;
-        ListNode lastNode=null;
 
-        while (temp!=null) {
-            len++;
-            lastNode=temp;
-            temp=temp.next;
-        }
+  public ListNode rotateRight(ListNode head, int k) {
+    if (head == null || head.next == null) return head;
 
-        k=k%len;
-        if (k==0)
-            return head;
+    int len = 0;
+    ListNode temp = head;
+    ListNode lastNode = null;
 
-        ListNode kthNodeFromLast=kthLastNode(head,k);
-        lastNode.next=head;
-        return kthNodeFromLast;
+    while (temp != null) {
+      len++;
+      lastNode = temp;
+      temp = temp.next;
     }
 
-    public ListNode kthLastNode(ListNode head,int k) {
-        ListNode first=head;
+    k = k % len;
+    if (k == 0) return head;
 
-        for (int i=0;i<k;i++)
-            first=first.next;
+    ListNode kthNodeFromLast = kthLastNode(head, k);
+    lastNode.next = head;
+    return kthNodeFromLast;
+  }
 
-        ListNode second=head;
-        ListNode prev=null;
+  public ListNode kthLastNode(ListNode head, int k) {
+    ListNode first = head;
 
-        while (first!=null) {
-            first=first.next;
-            prev=second;
-            second=second.next;
-        }
+    for (int i = 0; i < k; i++) first = first.next;
 
-        prev.next=null;
-        return second;
+    ListNode second = head;
+    ListNode prev = null;
+
+    while (first != null) {
+      first = first.next;
+      prev = second;
+      second = second.next;
     }
+
+    prev.next = null;
+    return second;
+  }
 }

@@ -1,23 +1,22 @@
 class Solution {
-    public int distinctPrimeFactors(int[] nums) {
-        Set<Integer> set=new HashSet<>();
 
-        for (int num: nums) {
-            int temp=num;
+  public int distinctPrimeFactors(int[] nums) {
+    Set<Integer> set = new HashSet<>();
 
-            for (int i=2;i*i<=temp;i++) {
-                if (temp%i==0) {
-                    set.add(i);
+    for (int num : nums) {
+      int temp = num;
 
-                    while (temp%i==0)
-                        temp/=i;
-                }
-            }
+      for (int i = 2; i * i <= temp; i++) {
+        if (temp % i == 0) {
+          set.add(i);
 
-            if (temp>1)
-                set.add(temp);
+          while (temp % i == 0) temp /= i;
         }
+      }
 
-        return set.size();
+      if (temp > 1) set.add(temp);
     }
+
+    return set.size();
+  }
 }

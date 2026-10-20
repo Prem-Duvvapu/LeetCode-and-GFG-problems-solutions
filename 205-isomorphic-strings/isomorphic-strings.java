@@ -1,30 +1,27 @@
 class Solution {
-    public boolean isIsomorphic(String s, String t) {
-        int n=s.length();
 
-        int[] sTot=new int[256];
-        int[] tTos=new int[256];
+  public boolean isIsomorphic(String s, String t) {
+    int n = s.length();
 
-        Arrays.fill(sTot,-1);
-        Arrays.fill(tTos,-1);
+    int[] sTot = new int[256];
+    int[] tTos = new int[256];
 
-        for (int i=0;i<n;i++) {
-            char sChar=s.charAt(i);
-            char tChar=t.charAt(i);
+    Arrays.fill(sTot, -1);
+    Arrays.fill(tTos, -1);
 
-            //s to t checking
-            if (sTot[sChar]!=-1 && sTot[sChar]!=tChar)
-                return false;
-            else
-                sTot[sChar]=tChar;
+    for (int i = 0; i < n; i++) {
+      char sChar = s.charAt(i);
+      char tChar = t.charAt(i);
 
-            //t to s checking
-            if (tTos[tChar]!=-1 && tTos[tChar]!=sChar)
-                return false;
-            else
-                tTos[tChar]=sChar;
-        }
+      //s to t checking
+      if (sTot[sChar] != -1 && sTot[sChar] != tChar) return false;
+      else sTot[sChar] = tChar;
 
-        return true;
+      //t to s checking
+      if (tTos[tChar] != -1 && tTos[tChar] != sChar) return false;
+      else tTos[tChar] = sChar;
     }
+
+    return true;
+  }
 }

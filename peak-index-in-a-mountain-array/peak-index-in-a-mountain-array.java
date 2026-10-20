@@ -1,11 +1,11 @@
 class Solution {
-    public int peakIndexInMountainArray(int[] arr) {
-        int maxIndex=0;
 
-        for (int i=1;i<arr.length;i++)
-            if (arr[i]>arr[maxIndex])
-                maxIndex=i;
+  public int peakIndexInMountainArray(int[] arr) {
+    int maxIndex = 0;
 
-        return maxIndex;
-    }
+    for (int i = 1; i < arr.length; i++) if (arr[i] > arr[maxIndex]) maxIndex =
+      i;
+
+    return maxIndex;
+  }
 }

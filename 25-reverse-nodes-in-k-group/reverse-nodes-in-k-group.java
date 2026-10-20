@@ -9,59 +9,57 @@
  * }
  */
 class Solution {
-    public ListNode reverseKGroup(ListNode head, int k) {
-        if (head==null || head.next==null)
-            return head;
 
-        ListNode curr=head;
-        ListNode temp=new ListNode(-1);
-        ListNode prev=temp;
-        ListNode first=head;
-        ListNode last=null;
-        ListNode newFirst=null;
-        ListNode newLast=null;
-        int cnt=0;
-        
-        while (first!=null) {
-            while (cnt<k && curr!=null) {
-                last=curr;
-                cnt++;
-                curr=curr.next;
-            }
+  public ListNode reverseKGroup(ListNode head, int k) {
+    if (head == null || head.next == null) return head;
 
-            if (cnt<k)
-                break;
+    ListNode curr = head;
+    ListNode temp = new ListNode(-1);
+    ListNode prev = temp;
+    ListNode first = head;
+    ListNode last = null;
+    ListNode newFirst = null;
+    ListNode newLast = null;
+    int cnt = 0;
 
-            last.next=null;
-            newFirst=reverseLL(first);
-            newLast=first;
+    while (first != null) {
+      while (cnt < k && curr != null) {
+        last = curr;
+        cnt++;
+        curr = curr.next;
+      }
 
-            prev.next=newFirst;
-            prev=newLast;
+      if (cnt < k) break;
 
-            first=curr;
-            cnt=0;
-        }
+      last.next = null;
+      newFirst = reverseLL(first);
+      newLast = first;
 
-        if (cnt>0)
-            prev.next=first;
+      prev.next = newFirst;
+      prev = newLast;
 
-        return temp.next;
+      first = curr;
+      cnt = 0;
     }
 
-    public ListNode reverseLL(ListNode head) {
-        ListNode prev=null;
-        ListNode curr=head;
+    if (cnt > 0) prev.next = first;
 
-        while (curr!=null) {
-            ListNode nextNode=curr.next;
+    return temp.next;
+  }
 
-            curr.next=prev;
+  public ListNode reverseLL(ListNode head) {
+    ListNode prev = null;
+    ListNode curr = head;
 
-            prev=curr;
-            curr=nextNode;
-        }
+    while (curr != null) {
+      ListNode nextNode = curr.next;
 
-        return prev;
+      curr.next = prev;
+
+      prev = curr;
+      curr = nextNode;
     }
+
+    return prev;
+  }
 }

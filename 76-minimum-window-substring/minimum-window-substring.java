@@ -1,51 +1,47 @@
 class Solution {
-    public String minWindow(String s, String t) {
-        int n=s.length();
-        int m=t.length();
-        int[] freq=new int[256];
-        int left=0;
-        int right=0;
-        int cnt=0;
-        int minLen=(int)1e6;
-        int currLen=0;
-        int startIndex=-1;
 
-        for (char ch: t.toCharArray())
-            freq[ch]--;
+  public String minWindow(String s, String t) {
+    int n = s.length();
+    int m = t.length();
+    int[] freq = new int[256];
+    int left = 0;
+    int right = 0;
+    int cnt = 0;
+    int minLen = (int) 1e6;
+    int currLen = 0;
+    int startIndex = -1;
 
-        while (right<n) {
-            char ch=s.charAt(right);
-            freq[ch]++;
+    for (char ch : t.toCharArray()) freq[ch]--;
 
-            if (freq[ch]<=0)
-                cnt++;
+    while (right < n) {
+      char ch = s.charAt(right);
+      freq[ch]++;
 
-            while (cnt==m) {
-                currLen=right-left+1;
-                if (currLen<minLen) {
-                    minLen=currLen;
-                    startIndex=left;
-                }
+      if (freq[ch] <= 0) cnt++;
 
-                char leftChar=s.charAt(left);
-                freq[leftChar]--;
-
-                if (freq[leftChar]<0)
-                    cnt--;
-
-                left++;
-            }
-
-            right++;
+      while (cnt == m) {
+        currLen = right - left + 1;
+        if (currLen < minLen) {
+          minLen = currLen;
+          startIndex = left;
         }
 
-        if (startIndex==-1)
-            return "";
+        char leftChar = s.charAt(left);
+        freq[leftChar]--;
 
-        return s.substring(startIndex,startIndex+minLen);
+        if (freq[leftChar] < 0) cnt--;
+
+        left++;
+      }
+
+      right++;
     }
-}
 
+    if (startIndex == -1) return "";
+
+    return s.substring(startIndex, startIndex + minLen);
+  }
+}
 
 /*
 time: O(m) + O(n) + O(n)

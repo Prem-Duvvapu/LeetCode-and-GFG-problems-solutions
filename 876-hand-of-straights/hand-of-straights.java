@@ -1,35 +1,32 @@
 class Solution {
-    public boolean isNStraightHand(int[] hand, int groupSize) {
-        int n=hand.length;
 
-        Map<Integer,Integer> map=new TreeMap<>();
+  public boolean isNStraightHand(int[] hand, int groupSize) {
+    int n = hand.length;
 
-        for (int card: hand)
-            map.put(card,map.getOrDefault(card,0)+1);
+    Map<Integer, Integer> map = new TreeMap<>();
 
-        Queue<Integer> groupStartQ=new LinkedList<>();
-        int lastCard=-1;
-        int currOpenGroups=0;
+    for (int card : hand) map.put(card, map.getOrDefault(card, 0) + 1);
 
-        for (Map.Entry<Integer,Integer> m: map.entrySet()) {
-            int currCard=m.getKey();
-            int currCardFreq=m.getValue();
+    Queue<Integer> groupStartQ = new LinkedList<>();
+    int lastCard = -1;
+    int currOpenGroups = 0;
 
-            if (currOpenGroups>0 && currCard>lastCard+1)
-                return false;
+    for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+      int currCard = m.getKey();
+      int currCardFreq = m.getValue();
 
-            if (currCardFreq<currOpenGroups)
-                return false;
+      if (currOpenGroups > 0 && currCard > lastCard + 1) return false;
 
-            groupStartQ.add(currCardFreq-currOpenGroups);
+      if (currCardFreq < currOpenGroups) return false;
 
-            lastCard=currCard;
-            currOpenGroups=currCardFreq;
+      groupStartQ.add(currCardFreq - currOpenGroups);
 
-            if (groupStartQ.size()==groupSize)
-                currOpenGroups-=groupStartQ.poll();
-        }
+      lastCard = currCard;
+      currOpenGroups = currCardFreq;
 
-        return currOpenGroups==0;
+      if (groupStartQ.size() == groupSize) currOpenGroups -= groupStartQ.poll();
     }
+
+    return currOpenGroups == 0;
+  }
 }

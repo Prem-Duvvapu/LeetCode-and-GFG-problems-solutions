@@ -1,29 +1,30 @@
 class Solution {
-    public static final int MOD = (int)1e9 + 7;
-    public int countPairs(int[] deliciousness) {
-        int n = deliciousness.length;
-        int cnt = 0;
-        Map<Integer,Integer> map = new HashMap<>();
-        int[] powerOf2 = new int[22];
-        // 0 to 21
 
-        int val = 1;
-        for (int i=0;i<powerOf2.length;i++) {
-            powerOf2[i] = val;
-            val*=2;
-        }
+  public static final int MOD = (int) 1e9 + 7;
 
-        for (int i=0;i<n;i++) {
-            for (int sum: powerOf2) {
-                int req  = sum - deliciousness[i];
-                if (map.containsKey(req))
-                    cnt = (cnt + (map.get(req)))%MOD;
-            }
-            map.put(deliciousness[i],map.getOrDefault(deliciousness[i],0)+1);
-        }
+  public int countPairs(int[] deliciousness) {
+    int n = deliciousness.length;
+    int cnt = 0;
+    Map<Integer, Integer> map = new HashMap<>();
+    int[] powerOf2 = new int[22];
+    // 0 to 21
 
-        return cnt;
+    int val = 1;
+    for (int i = 0; i < powerOf2.length; i++) {
+      powerOf2[i] = val;
+      val *= 2;
     }
+
+    for (int i = 0; i < n; i++) {
+      for (int sum : powerOf2) {
+        int req = sum - deliciousness[i];
+        if (map.containsKey(req)) cnt = (cnt + map.get(req)) % MOD;
+      }
+      map.put(deliciousness[i], map.getOrDefault(deliciousness[i], 0) + 1);
+    }
+
+    return cnt;
+  }
 }
 
 /*

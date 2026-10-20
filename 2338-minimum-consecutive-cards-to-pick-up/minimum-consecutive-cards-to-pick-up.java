@@ -1,21 +1,21 @@
 class Solution {
-    public int minimumCardPickup(int[] cards) {
-        int n = cards.length;
-        Map<Integer,Integer> map = new HashMap<>();
-        int res = n+1;
 
-        for (int i=0;i<n;i++) {
-            if (map.containsKey(cards[i])) {
-                int currRes = i - map.get(cards[i]) + 1;
-                res = Math.min(res, currRes);
-            }
+  public int minimumCardPickup(int[] cards) {
+    int n = cards.length;
+    Map<Integer, Integer> map = new HashMap<>();
+    int res = n + 1;
 
-            map.put(cards[i],i);
-        }
+    for (int i = 0; i < n; i++) {
+      if (map.containsKey(cards[i])) {
+        int currRes = i - map.get(cards[i]) + 1;
+        res = Math.min(res, currRes);
+      }
 
-
-        return (res == n+1) ? -1 : res;
+      map.put(cards[i], i);
     }
+
+    return res == n + 1 ? -1 : res;
+  }
 }
 
 /*

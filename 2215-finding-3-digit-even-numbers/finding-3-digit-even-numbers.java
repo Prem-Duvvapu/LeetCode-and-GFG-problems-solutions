@@ -1,33 +1,31 @@
 class Solution {
-    public int[] findEvenNumbers(int[] digits) {
-        List<Integer> res=new ArrayList<>();
-        int[] digitsFreq=new int[10];
 
-        for (int digit: digits)
-            digitsFreq[digit]++;
+  public int[] findEvenNumbers(int[] digits) {
+    List<Integer> res = new ArrayList<>();
+    int[] digitsFreq = new int[10];
 
-        int temp=0;
-        int[] currDigitsFreq=new int[10];
+    for (int digit : digits) digitsFreq[digit]++;
 
-        for (int num=100;num<999;num+=2) {
-            temp=num;
-            currDigitsFreq=new int[10];
+    int temp = 0;
+    int[] currDigitsFreq = new int[10];
 
-            while (temp>0) {
-                int lastDigit=temp%10;
-                currDigitsFreq[lastDigit]++;
+    for (int num = 100; num < 999; num += 2) {
+      temp = num;
+      currDigitsFreq = new int[10];
 
-                if (digitsFreq[lastDigit]<currDigitsFreq[lastDigit])
-                    break;
+      while (temp > 0) {
+        int lastDigit = temp % 10;
+        currDigitsFreq[lastDigit]++;
 
-                temp=temp/10;
-            }
+        if (digitsFreq[lastDigit] < currDigitsFreq[lastDigit]) break;
 
-            if (temp==0)
-                res.add(num);
-            Arrays.fill(currDigitsFreq,0);
-        }
+        temp = temp / 10;
+      }
 
-        return res.stream().mapToInt(Integer::intValue).toArray();
+      if (temp == 0) res.add(num);
+      Arrays.fill(currDigitsFreq, 0);
     }
+
+    return res.stream().mapToInt(Integer::intValue).toArray();
+  }
 }

@@ -14,66 +14,60 @@
  * }
  */
 class Solution {
-    public TreeNode lcaDeepestLeaves(TreeNode root) {
-        if (root==null)
-            return root;
 
-        HashMap<Integer,TreeNode> childToParent=new HashMap<>();
-        Queue<TreeNode> q=new LinkedList<>();
-        int maxDepth=calcMaxDepth(root);
+  public TreeNode lcaDeepestLeaves(TreeNode root) {
+    if (root == null) return root;
 
-        q.add(root);
-        int currDepth=0;
-        while (!q.isEmpty()) {
-            int qlen=q.size();
+    HashMap<Integer, TreeNode> childToParent = new HashMap<>();
+    Queue<TreeNode> q = new LinkedList<>();
+    int maxDepth = calcMaxDepth(root);
 
-            while (qlen-- > 0) {
-                TreeNode curr=q.poll();
+    q.add(root);
+    int currDepth = 0;
+    while (!q.isEmpty()) {
+      int qlen = q.size();
 
-                if (curr.left!=null) {
-                    childToParent.put(curr.left.val,curr);
-                    q.add(curr.left);
-                }
+      while (qlen-- > 0) {
+        TreeNode curr = q.poll();
 
-                if (curr.right!=null) {
-                    childToParent.put(curr.right.val,curr);
-                    q.add(curr.right);
-                }
-            }
-
-            if (!q.isEmpty())
-                currDepth++;
-            
-            if (currDepth==maxDepth)
-                break;
+        if (curr.left != null) {
+          childToParent.put(curr.left.val, curr);
+          q.add(curr.left);
         }
 
-        Set<TreeNode> set=new HashSet<>();
-        while (!q.isEmpty())
-            set.add(q.poll());
-
-        while (set.size()>1) {
-            Set<TreeNode> temp=new HashSet<>();
-
-            for (TreeNode child: set)
-                temp.add(childToParent.get(child.val));
-            
-            set=temp;
+        if (curr.right != null) {
+          childToParent.put(curr.right.val, curr);
+          q.add(curr.right);
         }
+      }
 
-        for (TreeNode res: set)
-            return res;
+      if (!q.isEmpty()) currDepth++;
 
-        return root;
+      if (currDepth == maxDepth) break;
     }
 
-    public int calcMaxDepth(TreeNode root) {
-        if (root==null)
-            return -1;
+    Set<TreeNode> set = new HashSet<>();
+    while (!q.isEmpty()) set.add(q.poll());
 
-        int leftDepth=calcMaxDepth(root.left);
-        int rightDepth=calcMaxDepth(root.right);
+    while (set.size() > 1) {
+      Set<TreeNode> temp = new HashSet<>();
 
-        return 1+Math.max(leftDepth,rightDepth);
+      for (TreeNode child : set) temp.add(childToParent.get(child.val));
+
+      set = temp;
     }
+
+    for (TreeNode res : set) return res;
+
+    return root;
+  }
+
+  public int calcMaxDepth(TreeNode root) {
+    if (root == null) return -1;
+
+    int leftDepth = calcMaxDepth(root.left);
+    int rightDepth = calcMaxDepth(root.right);
+
+    return 1 + Math.max(leftDepth, rightDepth);
+  }
 }

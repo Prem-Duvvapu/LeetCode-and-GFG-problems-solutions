@@ -1,34 +1,34 @@
 class Solution {
-    public int smallestDivisor(int[] nums, int threshold) {
-        int n = nums.length;
-        int low = 1;
-        int high = (int)1e6;
-        int res = high;
 
-        while (low <= high) {
-            int mid = low  + (high - low)/2;
+  public int smallestDivisor(int[] nums, int threshold) {
+    int n = nums.length;
+    int low = 1;
+    int high = (int) 1e6;
+    int res = high;
 
-            if (isPossible(mid,nums,threshold)) {
-                res = mid;
-                high = mid-1;
-            } else {
-                low = mid+1;
-            }
-        }
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
 
-        return res;
+      if (isPossible(mid, nums, threshold)) {
+        res = mid;
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
     }
 
-    private boolean isPossible(int mid,int[] nums,int threshold) {
-        long sum = 0;
+    return res;
+  }
 
-        for (int val: nums) {
-            sum += (val/mid);
+  private boolean isPossible(int mid, int[] nums, int threshold) {
+    long sum = 0;
 
-            if (val%mid != 0)
-                sum += 1;
-        }
+    for (int val : nums) {
+      sum += val / mid;
 
-        return (sum <= (long)threshold);
+      if (val % mid != 0) sum += 1;
     }
+
+    return sum <= (long) threshold;
+  }
 }

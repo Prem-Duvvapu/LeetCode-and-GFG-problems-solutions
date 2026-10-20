@@ -1,63 +1,57 @@
 class Solution {
-    public int minZeroArray(int[] nums, int[][] queries) {
-        int n=nums.length;
 
-        if (checkAllZeroes(nums,n))
-            return 0;
+  public int minZeroArray(int[] nums, int[][] queries) {
+    int n = nums.length;
 
-        int res=-1;
-        int low=0;
-        int high=queries.length-1;
+    if (checkAllZeroes(nums, n)) return 0;
 
-        //O(logn)
-        while (low<=high) {
-            int mid=low+(high-low)/2;
-            if (solve(nums,queries,mid)) {
-                res=mid+1;
-                high=mid-1;
-            } else {
-                low=mid+1;
-            }
-        }
+    int res = -1;
+    int low = 0;
+    int high = queries.length - 1;
 
-        return res;
+    //O(logn)
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+      if (solve(nums, queries, mid)) {
+        res = mid + 1;
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
     }
 
-    public boolean solve(int[] nums,int[][] queries,int k) {
-        int n=nums.length;
-        int[] diff=new int[n];
+    return res;
+  }
 
-        //O(n)
-        for (int q=0;q<=k;q++) {
-            int start=queries[q][0];
-            int end=queries[q][1];
-            int val=queries[q][2];
+  public boolean solve(int[] nums, int[][] queries, int k) {
+    int n = nums.length;
+    int[] diff = new int[n];
 
-            diff[start]+=val;
-            if (end+1<n)
-                diff[end+1]-=val;
-        }
+    //O(n)
+    for (int q = 0; q <= k; q++) {
+      int start = queries[q][0];
+      int end = queries[q][1];
+      int val = queries[q][2];
 
-        //O(n)
-        for (int i=1;i<n;i++)
-            diff[i]+=diff[i-1];
-        
-        //O(n)
-        return check(nums,diff,n);
+      diff[start] += val;
+      if (end + 1 < n) diff[end + 1] -= val;
     }
 
-    public boolean check(int[] nums,int[] diff,int n) {
-        for (int i=0;i<n;i++)
-            if (diff[i]-nums[i]<0)
-                return false;
-        return true;
-    }
+    //O(n)
+    for (int i = 1; i < n; i++) diff[i] += diff[i - 1];
 
-    public boolean checkAllZeroes(int[] nums,int n) {
-        for (int i=0;i<n;i++)
-            if (nums[i]!=0)
-                return false;
+    //O(n)
+    return check(nums, diff, n);
+  }
 
-        return true;
-    }
+  public boolean check(int[] nums, int[] diff, int n) {
+    for (int i = 0; i < n; i++) if (diff[i] - nums[i] < 0) return false;
+    return true;
+  }
+
+  public boolean checkAllZeroes(int[] nums, int n) {
+    for (int i = 0; i < n; i++) if (nums[i] != 0) return false;
+
+    return true;
+  }
 }

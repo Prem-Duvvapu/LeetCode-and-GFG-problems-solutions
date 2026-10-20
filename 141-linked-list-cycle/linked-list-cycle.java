@@ -10,21 +10,20 @@
  * }
  */
 public class Solution {
-    public boolean hasCycle(ListNode head) {
-        if (head == null || head.next == null)
-            return false;
 
-        ListNode slow = head;
-        ListNode fast = head;
+  public boolean hasCycle(ListNode head) {
+    if (head == null || head.next == null) return false;
 
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
+    ListNode slow = head;
+    ListNode fast = head;
 
-            if (slow == fast)
-                return true;
-        }
+    while (fast != null && fast.next != null) {
+      slow = slow.next;
+      fast = fast.next.next;
 
-        return false;
+      if (slow == fast) return true;
     }
+
+    return false;
+  }
 }

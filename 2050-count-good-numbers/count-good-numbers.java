@@ -1,29 +1,28 @@
 class Solution {
-    long mod=(long)1e9+7;
 
-    public int countGoodNumbers(long n) {
-        if (n==1)
-            return 5;
+  long mod = (long) 1e9 + 7;
 
-        long evenPosCnt=(n+1)/2;
-        long oddPosCnt=n/2;
+  public int countGoodNumbers(long n) {
+    if (n == 1) return 5;
 
-        long total=power((long)5,evenPosCnt)%mod*power((long)4,oddPosCnt)%mod;
-        total%=mod;
+    long evenPosCnt = (n + 1) / 2;
+    long oddPosCnt = n / 2;
 
-        return (int)total;
-    }
+    long total =
+      ((power((long) 5, evenPosCnt) % mod) * power((long) 4, oddPosCnt)) % mod;
+    total %= mod;
 
-    public long power(long base,long expo) {
-        if (expo==0)
-            return 1;
+    return (int) total;
+  }
 
-        long half=power(base,expo/2)%mod;
-        long res=(half*half)%mod;;
+  public long power(long base, long expo) {
+    if (expo == 0) return 1;
 
-        if (expo%2==1)
-            res*=base;
+    long half = power(base, expo / 2) % mod;
+    long res = (half * half) % mod;
 
-        return res%mod;
-    }
+    if (expo % 2 == 1) res *= base;
+
+    return res % mod;
+  }
 }

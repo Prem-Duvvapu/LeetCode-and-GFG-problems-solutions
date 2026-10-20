@@ -8,61 +8,60 @@
  * }
  */
 public class Codec {
-    public TreeNode temp;
 
-    // Encodes a tree to a single string.
-    public String serialize(TreeNode root) {
-        if (root == null)
-            return "";
+  public TreeNode temp;
 
-        StringBuilder res = new StringBuilder();
-        Queue<TreeNode> q = new LinkedList<>();
+  // Encodes a tree to a single string.
+  public String serialize(TreeNode root) {
+    if (root == null) return "";
 
-        q.add(root);
-        while (!q.isEmpty())  {
-            TreeNode curr = q.poll();
+    StringBuilder res = new StringBuilder();
+    Queue<TreeNode> q = new LinkedList<>();
 
-            if (curr != null) {
-                res.append(curr.val+" ");
-                q.add(curr.left);
-                q.add(curr.right);
-            } else {
-                res.append("n ");
-            }
-        }
+    q.add(root);
+    while (!q.isEmpty()) {
+      TreeNode curr = q.poll();
 
-        return res.toString();
+      if (curr != null) {
+        res.append(curr.val + " ");
+        q.add(curr.left);
+        q.add(curr.right);
+      } else {
+        res.append("n ");
+      }
     }
 
-    // Decodes your encoded data to tree.
-    public TreeNode deserialize(String data) {
-        if (data.length() == 0)
-            return null;
+    return res.toString();
+  }
 
-        String[] arr = data.split(" ");
-        System.out.println(Arrays.toString(arr));
-        TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
-        Queue<TreeNode> q = new LinkedList<>();
-        q.add(root);
+  // Decodes your encoded data to tree.
+  public TreeNode deserialize(String data) {
+    if (data.length() == 0) return null;
 
-        for (int i=1;i<arr.length-1;i+=2) {
-            TreeNode parent = q.poll();
+    String[] arr = data.split(" ");
+    System.out.println(Arrays.toString(arr));
+    TreeNode root = new TreeNode(Integer.parseInt(arr[0]));
+    Queue<TreeNode> q = new LinkedList<>();
+    q.add(root);
 
-            if (!arr[i].equals("n")) {
-                TreeNode leftNode = new TreeNode(Integer.parseInt(arr[i]));
-                parent.left = leftNode;
-                q.add(leftNode);
-            }
+    for (int i = 1; i < arr.length - 1; i += 2) {
+      TreeNode parent = q.poll();
 
-            if (!arr[i+1].equals("n")) {
-                TreeNode rightNode = new TreeNode(Integer.parseInt(arr[i+1]));
-                parent.right = rightNode;
-                q.add(rightNode);
-            }
-        }
+      if (!arr[i].equals("n")) {
+        TreeNode leftNode = new TreeNode(Integer.parseInt(arr[i]));
+        parent.left = leftNode;
+        q.add(leftNode);
+      }
 
-        return root;
+      if (!arr[i + 1].equals("n")) {
+        TreeNode rightNode = new TreeNode(Integer.parseInt(arr[i + 1]));
+        parent.right = rightNode;
+        q.add(rightNode);
+      }
     }
+
+    return root;
+  }
 }
 
 // Your Codec object will be instantiated and called as such:

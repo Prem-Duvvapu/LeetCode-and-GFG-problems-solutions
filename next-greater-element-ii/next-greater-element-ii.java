@@ -2,26 +2,24 @@
 //Iterate through the nums array two times because the -1 values got in first iteration for result array can be replaced with its highest previous values in the nums array if exist by iterating starting from the first second time.
 
 class Solution {
-    public int[] nextGreaterElements(int[] nums) {
-        int n=nums.length;
-        int[] res=new int[n];
-        Arrays.fill(res,-1);
-        ArrayDeque<Integer> mStack=new ArrayDeque<>();
 
-        for (int i=0;i<2*n;i++)
-        {
-            int val=nums[i%n];
+  public int[] nextGreaterElements(int[] nums) {
+    int n = nums.length;
+    int[] res = new int[n];
+    Arrays.fill(res, -1);
+    ArrayDeque<Integer> mStack = new ArrayDeque<>();
 
-            while (!mStack.isEmpty() && val>nums[mStack.peek()])
-            {
-                int index=mStack.pop();
-                res[index]=val;
-            }
+    for (int i = 0; i < 2 * n; i++) {
+      int val = nums[i % n];
 
-            if(i<n)
-                mStack.push(i);
-        }
+      while (!mStack.isEmpty() && val > nums[mStack.peek()]) {
+        int index = mStack.pop();
+        res[index] = val;
+      }
 
-        return res;
+      if (i < n) mStack.push(i);
     }
+
+    return res;
+  }
 }

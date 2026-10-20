@@ -14,25 +14,24 @@
  * }
  */
 class Solution {
-    public int findBottomLeftValue(TreeNode root) {
-        Queue<TreeNode> q=new ArrayDeque<>();
-        q.add(root);
-        int res=0;
 
-        while (!q.isEmpty()) {
-            res=q.peek().val;
-            int qlen=q.size();
+  public int findBottomLeftValue(TreeNode root) {
+    Queue<TreeNode> q = new ArrayDeque<>();
+    q.add(root);
+    int res = 0;
 
-            while (qlen-- > 0) {
-                TreeNode curr=q.poll();
-                if (curr.left!=null)
-                    q.add(curr.left);
-                
-                if (curr.right!=null)
-                    q.add(curr.right);
-            }
-        }
+    while (!q.isEmpty()) {
+      res = q.peek().val;
+      int qlen = q.size();
 
-        return res;
+      while (qlen-- > 0) {
+        TreeNode curr = q.poll();
+        if (curr.left != null) q.add(curr.left);
+
+        if (curr.right != null) q.add(curr.right);
+      }
     }
+
+    return res;
+  }
 }

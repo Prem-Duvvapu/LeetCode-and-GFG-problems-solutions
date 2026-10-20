@@ -9,37 +9,35 @@
  * }
  */
 class Solution {
-    public boolean isPalindrome(ListNode head) {
-        if (head==null || head.next==null)
-            return true;
 
-        ListNode prev=null;
-        ListNode slow=head;
-        ListNode fast=head;
+  public boolean isPalindrome(ListNode head) {
+    if (head == null || head.next == null) return true;
 
-        while (fast!=null && fast.next!=null) {
-            fast=fast.next.next;
-            ListNode nextNode=slow.next;
-            slow.next=prev;
+    ListNode prev = null;
+    ListNode slow = head;
+    ListNode fast = head;
 
-            prev=slow;
-            slow=nextNode;
-        }
+    while (fast != null && fast.next != null) {
+      fast = fast.next.next;
+      ListNode nextNode = slow.next;
+      slow.next = prev;
 
-        if (fast!=null)
-            slow=slow.next;
-
-        ListNode revFirstHalf=prev;
-        ListNode secondHalf=slow;
-
-        while (secondHalf!=null) {
-            if (revFirstHalf.val!=secondHalf.val)
-                return false;
-
-            revFirstHalf=revFirstHalf.next;
-            secondHalf=secondHalf.next;
-        }
-
-        return true;
+      prev = slow;
+      slow = nextNode;
     }
+
+    if (fast != null) slow = slow.next;
+
+    ListNode revFirstHalf = prev;
+    ListNode secondHalf = slow;
+
+    while (secondHalf != null) {
+      if (revFirstHalf.val != secondHalf.val) return false;
+
+      revFirstHalf = revFirstHalf.next;
+      secondHalf = secondHalf.next;
+    }
+
+    return true;
+  }
 }

@@ -1,55 +1,64 @@
 class Pair {
-    int row;
-    int col;
-    int time;
-    int move;
 
-    public Pair(int row,int col,int time,int move) {
-        this.row=row;
-        this.col=col;
-        this.time=time;
-        this.move=move;
-    }
+  int row;
+  int col;
+  int time;
+  int move;
+
+  public Pair(int row, int col, int time, int move) {
+    this.row = row;
+    this.col = col;
+    this.time = time;
+    this.move = move;
+  }
 }
 
 class Solution {
-    public static final int[] DROW={-1,0,1,0};
-    public static final int[] DCOL={0,1,0,-1};
 
-    public int minTimeToReach(int[][] moveTime) {
-        int n=moveTime.length;
-        int m=moveTime[0].length;
-        boolean[][] visited=new boolean[n][m];
-        PriorityQueue<Pair> pq=new PriorityQueue<>((x,y) -> Integer.compare(x.time,y.time));
+  public static final int[] DROW = { -1, 0, 1, 0 };
+  public static final int[] DCOL = { 0, 1, 0, -1 };
 
-        visited[0][0]=true;
-        pq.add(new Pair(0,0,0,2));
+  public int minTimeToReach(int[][] moveTime) {
+    int n = moveTime.length;
+    int m = moveTime[0].length;
+    boolean[][] visited = new boolean[n][m];
+    PriorityQueue<Pair> pq = new PriorityQueue<>((x, y) ->
+      Integer.compare(x.time, y.time)
+    );
 
-        while (!pq.isEmpty()) {
-            Pair top=pq.poll();
-            int currRow=top.row;
-            int currCol=top.col;
-            int currTime=top.time;
-            int currMove=top.move;
+    visited[0][0] = true;
+    pq.add(new Pair(0, 0, 0, 2));
 
-            if (currRow==n-1 && currCol==m-1)
-                return currTime;
+    while (!pq.isEmpty()) {
+      Pair top = pq.poll();
+      int currRow = top.row;
+      int currCol = top.col;
+      int currTime = top.time;
+      int currMove = top.move;
 
-            for (int i=0;i<4;i++) {
-                int newRow=currRow+DROW[i];
-                int newCol=currCol+DCOL[i];
+      if (currRow == n - 1 && currCol == m - 1) return currTime;
 
-                if (newRow>=0 && newRow<n && newCol>=0 && newCol<m && !visited[newRow][newCol]) {
-                    visited[newRow][newCol]=true;
+      for (int i = 0; i < 4; i++) {
+        int newRow = currRow + DROW[i];
+        int newCol = currCol + DCOL[i];
 
-                    int newTime=Math.max(currTime,moveTime[newRow][newCol]);
-                    int newMove=1+(currMove&1);
-                    
-                    pq.add(new Pair(newRow,newCol,newTime+newMove,newMove));
-                }
-            }
+        if (
+          newRow >= 0 &&
+          newRow < n &&
+          newCol >= 0 &&
+          newCol < m &&
+          !visited[newRow][newCol]
+        ) {
+          visited[newRow][newCol] = true;
+
+          int newTime = Math.max(currTime, moveTime[newRow][newCol]);
+          int newMove = 1 + (currMove & 1);
+
+          pq.add(new Pair(newRow, newCol, newTime + newMove, newMove));
         }
-
-        return -1;
+      }
     }
+
+    return -1;
+  }
 }

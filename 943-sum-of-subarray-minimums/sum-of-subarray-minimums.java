@@ -1,59 +1,62 @@
 class Solution {
-    public int sumSubarrayMins(int[] arr) {
-        int n=arr.length;
-        long res=0;
-        long mod=(long)1e9+7;
-        int[] pse=new int[n]; //O(n)
-        int[] nse=new int[n]; //O(n)
 
-        Arrays.fill(pse,-1);
-        Arrays.fill(nse,n);
+  public int sumSubarrayMins(int[] arr) {
+    int n = arr.length;
+    long res = 0;
+    long mod = (long) 1e9 + 7;
+    int[] pse = new int[n]; //O(n)
+    int[] nse = new int[n]; //O(n)
 
-        calcPreviousSmaller(arr,pse);
-        calcNextSmaller(arr,nse);
+    Arrays.fill(pse, -1);
+    Arrays.fill(nse, n);
 
-        for (int i=0;i<n;i++) { //O(n)
-            long numOfStarts=i-pse[i];
-            long numOfEnds=nse[i]-i;
-            long numOfSubArrays=numOfStarts*numOfEnds;
-            long currTotalMin=arr[i]*numOfSubArrays;
-            // System.out.println(i+" "+arr[i]+" "+numOfSubArrays+" "+currTotalMin);
+    calcPreviousSmaller(arr, pse);
+    calcNextSmaller(arr, nse);
 
-            res=(res+currTotalMin)%mod;
-        }
+    for (int i = 0; i < n; i++) {
+      //O(n)
+      long numOfStarts = i - pse[i];
+      long numOfEnds = nse[i] - i;
+      long numOfSubArrays = numOfStarts * numOfEnds;
+      long currTotalMin = arr[i] * numOfSubArrays;
+      // System.out.println(i+" "+arr[i]+" "+numOfSubArrays+" "+currTotalMin);
 
-        return (int)res;
+      res = (res + currTotalMin) % mod;
     }
 
-    public void calcPreviousSmaller(int[] arr,int[] pse) { //O(2*n)
-        int n=arr.length;
-        Stack<Integer> stack=new Stack<>();
+    return (int) res;
+  }
 
-        for (int i=n-1;i>=0;i--) {
-            while (!stack.isEmpty() && arr[stack.peek()]>=arr[i]) {
-                int index=stack.pop();
-                pse[index]=i;
-            }
+  public void calcPreviousSmaller(int[] arr, int[] pse) {
+    //O(2*n)
+    int n = arr.length;
+    Stack<Integer> stack = new Stack<>();
 
-            stack.push(i);
-        }
+    for (int i = n - 1; i >= 0; i--) {
+      while (!stack.isEmpty() && arr[stack.peek()] >= arr[i]) {
+        int index = stack.pop();
+        pse[index] = i;
+      }
+
+      stack.push(i);
     }
+  }
 
-    public void calcNextSmaller(int[] arr,int[] nse) { //O(2*n)
-        int n=arr.length;
-        Stack<Integer> stack=new Stack<>();
+  public void calcNextSmaller(int[] arr, int[] nse) {
+    //O(2*n)
+    int n = arr.length;
+    Stack<Integer> stack = new Stack<>();
 
-        for (int i=0;i<n;i++) {
-            while (!stack.isEmpty() && arr[stack.peek()]>arr[i]) {
-                int index=stack.pop();
-                nse[index]=i;
-            }
+    for (int i = 0; i < n; i++) {
+      while (!stack.isEmpty() && arr[stack.peek()] > arr[i]) {
+        int index = stack.pop();
+        nse[index] = i;
+      }
 
-            stack.push(i);
-        }
+      stack.push(i);
     }
+  }
 }
-
 
 /*
 Time: O(n)+O(2*n)+O(2*n)

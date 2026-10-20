@@ -14,20 +14,20 @@
  * }
  */
 class Solution {
-    public TreeNode bstFromPreorder(int[] preorder) {
-        return solve(new int[]{0}, 1001, preorder);
-    }
 
-    private TreeNode solve(int[] pos, int upperBound, int[] preorder) {
-        if (pos[0] == preorder.length || preorder[pos[0]] > upperBound)
-            return null;
+  public TreeNode bstFromPreorder(int[] preorder) {
+    return solve(new int[] { 0 }, 1001, preorder);
+  }
 
-        TreeNode root = new TreeNode(preorder[pos[0]]);
-        pos[0]++;
+  private TreeNode solve(int[] pos, int upperBound, int[] preorder) {
+    if (pos[0] == preorder.length || preorder[pos[0]] > upperBound) return null;
 
-        root.left = solve(pos, root.val, preorder);
-        root.right = solve(pos, upperBound, preorder);
+    TreeNode root = new TreeNode(preorder[pos[0]]);
+    pos[0]++;
 
-        return root;
-    }
+    root.left = solve(pos, root.val, preorder);
+    root.right = solve(pos, upperBound, preorder);
+
+    return root;
+  }
 }

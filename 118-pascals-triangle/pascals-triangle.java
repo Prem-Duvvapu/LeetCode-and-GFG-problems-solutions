@@ -1,27 +1,28 @@
 //optimal
 class Solution {
-    public List<List<Integer>> generate(int numRows) {
-        List<List<Integer>> resList=new ArrayList<>();
 
-        for (int i=0;i<numRows;i++) {
-            List<Integer> currList=new ArrayList<>();
-            int currEle=1;
+  public List<List<Integer>> generate(int numRows) {
+    List<List<Integer>> resList = new ArrayList<>();
 
-            currList.add(currEle);
-            for (int j=1;j<=i;j++) {
-                currEle=(currEle*(i-(j-1)));
-                currEle=(currEle/j);
-                currList.add(currEle);
-            }
+    for (int i = 0; i < numRows; i++) {
+      List<Integer> currList = new ArrayList<>();
+      int currEle = 1;
 
-            resList.add(currList);
-        }
+      currList.add(currEle);
+      for (int j = 1; j <= i; j++) {
+        currEle = currEle * (i - (j - 1));
+        currEle = currEle / j;
+        currList.add(currEle);
+      }
 
-        return resList;
+      resList.add(currList);
     }
 
-    //O(r)
-    /*
+    return resList;
+  }
+
+  //O(r)
+  /*
     public int findNcR(int n,int r) {
         int res=1;
         r=Math.min(r,n-r);

@@ -1,25 +1,24 @@
 class Solution {
-    public int minOperations(int[] nums, int k) {
-        int n=nums.length;
-        Arrays.sort(nums);
-        PriorityQueue<Long> pq=new PriorityQueue<>((a, b) -> Long.compare(a, b));
-        int res=0;
 
-        for (int i=0;i<n;i++)
-            pq.add((long)nums[i]);
+  public int minOperations(int[] nums, int k) {
+    int n = nums.length;
+    Arrays.sort(nums);
+    PriorityQueue<Long> pq = new PriorityQueue<>((a, b) -> Long.compare(a, b));
+    int res = 0;
 
-        while (pq.size()!=1) {
-            if (pq.peek()>=(long)k)
-                break;
+    for (int i = 0; i < n; i++) pq.add((long) nums[i]);
 
-            long x=pq.poll();
-            long y=pq.poll();
-            long newElement=Math.min(x,y)*2+Math.max(x,y);
-            res++;
+    while (pq.size() != 1) {
+      if (pq.peek() >= (long) k) break;
 
-            pq.add(newElement);
-        }
+      long x = pq.poll();
+      long y = pq.poll();
+      long newElement = Math.min(x, y) * 2 + Math.max(x, y);
+      res++;
 
-        return res;
+      pq.add(newElement);
     }
+
+    return res;
+  }
 }

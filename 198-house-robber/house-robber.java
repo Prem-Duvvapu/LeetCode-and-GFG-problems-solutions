@@ -1,29 +1,27 @@
 //memoization
 class Solution {
-    public int rob(int[] nums) {
-        int n=nums.length;
-        //pos is changing [0,n-1]
-        int[] dp=new int[n];
-        Arrays.fill(dp,-1);
 
-        return solve(0,dp,nums,n);
-    }
+  public int rob(int[] nums) {
+    int n = nums.length;
+    //pos is changing [0,n-1]
+    int[] dp = new int[n];
+    Arrays.fill(dp, -1);
 
-    public int solve(int pos,int[] dp,int[] nums,int n) {
-        if (pos==n-1)
-            return nums[pos];
+    return solve(0, dp, nums, n);
+  }
 
-        if (pos>=n)
-            return 0;
+  public int solve(int pos, int[] dp, int[] nums, int n) {
+    if (pos == n - 1) return nums[pos];
 
-        if (dp[pos]!=-1)
-            return dp[pos];
+    if (pos >= n) return 0;
 
-        int pick=nums[pos]+solve(pos+2,dp,nums,n);
-        int notPick=0+solve(pos+1,dp,nums,n);
+    if (dp[pos] != -1) return dp[pos];
 
-        return dp[pos]=Math.max(pick,notPick);
-    }
+    int pick = nums[pos] + solve(pos + 2, dp, nums, n);
+    int notPick = 0 + solve(pos + 1, dp, nums, n);
+
+    return (dp[pos] = Math.max(pick, notPick));
+  }
 }
 
 /*
@@ -42,7 +40,3 @@ Sub-topics
 6. Dp on Longest Increasing subsequence
 7. Partion Dp(hard)
 */
-
-
-
-

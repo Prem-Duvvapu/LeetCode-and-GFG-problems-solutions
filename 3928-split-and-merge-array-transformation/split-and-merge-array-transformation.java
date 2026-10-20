@@ -1,54 +1,51 @@
 class Solution {
-    public int minSplitMerge(int[] nums1, int[] nums2) {
-        int n = nums1.length;
-        Set<String> set= new HashSet<>();
-        Queue<String> q = new LinkedList<>();
-        int level = 0;
-        String src = "";
 
-        for (int i=0;i<n;i++)
-            src += ""+i;
+  public int minSplitMerge(int[] nums1, int[] nums2) {
+    int n = nums1.length;
+    Set<String> set = new HashSet<>();
+    Queue<String> q = new LinkedList<>();
+    int level = 0;
+    String src = "";
 
-        q.add(src);
-        set.add(src);
+    for (int i = 0; i < n; i++) src += "" + i;
 
-        while (!q.isEmpty()) {
-            int qlen = q.size();
+    q.add(src);
+    set.add(src);
 
-            while (qlen-- > 0) {
-                String curr = q.poll();
-                boolean match = true;
+    while (!q.isEmpty()) {
+      int qlen = q.size();
 
-                for (int i=0;i<n;i++)
-                    if (nums1[curr.charAt(i) - '0'] != nums2[i])
-                        match = false;
+      while (qlen-- > 0) {
+        String curr = q.poll();
+        boolean match = true;
 
-                if (match)
-                    return level;
+        for (int i = 0; i < n; i++) if (
+          nums1[curr.charAt(i) - '0'] != nums2[i]
+        ) match = false;
 
-                for (int i=0;i<n;i++) {
-                    for (int j=i;j<n;j++) {
-                        String base = curr.substring(0,i) + curr.substring(j+1);
-                        String sub = curr.substring(i,j+1);
+        if (match) return level;
 
-                        for (int k=0;k<=base.length();k++) {
-                            StringBuilder sb = new StringBuilder(base);
-                            sb.insert(k,sub);
+        for (int i = 0; i < n; i++) {
+          for (int j = i; j < n; j++) {
+            String base = curr.substring(0, i) + curr.substring(j + 1);
+            String sub = curr.substring(i, j + 1);
 
-                            if (set.contains(sb.toString()))
-                                continue;
+            for (int k = 0; k <= base.length(); k++) {
+              StringBuilder sb = new StringBuilder(base);
+              sb.insert(k, sub);
 
-                            q.add(sb.toString());
-                            set.add(sb.toString());
-                        }
-                    }
-                }
+              if (set.contains(sb.toString())) continue;
+
+              q.add(sb.toString());
+              set.add(sb.toString());
             }
-
-            level++;
+          }
         }
+      }
 
-
-        return -1;
+      level++;
     }
+
+    return -1;
+  }
 }

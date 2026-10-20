@@ -1,32 +1,31 @@
 class Solution {
-    public boolean isBipartite(int[][] graph) {
-        int n = graph.length;
-        int[] color = new int[n];
 
-        Arrays.fill(color, -1);
+  public boolean isBipartite(int[][] graph) {
+    int n = graph.length;
+    int[] color = new int[n];
 
-        for (int i=0;i<n;i++) {
-            if (color[i] == -1) {
-                if (!dfs(i,0,color,graph))
-                    return false;
-            }
-        }
+    Arrays.fill(color, -1);
 
-        return true;
+    for (int i = 0; i < n; i++) {
+      if (color[i] == -1) {
+        if (!dfs(i, 0, color, graph)) return false;
+      }
     }
 
-    private boolean dfs(int curr,int currColor,int[] color,int[][] graph) {
-        color[curr] = currColor;
+    return true;
+  }
 
-        for (int ngbr: graph[curr]) {
-            if (color[ngbr] == -1) {
-                if (!dfs(ngbr,1 - currColor,color,graph))
-                    return false;
-            } else if (color[ngbr] == currColor) {
-                return false;
-            }
-        }
+  private boolean dfs(int curr, int currColor, int[] color, int[][] graph) {
+    color[curr] = currColor;
 
-        return true;
+    for (int ngbr : graph[curr]) {
+      if (color[ngbr] == -1) {
+        if (!dfs(ngbr, 1 - currColor, color, graph)) return false;
+      } else if (color[ngbr] == currColor) {
+        return false;
+      }
     }
+
+    return true;
+  }
 }

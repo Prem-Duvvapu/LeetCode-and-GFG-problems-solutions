@@ -14,37 +14,33 @@
  * }
  */
 class Solution {
-    public String tree2str(TreeNode root) {
-        StringBuilder sb=new StringBuilder();
-        solve(root,sb);
-        return sb.toString();
+
+  public String tree2str(TreeNode root) {
+    StringBuilder sb = new StringBuilder();
+    solve(root, sb);
+    return sb.toString();
+  }
+
+  private void solve(TreeNode root, StringBuilder sb) {
+    if (root == null) return;
+
+    if (isLeaf(root)) {
+      sb.append(root.val);
+      return;
     }
 
-    private void solve(TreeNode root,StringBuilder sb)
-    {
-        if (root==null)
-            return;
+    sb.append(root.val);
+    sb.append("(");
+    solve(root.left, sb);
+    sb.append(")");
 
-        if (isLeaf(root))
-        {
-            sb.append(root.val);
-            return;
-        }
+    if (root.right == null) return;
+    sb.append("(");
+    solve(root.right, sb);
+    sb.append(")");
+  }
 
-        sb.append(root.val);
-        sb.append("(");
-        solve(root.left,sb);
-        sb.append(")");
-
-        if (root.right==null)
-            return;
-        sb.append("(");
-        solve(root.right,sb);
-        sb.append(")");
-    }
-
-    private boolean isLeaf(TreeNode root)
-    {
-        return (root!=null && root.left==null && root.right==null);
-    }
+  private boolean isLeaf(TreeNode root) {
+    return root != null && root.left == null && root.right == null;
+  }
 }

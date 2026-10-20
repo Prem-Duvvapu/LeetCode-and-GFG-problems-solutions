@@ -14,24 +14,22 @@
  * }
  */
 class Solution {
-    public boolean isValidBST(TreeNode root) {
-        if (root == null)
-            return true;
 
-        return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
-    }
+  public boolean isValidBST(TreeNode root) {
+    if (root == null) return true;
 
-    private boolean helper(TreeNode root, long minVal, long maxVal) {
-        if (root == null)
-            return true;
+    return helper(root, Long.MIN_VALUE, Long.MAX_VALUE);
+  }
 
-        long currVal = (long)root.val;
-        if (currVal < minVal || currVal > maxVal)
-            return false;
+  private boolean helper(TreeNode root, long minVal, long maxVal) {
+    if (root == null) return true;
 
-        boolean leftCheck = helper(root.left, minVal, currVal-1);
-        boolean rightCheck = helper(root.right, currVal+1, maxVal);
+    long currVal = (long) root.val;
+    if (currVal < minVal || currVal > maxVal) return false;
 
-        return (leftCheck && rightCheck);
-    }
+    boolean leftCheck = helper(root.left, minVal, currVal - 1);
+    boolean rightCheck = helper(root.right, currVal + 1, maxVal);
+
+    return leftCheck && rightCheck;
+  }
 }

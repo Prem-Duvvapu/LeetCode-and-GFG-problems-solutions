@@ -2,37 +2,37 @@
 //T.C. : O(n*10)
 //S.C. : O(n)
 class Solution {
-    public int maximumSum(int[] nums) {
-        int n=nums.length;
-        int maxSum=-1;
-        Map<Integer,Integer> map=new HashMap<>();
-       
-        for (int i=0;i<n;i++) {
-            int currNumDigitsSum=sumOfDigits(nums[i]);
 
-            if (map.containsKey(currNumDigitsSum)) {
-                int prevNumIndex=map.get(currNumDigitsSum);
-                int currSum=nums[prevNumIndex]+nums[i];
-                maxSum=Math.max(maxSum,currSum);
+  public int maximumSum(int[] nums) {
+    int n = nums.length;
+    int maxSum = -1;
+    Map<Integer, Integer> map = new HashMap<>();
 
-                if (nums[i]>nums[prevNumIndex])
-                    map.put(currNumDigitsSum,i);
-            } else {
-                map.put(currNumDigitsSum,i);
-            }
-        }
+    for (int i = 0; i < n; i++) {
+      int currNumDigitsSum = sumOfDigits(nums[i]);
 
-        return maxSum;
+      if (map.containsKey(currNumDigitsSum)) {
+        int prevNumIndex = map.get(currNumDigitsSum);
+        int currSum = nums[prevNumIndex] + nums[i];
+        maxSum = Math.max(maxSum, currSum);
+
+        if (nums[i] > nums[prevNumIndex]) map.put(currNumDigitsSum, i);
+      } else {
+        map.put(currNumDigitsSum, i);
+      }
     }
 
-    public int sumOfDigits(int n) {
-        int sum=0;
+    return maxSum;
+  }
 
-        while (n>0) {
-            sum+=(n%10);
-            n/=10;
-        }
+  public int sumOfDigits(int n) {
+    int sum = 0;
 
-        return sum;
+    while (n > 0) {
+      sum += n % 10;
+      n /= 10;
     }
+
+    return sum;
+  }
 }

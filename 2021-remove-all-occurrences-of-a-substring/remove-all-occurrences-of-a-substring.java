@@ -1,30 +1,30 @@
 class Solution {
-    public String removeOccurrences(String s, String part) {
-        int n=s.length();
-        int m=part.length();
-        StringBuilder res=new StringBuilder();
 
-        for (int i=0;i<n;i++) {
-            char ch=s.charAt(i);
-            res.append(ch);
-            if (res.length()>=m && ch==part.charAt(m-1)) {
-                int p1=res.length()-1;
-                int p2=m-1;
+  public String removeOccurrences(String s, String part) {
+    int n = s.length();
+    int m = part.length();
+    StringBuilder res = new StringBuilder();
 
-                while (p1>=0 && p2>=0) {
-                    if (res.charAt(p1)==part.charAt(p2)) {
-                        p1--;
-                        p2--;
-                    } else {
-                        break;
-                    }
-                }
+    for (int i = 0; i < n; i++) {
+      char ch = s.charAt(i);
+      res.append(ch);
+      if (res.length() >= m && ch == part.charAt(m - 1)) {
+        int p1 = res.length() - 1;
+        int p2 = m - 1;
 
-                if (p2<0)
-                    res=res.delete(p1+1,p1+1+m);
-            }
+        while (p1 >= 0 && p2 >= 0) {
+          if (res.charAt(p1) == part.charAt(p2)) {
+            p1--;
+            p2--;
+          } else {
+            break;
+          }
         }
 
-        return res.toString();
+        if (p2 < 0) res = res.delete(p1 + 1, p1 + 1 + m);
+      }
     }
+
+    return res.toString();
+  }
 }

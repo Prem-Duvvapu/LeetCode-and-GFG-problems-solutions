@@ -9,31 +9,29 @@
  * }
  */
 
- //monotonic Stack
+//monotonic Stack
 class Solution {
-    public int[] nextLargerNodes(ListNode head) {
-        List<Integer> ll=new ArrayList<>();
-        ListNode temp=head;
 
-        while (temp!=null)
-        {
-            ll.add(temp.val);
-            temp=temp.next;
-        }
+  public int[] nextLargerNodes(ListNode head) {
+    List<Integer> ll = new ArrayList<>();
+    ListNode temp = head;
 
-        int n=ll.size();
-        int[] res=new int[n];
-        Stack<Integer> mStack=new Stack<>();
-        for (int i=0;i<n;i++)
-        {
-            while (!mStack.isEmpty() && ll.get(i)>ll.get(mStack.peek()))
-            {
-                int index=mStack.pop();
-                res[index]=ll.get(i);
-            }
-            mStack.push(i);
-        }
-
-        return res;
+    while (temp != null) {
+      ll.add(temp.val);
+      temp = temp.next;
     }
+
+    int n = ll.size();
+    int[] res = new int[n];
+    Stack<Integer> mStack = new Stack<>();
+    for (int i = 0; i < n; i++) {
+      while (!mStack.isEmpty() && ll.get(i) > ll.get(mStack.peek())) {
+        int index = mStack.pop();
+        res[index] = ll.get(i);
+      }
+      mStack.push(i);
+    }
+
+    return res;
+  }
 }

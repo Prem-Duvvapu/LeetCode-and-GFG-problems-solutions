@@ -1,35 +1,36 @@
 class Solution {
-    public int minimumOR(int[][] grid) {
-        int res = 0;
-        int avoidedBits = 0;
 
-        for (int i=16;i>=0;i--) {
-            int avoidedBitsWithCurrentBit = avoidedBits | (1 << i);
-            boolean canAvoidCurrentBit = true;
+  public int minimumOR(int[][] grid) {
+    int res = 0;
+    int avoidedBits = 0;
 
-            for (int[] row: grid) {
-                boolean found = false;
+    for (int i = 16; i >= 0; i--) {
+      int avoidedBitsWithCurrentBit = avoidedBits | (1 << i);
+      boolean canAvoidCurrentBit = true;
 
-                for (int val: row) {
-                    if ((avoidedBitsWithCurrentBit & val) == 0) {
-                        found = true;
-                        break;
-                    }
-                }
+      for (int[] row : grid) {
+        boolean found = false;
 
-                if (!found) {
-                    canAvoidCurrentBit = false;
-                    break;
-                }
-            }
-
-            if (canAvoidCurrentBit) {
-                avoidedBits = avoidedBitsWithCurrentBit;
-            } else {
-                res = res | (1 << i);
-            }
+        for (int val : row) {
+          if ((avoidedBitsWithCurrentBit & val) == 0) {
+            found = true;
+            break;
+          }
         }
 
-        return res;
+        if (!found) {
+          canAvoidCurrentBit = false;
+          break;
+        }
+      }
+
+      if (canAvoidCurrentBit) {
+        avoidedBits = avoidedBitsWithCurrentBit;
+      } else {
+        res = res | (1 << i);
+      }
     }
+
+    return res;
+  }
 }

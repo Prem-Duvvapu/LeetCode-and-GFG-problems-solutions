@@ -14,20 +14,18 @@
  * }
  */
 class Solution {
-    public boolean isSymmetric(TreeNode root) {
-        if (root == null)
-            return true;
 
-        return check(root.left,root.right);
-    }
+  public boolean isSymmetric(TreeNode root) {
+    if (root == null) return true;
 
-    private boolean check(TreeNode p, TreeNode q) {
-        if (p == null || q == null)
-            return (p == q);
+    return check(root.left, root.right);
+  }
 
-        if (p.val != q.val)
-            return false;
+  private boolean check(TreeNode p, TreeNode q) {
+    if (p == null || q == null) return p == q;
 
-        return (check(p.left,q.right) && check(p.right,q.left));
-    }
+    if (p.val != q.val) return false;
+
+    return check(p.left, q.right) && check(p.right, q.left);
+  }
 }

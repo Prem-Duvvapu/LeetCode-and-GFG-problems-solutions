@@ -1,30 +1,32 @@
 class Solution {
-    int[] r={1,2,1,2,-1,-2,-1,-2};
-    int[] c={2,1,-2,-1,2,1,-2,-1};
-    Map<String,Double> map=new HashMap<>();
 
-    public double knightProbability(int n, int k, int row, int column) {
-        return prob(n,k,row,column);
-    }
+  int[] r = { 1, 2, 1, 2, -1, -2, -1, -2 };
+  int[] c = { 2, 1, -2, -1, 2, 1, -2, -1 };
+  Map<String, Double> map = new HashMap<>();
 
-    private double prob(int n,int k,int row,int col)
-    {
-        if (row<0 || row>=n || col<0 || col>=n)
-            return 0;
+  public double knightProbability(int n, int k, int row, int column) {
+    return prob(n, k, row, column);
+  }
 
-        if (k==0)
-            return 1;
+  private double prob(int n, int k, int row, int col) {
+    if (row < 0 || row >= n || col < 0 || col >= n) return 0;
 
-        String s=Integer.toString(row)+"-"+Integer.toString(col)+"-"+Integer.toString(k);
-        if (map.containsKey(s))
-            return map.get(s);
+    if (k == 0) return 1;
 
-        double probability=0;
+    String s =
+      Integer.toString(row) +
+      "-" +
+      Integer.toString(col) +
+      "-" +
+      Integer.toString(k);
+    if (map.containsKey(s)) return map.get(s);
 
-        for (int i=0;i<8;i++)
-            probability+=prob(n,k-1,row+r[i],col+c[i])/8.0;
+    double probability = 0;
 
-        map.put(s,probability);
-        return probability;
-    }
+    for (int i = 0; i < 8; i++) probability +=
+      prob(n, k - 1, row + r[i], col + c[i]) / 8.0;
+
+    map.put(s, probability);
+    return probability;
+  }
 }

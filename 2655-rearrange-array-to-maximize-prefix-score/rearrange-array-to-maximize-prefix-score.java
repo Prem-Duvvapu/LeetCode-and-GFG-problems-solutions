@@ -1,30 +1,30 @@
 class Solution {
-    public int maxScore(int[] nums) {
-        int n = nums.length;
-        long sum = 0;
-        Arrays.sort(nums);
-        reverse(nums);
 
-        for (int i=0;i<n;i++) {
-            sum += nums[i];
-            if (sum <= 0)
-                return i;
-        }
+  public int maxScore(int[] nums) {
+    int n = nums.length;
+    long sum = 0;
+    Arrays.sort(nums);
+    reverse(nums);
 
-        return n;
+    for (int i = 0; i < n; i++) {
+      sum += nums[i];
+      if (sum <= 0) return i;
     }
 
-    public void reverse(int[] arr) {
-        int low = 0;
-        int high = arr.length - 1;
+    return n;
+  }
 
-        while (low <= high) {
-            int temp = arr[low];
-            arr[low] = arr[high];
-            arr[high] = temp;
+  public void reverse(int[] arr) {
+    int low = 0;
+    int high = arr.length - 1;
 
-            low++;
-            high--;
-        }
+    while (low <= high) {
+      int temp = arr[low];
+      arr[low] = arr[high];
+      arr[high] = temp;
+
+      low++;
+      high--;
     }
+  }
 }

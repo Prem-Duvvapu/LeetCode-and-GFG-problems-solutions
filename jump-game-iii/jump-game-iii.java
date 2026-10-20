@@ -1,22 +1,20 @@
 class Solution {
-    private boolean helper(int[] arr,int curr,boolean[] visited)
-    {
-        if (curr<0 || curr>=arr.length || visited[curr])
-            return false;
 
-        if (arr[curr]==0)
-            return true;
+  private boolean helper(int[] arr, int curr, boolean[] visited) {
+    if (curr < 0 || curr >= arr.length || visited[curr]) return false;
 
-        visited[curr]=true;
+    if (arr[curr] == 0) return true;
 
-        boolean left=helper(arr,curr-arr[curr],visited);
-        boolean right=helper(arr,curr+arr[curr],visited);
+    visited[curr] = true;
 
-        return (left || right);
-    }
+    boolean left = helper(arr, curr - arr[curr], visited);
+    boolean right = helper(arr, curr + arr[curr], visited);
 
-    public boolean canReach(int[] arr, int start) {
-        boolean[] visited=new boolean[arr.length];
-        return helper(arr,start,visited);
-    }
+    return left || right;
+  }
+
+  public boolean canReach(int[] arr, int start) {
+    boolean[] visited = new boolean[arr.length];
+    return helper(arr, start, visited);
+  }
 }

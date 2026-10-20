@@ -15,31 +15,29 @@
  */
 
 class Solution {
-    public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> res = new ArrayList<>();
-        if (root == null)
-            return res;
 
-        Deque<TreeNode> q = new ArrayDeque<>();
-        q.add(root);
+  public List<Integer> rightSideView(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
 
-        while (!q.isEmpty()) {
-            TreeNode lastNode = q.peekLast();
-            res.add(lastNode.val);
+    Deque<TreeNode> q = new ArrayDeque<>();
+    q.add(root);
 
-            int qlen = q.size();
+    while (!q.isEmpty()) {
+      TreeNode lastNode = q.peekLast();
+      res.add(lastNode.val);
 
-            while (qlen-- > 0) {
-                TreeNode currNode = q.poll();
+      int qlen = q.size();
 
-                if (currNode.left!=null)
-                    q.add(currNode.left);
+      while (qlen-- > 0) {
+        TreeNode currNode = q.poll();
 
-                if (currNode.right!=null)
-                    q.add(currNode.right);
-            }
-        }
+        if (currNode.left != null) q.add(currNode.left);
 
-        return res;
+        if (currNode.right != null) q.add(currNode.right);
+      }
     }
+
+    return res;
+  }
 }

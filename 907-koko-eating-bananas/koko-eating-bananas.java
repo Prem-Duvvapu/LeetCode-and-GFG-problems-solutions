@@ -1,54 +1,54 @@
 class Solution {
-    public int minEatingSpeed(int[] piles, int h) {
-        int maxValue = Integer.MIN_VALUE;;
-        for(int i=0;i<piles.length;i++){
-            if(piles[i]>maxValue) maxValue = piles[i];
-        }
 
-        int low = 1;
-        int high = maxValue;
-        int ans = -1;
-
-        while (low <= high) {
-            int mid = low + (high - low)/2;
-
-            long sum = findSum(mid, piles);
-            if (sum <= h) {
-                ans = mid; // possible answer
-                high = mid-1;
-            } else {
-                low = mid+1;
-            }
-        }
-
-        return ans;
-       
-        
-        // for(int k=1;k<=maxValue;k++){ //10^9
-        //    long sum = findSum(k, piles);
-        //    if(sum<=h){
-             
-        //      return k;
-        //    }
-        // }
+  public int minEatingSpeed(int[] piles, int h) {
+    int maxValue = Integer.MIN_VALUE;
+    for (int i = 0; i < piles.length; i++) {
+      if (piles[i] > maxValue) maxValue = piles[i];
     }
 
-    public long  findSum(int k, int piles[]){
-        long sum =0;
-        for(int j=0;j<piles.length;j++){ // 10^4
-             // find value for each pile
-             int pile = piles[j];
-             int findHours = pile/k; // 10^9
-             int remainder = pile % k; // 0
-             if(remainder!=0) findHours++;
-             sum = sum + findHours; // sum = 0+10^9
-           }
+    int low = 1;
+    int high = maxValue;
+    int ans = -1;
 
-           return sum;
+    while (low <= high) {
+      int mid = low + (high - low) / 2;
+
+      long sum = findSum(mid, piles);
+      if (sum <= h) {
+        ans = mid; // possible answer
+        high = mid - 1;
+      } else {
+        low = mid + 1;
+      }
     }
 
+    return ans;
+
+    // for(int k=1;k<=maxValue;k++){ //10^9
+    //    long sum = findSum(k, piles);
+    //    if(sum<=h){
+
+    //      return k;
+    //    }
+    // }
+  }
+
+  public long findSum(int k, int[] piles) {
+    long sum = 0;
+    for (int j = 0; j < piles.length; j++) {
+      // 10^4
+      // find value for each pile
+      int pile = piles[j];
+      int findHours = pile / k; // 10^9
+      int remainder = pile % k; // 0
+      if (remainder != 0) findHours++;
+      sum = sum + findHours; // sum = 0+10^9
+    }
+
+    return sum;
+  }
 }
-// 1) what this method shluld return(sum ), type(long) ? 
+// 1) what this method shluld return(sum ), type(long) ?
 // 2) findHour we need
 // 10^4.  10^4 * 10^9 = 10^13
 // [10^9,10^9,......]
@@ -58,8 +58,7 @@ class Solution {
 // Steps:
 // 1) we will start with k=1 to max value in array
 // 2) find max
-// 3) 
-
+// 3)
 
 // 1) element/k + 1
 // k=10, elemtn = 9
@@ -70,7 +69,7 @@ class Solution {
 // piles of banannas -> [3,6,7,11]
 // h= 8
 
-// k=100 , a= 4 
+// k=100 , a= 4
 // k=50  a=4
 // k=20 a=4
 // k=13 a=4
