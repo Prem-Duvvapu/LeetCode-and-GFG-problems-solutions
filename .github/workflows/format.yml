@@ -2,7 +2,16 @@ name: Auto Format Code
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+# Serialize formatter runs when sync extensions push several submissions.
+concurrency:
+  group: auto-format-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   format:
@@ -10,21 +19,38 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          # Format the latest branch state, including queued sync pushes.
+          ref: ${{ github.ref_name }}
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: Install Prettier and Java Plugin
+        # Keep npm dependencies and generated package files out of the repo.
         run: |
-          npm install prettier prettier-plugin-java
+          npm install --prefix "$RUNNER_TEMP/java-formatter" --no-save --no-package-lock \
+            prettier@3.9.10 prettier-plugin-java@2.11.0
 
       - name: Run Prettier Formatter
+        id: formatter
+        # Commit successfully formatted files even if another submission is invalid.
+        continue-on-error: true
         run: |
-          npx prettier --write "**/*.java" || true
+          "$RUNNER_TEMP/java-formatter/node_modules/.bin/prettier" \
+            --plugin="$RUNNER_TEMP/java-formatter/node_modules/prettier-plugin-java/dist/index.mjs" \
+            --write "**/*.java"
 
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "style: auto-format pushed code"
+          file_pattern: '*.java'
+
+      - name: Report formatting failures
+        if: steps.formatter.outcome == 'failure'
+        run: |
+          echo "::error::Some Java files could not be parsed. See the formatter output; check synced source for missing line breaks around // comments."
+          exit 1
