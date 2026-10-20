@@ -1,0 +1,26 @@
+name: Auto Format Code
+
+on:
+  push:
+    branches: [ main, master ] # Adjust if your main branch has a different name
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js (For Prettier formatter)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Prettier Formatter
+        run: |
+          npx prettier --write "**/*.java" || true
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "style: auto-format pushed code"
