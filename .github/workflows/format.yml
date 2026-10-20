@@ -2,7 +2,7 @@ name: Auto Format Code
 
 on:
   push:
-    branches: [ main, master ] # Adjust if your main branch has a different name
+    branches: [ main, master ]
 
 jobs:
   format:
@@ -11,10 +11,14 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Set up Node.js (For Prettier formatter)
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
+      - name: Install Prettier and Java Plugin
+        run: |
+          npm install prettier prettier-plugin-java
 
       - name: Run Prettier Formatter
         run: |
