@@ -24,17 +24,13 @@ class GfG {
 
 class Solution {
 
-  long substrCount(
-    String s,
-    int k
-  ) { //returns no. of substrings of size=k
+  long substrCount(String s, int k) {
+    //returns no. of substrings of size=k
     return solve(s, k) - solve(s, k - 1);
   }
 
-  private long solve(
-    String s,
-    int k
-  ) { //returns no. of substrings of size<=k
+  private long solve(String s, int k) {
+    //returns no. of substrings of size<=k
     int n = s.length();
     long ans = 0;
     int left = 0;

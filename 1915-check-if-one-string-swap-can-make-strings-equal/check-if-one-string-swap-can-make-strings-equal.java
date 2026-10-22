@@ -23,7 +23,7 @@ class Solution {
       diffCnt == 0 ||
       (diffCnt == 2 &&
         s1.charAt(firstDiffIndex) == s2.charAt(secondDiffIndex) &&
-          s2.charAt(firstDiffIndex) == s1.charAt(secondDiffIndex))
+        s2.charAt(firstDiffIndex) == s1.charAt(secondDiffIndex))
     ) return true;
 
     return false;
